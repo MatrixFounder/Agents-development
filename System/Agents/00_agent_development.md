@@ -109,6 +109,11 @@
 3. Оркестратор останавливает работу
 4. Ожидается ответ пользователя
 
+## WORKFLOWS (Dynamic Dispatch)
+The system supports multiple development "variants" via workspace workflows.
+- **Source of Truth**: `.agent/workflows/`
+- **Dynamic Dispatch**: If a user request matches a workflow file (e.g., `vdd-03-develop.md`), the Orchestrator MUST execute that workflow instead of the standard process described below.
+
 ## Процесс разработки
 
 ### Этап 1: Анализ

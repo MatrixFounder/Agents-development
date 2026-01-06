@@ -6,6 +6,15 @@ Your Source of Truth is the folder `/System/Agents` (or root prompts).
 ## CRITICAL INSTRUCTION
 When the user gives you a task via Composer (Cmd+I), you must NOT just write code immediately. You must execute the **Agentic Pipeline** defined in `00_agent_development.md` and `01_orchestrator.md`.
 
+## WORKSPACE WORKFLOWS (Dynamic Dispatch)
+Before starting the standard pipeline, check if the user's request matches a workflow in `.agent/workflows/`.
+1. **Discovery**: Look for files matching the pattern `[variant]-[stage]-[action].md` in `.agent/workflows/`.
+2. **Dispatch**:
+   - If user asks for "VDD", prioritize `vdd-*` workflows.
+   - If user asks for "TDD", prioritize `tdd-*` workflows.
+   - If no variant specified, default to standard `01-04` files (which are implicit).
+3. **Execution**: If a matching workflow is found, execute its steps strictly INSTEAD of the hardcoded pipeline below.
+
 ## THE PIPELINE (EXECUTE SEQUENTIALLY)
 
 1. **Analysis Phase**:

@@ -27,7 +27,13 @@
 4. Разработка (Разработчик → Ревьюер кода) — для каждой задачи из плана
 
 Всегда указывай текущий этап, номер итерации и следующее действие.
-```
+
+## WORKFLOWS & EXTENSIBILITY
+You are designed to be extensible.
+- **Source of Truth for Process**: Always check `.agent/workflows/` first.
+- **Workflow Override**: If a workflow file exists for the requested action (e.g. `vdd-03-develop.md`), it OVERRIDES the standard pipeline steps described below.
+
+---
 
 ---
 

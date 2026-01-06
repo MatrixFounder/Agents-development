@@ -12,6 +12,15 @@ When the pipeline requires reading a specific file (e.g., `02_analyst_prompt.md`
 2. **VERIFICATION**: If you cannot access the file or are unsure if you have the *full content*, **STOP** and ask the user: "Please provide the context for [File Name] using @".
 3. Do not proceed until you have the specific instructions for that phase.
 
+## WORKSPACE WORKFLOWS (Dynamic Dispatch)
+Before starting the standard pipeline, check if the user's request matches a workflow in `.agent/workflows/`.
+1. **Discovery**: Look for files matching the pattern `[variant]-[stage]-[action].md`.
+2. **Dispatch**:
+   - If user asks for "VDD", prioritize `vdd-*` workflows.
+   - If user asks for "TDD", prioritize `tdd-*` workflows.
+   - If no variant specified, default to standard `01-04`.
+3. **Execution**: If a matching workflow is found, execute its steps strictly INSTEAD of the hardcoded pipeline below.
+
 ## THE PIPELINE (EXECUTE SEQUENTIALLY)
 
 1. **Analysis Phase**:
@@ -25,11 +34,13 @@ When the pipeline requires reading a specific file (e.g., `02_analyst_prompt.md`
    - Read `docs/ARCHITECTURE.md` (Current Source of Truth).
    - Update `docs/ARCHITECTURE.md` if the new feature changes the system structure.
    - **CONSTRAINT**: Respect the "Stub-First" and "One Giant Column" strategies defined in Architecture.
+   - (Verification): Validate with `System/Agents/05_architecture_reviewer_prompt.md`.
 
 3. **Planning Phase**:
    - Read `System/Agents/06_agent_planner.md`.
    - Create `docs/PLAN.md` and `docs/tasks/*.md`.
    - **MUST FOLLOW STUB-FIRST STRATEGY**: Ensure tasks are split into Stub -> Implementation.
+   - (Verification): Validate plan with `System/Agents/07_agent_plan_reviewer.md`.
 
 4. **Development Phase** (Loop for each task):
    - Read `System/Agents/08_agent_developer.md`.
