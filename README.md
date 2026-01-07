@@ -96,7 +96,7 @@ This process will take you from an idea to finished code in the repository.
    - Check the TZ for completeness and consistency.
 3. **Architect (04_architect_prompt.md):**
    - Based on the TZ, the agent designs the architecture.
-   - Result: **Architecture Document** (classes, databases, APIs).
+   - Result: **Architecture Document** (`docs/ARCHITECTURE.md`) - (classes, databases, APIs).
 4. **Architecture Review (05_architecture_reviewer_prompt.md):**
    - Approve the architecture before planning.
 
@@ -131,7 +131,30 @@ For each pair of tasks in the plan (Stub -> Impl):
 2. **Git Commit:**
    - If all tests are green, make a commit.
    - Recommended format: `feat(scope): description`.
-3. **Artifacts:** Ensure all created artifacts (TZ, Architecture, Plan) are saved in the project documentation (e.g., in `docs/` folder).
+3. **Artifacts:**
+   - Ensure all created artifacts (TZ, Architecture, Plan) are saved in the project documentation.
+   - **Archive TZ:** Copy the final Technical Specification to the archive: `cp docs/TZ.md docs/tasks/task-ID-name.md`.
+
+---
+
+
+## 🗂 Artifact Management
+
+During the development process, agents create various artifacts. Here is how to handle them:
+
+| Artifact | Path | Status | Recommendation |
+|----------|------|--------|----------------|
+| **Technical Specification** | `docs/TZ.md` | **Living / History** | Keep. Rewrite for new tasks, or archive old ones if desired. |
+| **Architecture** | `docs/ARCHITECTURE.md` | **Source of Truth** | **NEVER DELETE**. Keep updated. This is the map of your system. |
+| **Known Issues** | `docs/KNOWN_ISSUES.md` | **Living Document** | Keep. Document bugs, workarounds, and complex logic explanation. |
+| **Task Archive** | `docs/tasks/task-ID-name.md` | **History** | **Create copy of TZ here**. Preserves history of what was implemented. |
+| **Implementation Plan** | `docs/PLAN.md` (or `implementation_plan.md`) | **Transient** | Can be kept for history or deleted after task completion. |
+| **Task Checklist** | `task.md` | **Transient** | Task tracking. Reset/overwrite for new tasks. |
+| **Agent Memory** | `.AGENTS.md` | **Long-term Memory** | **NEVER DELETE**. Commit to Git. |
+
+**Cleanup Rule:**
+- **Keep**: All `docs/*` files that describe the *current* state of the system.
+- **Cleanup**: Intermediate scratchpads if you used them outside of `docs/`.
 
 ---
 

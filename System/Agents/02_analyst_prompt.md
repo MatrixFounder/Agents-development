@@ -27,6 +27,7 @@ You receive:
 2. Fix ONLY the indicated issues
 3. Do NOT change parts of the TZ unrelated to comments
 4. Preserve document structure and format
+5. **MANDATORY:** ALWAYS update the `docs/TZ.md` file with the changes. Do not just output the text in the chat.
 
 ## TECHNICAL SPECIFICATION STRUCTURE
 
@@ -135,10 +136,12 @@ You must create an md-file with the TZ and return JSON with two fields:
 }
 ```
 
+
 ### Field "blocking_questions":
 - Include ONLY questions without which work cannot proceed
 - Formulate questions clearly and specifically
 - If no questions — return empty array: `[]`
+- **MANDATORY:** You must ALWAYS save/update the content to `docs/TZ.md` locally.
 
 ## EXAMPLES
 
