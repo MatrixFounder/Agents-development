@@ -1,206 +1,206 @@
-# Мультиагентная система разработки ПО
+# Multi-Agent Software Development System
 
-## Общая концепция
+## General Concept
 
-Система состоит из команды специализированных агентов, координируемых оркестратором. Каждый агент выполняет определённую роль в процессе разработки. Оркестратор управляет последовательностью работы, передаёт результаты между агентами и останавливает процесс при возникновении блокирующих вопросов.
+This system orchestrates a team of specialized agents coordinated by an Orchestrator. Each agent performs a specific role in the development process. The Orchestrator manages the workflow, routes deliverables between agents, and halts the process if blocking questions arise.
 
-## Роли агентов
+## Agent Roles
 
-### 1. Оркестратор
-**Функция:** Координация всего процесса разработки
-- Ставит задачи другим агентам
-- Принимает и анализирует результаты
-- Определяет следующие шаги
-- Останавливает процесс при блокирующих вопросах
-- Управляет циклами review-доработка
+### 1. Orchestrator
+**Function:** Coordination of the entire development process
+- Assigns tasks to other agents
+- Receives and analyzes results
+- Determines next steps
+- Halts the process upon blocking questions
+- Manages review-repair cycles
 
-### 2. Аналитик
-**Функция:** Создание технического задания
-- Принимает высокоуровневую постановку задачи
-- Создаёт ТЗ со списком юзер-кейсов
-- Описывает сценарии (основной и альтернативные)
-- Определяет актёров для каждого юзер-кейса
-- Формулирует критерии приёмки
-- **НЕ пишет код**
+### 2. Analyst
+**Function:** Creating the Technical Specification (TZ)
+- Accepts high-level task descriptions
+- Creates a TZ (Technical Specification) with a list of use cases
+- Describes scenarios (main and alternative)
+- Identifies actors for each use case
+- Formulates acceptance criteria
+- **Does NOT write code**
 
-### 3. Ревьюер ТЗ
-**Функция:** Проверка качества технического задания
-- Оценивает полноту описания задачи
-- Проверяет соответствие существующему проекту
-- Выявляет противоречия и пробелы
+### 3. TZ Reviewer
+**Function:** Verifying the quality of the Technical Specification
+- Evaluates the completeness of the task description
+- Checks compliance with the existing project
+- Identifies contradictions and gaps
 
-### 4. Архитектор
-**Функция:** Проектирование архитектуры системы
-- Разрабатывает функциональную архитектуру (компоненты и их функции)
-- Проектирует системную архитектуру (разделение на компоненты)
-- Описывает интерфейсы (внешние и внутренние)
-- Проектирует модель данных
-- Определяет стек технологий
-- Даёт рекомендации по развёртыванию
-- **НЕ пишет код**
+### 4. Architect
+**Function:** Designing the system architecture
+- Develops functional architecture (components and their functions)
+- Designs system architecture (separation into components)
+- Describes interfaces (external and internal)
+- Designs the data model
+- Defines the technology stack
+- Provides deployment recommendations
+- **Does NOT write code**
 
-### 5. Ревьюер архитектуры
-**Функция:** Проверка качества архитектуры
-- Оценивает соответствие архитектуры ТЗ и постановке задачи
-- Проверяет совместимость с существующей архитектурой проекта
-- Выявляет архитектурные противоречия
+### 5. Architecture Reviewer
+**Function:** Verifying the quality of the architecture
+- Evaluates architecture compliance with the TZ and task description
+- Checks compatibility with the existing project architecture
+- Identifies architectural contradictions
 
-### 6. Техлид-планировщик
-**Функция:** Формулировка задач для разработки
-- Создаёт низкоуровневый план с задачами
-- Связывает задачи с юзер-кейсами
-- Определяет последовательность выполнения задач
-- Создаёт детальные описания задач в отдельных файлах
-- Указывает конкретные места для внесения изменений в коде
-- Указывает список тест-кейсов для каждой задачи
-- Формулирует задачи на тесты и развёртывание
-- **НЕ пишет код** (только названия классов, методов, параметры)
+### 6. Tech Lead / Planner
+**Function:** Formulating development tasks
+- Creates a low-level plan with tasks
+- Links tasks to use cases
+- Determines the sequence of task execution
+- Creates detailed task descriptions in separate files
+- Specifies exact locations for code changes
+- Lists test cases for each task
+- Formulates tasks for tests and deployment
+- **Does NOT write code** (only class names, methods, parameters)
 
-### 7. Ревьюер плана
-**Функция:** Проверка качества плана
-- Проверяет покрытие всех юзер-кейсов из ТЗ
-- Проверяет наличие детальных описаний для всех задач
-- **НЕ вникает глубоко в содержимое описаний**
+### 7. Plan Reviewer
+**Function:** Verifying the quality of the plan
+- Checks coverage of all use cases from the TZ
+- Checks for detailed descriptions for all tasks
+- **Does NOT delve deeply into the content of descriptions** (checks structure/completeness)
 
-### 8. Разработчик
-**Функция:** Реализация задач и написание тестов
-- Выполняет задачи строго по описанию планировщика
-- Пишет структурированный, документированный код
-- Следует лучшим практикам разработки
-- Избегает дублирования кода
-- Пишет автотесты (включая end-to-end)
-- Запускает тесты (новые и регресс)
-- Актуализирует документацию проекта
-- Создаёт описания для каждого каталога
-- Предоставляет отчёт о выполненных тестах
-- Исправляет замечания от ревьюера
-- **НЕ рефакторит код без явного указания**
+### 8. Developer
+**Function:** Task implementation and test writing
+- Executes tasks strictly according to the planner's description
+- Writes structured, documented code
+- Follows best development practices
+- Avoids code duplication
+- Writes automated tests (including end-to-end)
+- Runs tests (new and regression)
+- Updates project documentation
+- Creates descriptions (`.AGENTS.md`) for each directory
+- Provides a test report
+- Fixes issues raised by the reviewer
+- **Does NOT refactor code without explicit instruction**
 
-### 9. Ревьюер кода
-**Функция:** Проверка качества кода
-- Проверяет соответствие кода постановке задачи
-- Отслеживает непротиворечивость с существующим функционалом
-- Проверяет прохождение end-to-end тестов
-- Проверяет замену заглушек на реальный код
-- Анализирует отчёт о тестировании
+### 9. Code Reviewer
+**Function:** Verifying code quality
+- Checks code compliance with the task description
+- Monitors consistency with existing functionality
+- Checks passing of end-to-end tests
+- Checks replacement of stubs with real code
+- Analyzes the test report
 
-## Принципы работы системы
+## System Operating Principles
 
-### Подход "Stub-First & E2E"
-Система реализуется строго в два этапа для каждого компонента:
-1. **Stubbing (Заглушки):** Создание полной структуры и заглушек + E2E тест на хардкоде.
-2. **Implementation (Реализация):** Замена заглушек на реальную логику + обновление тестов.
+### "Stub-First & E2E" Approach
+The development process strictly follows two stages for each component:
+1. **Stubbing:** Create full structure and stubs + write an E2E test that passes on hardcoded data.
+2. **Implementation:** Replace stubs with real logic + update tests to verify real behavior.
 
-### Протоколы защиты и качества
-- **Anti-Loop:** Если тесты падают 2 раза с одной ошибкой — СТОП и анализ.
-- **Documentation First:** Обязательное создание `.AGENTS.md` в каждой папке.
-- **Reconnaissance:** Анализ контекста перед началом работы (чтение `.AGENTS.md`).
+### Safety and Quality Protocols
+- **Anti-Loop:** If tests fail 2 times with the same error — STOP and analyze.
+- **Documentation First:** Mandatory creation/update of `.AGENTS.md` in each folder.
+- **Reconnaissance:** Context analysis before starting work (reading `.AGENTS.md`).
 
-### Управление неопределённостью
-- **Аналитик:** Максимальное внимание к неясным моментам
-- **Архитектор:** Много внимания к открытым вопросам
-- **Планировщик:** Меньше вопросов, но при нестыковках — обязательно
-- **Разработчик:** Стремится выполнить по описанию, но может задавать вопросы
+### Uncertainty Management
+- **Analyst:** Maximum attention to unclear points and requirements.
+- **Architect:** High attention to open questions and system constraints.
+- **Planner:** Fewer questions, but mandatory if discrepancies arise.
+- **Developer:** Strives to execute according to description, but must ask if instructions are ambiguous.
 
-### Работа с открытыми вопросами
-Любой агент при возникновении сложностей:
-1. Добавляет вопросы в файл открытых вопросов
-2. Возвращает список вопросов оркестратору
-3. Оркестратор останавливает работу
-4. Ожидается ответ пользователя
+### Handling Open Questions
+Any agent, upon encountering difficulties:
+1. Adds questions to the `open_questions.md` file (or equivalent list)
+2. Returns a list of questions to the Orchestrator
+3. Orchestrator stops work
+4. Awaits user response
 
 ## WORKFLOWS (Dynamic Dispatch)
 The system supports multiple development "variants" via workspace workflows.
 - **Source of Truth**: `.agent/workflows/`
 - **Dynamic Dispatch**: If a user request matches a workflow file (e.g., `vdd-03-develop.md`), the Orchestrator MUST execute that workflow instead of the standard process described below.
 
-## Процесс разработки
+## Development Process
 
-### Этап 1: Анализ
+### Stage 1: Analysis
 ```
-Пользователь  →  Оркестратор (формулировка задачи + описание проекта)
+User  →  Orchestrator (Task formulation + Project description)
                                 ↓
-                            Аналитик → ТЗ
+                            Analyst → TZ
                                 ↓
-                         Ревьюер ТЗ → Замечания
+                         TZ Reviewer → Comments
                                 ↓
-                         Аналитик (доработка)
+                          Analyst (Revision)
                                 ↓
-                         Ревьюер ТЗ (повторно)
+                         TZ Reviewer (Repeat)
 ```
-**Циклы:** Максимум 2 итерации review
+**Cycles:** Maximum 2 review iterations
 
-**Блокировка:** При критичных замечаниях после 2-го review
+**Block:** Upon critical issues after 2nd review
 
-### Этап 2: Проектирование архитектуры
+### Stage 2: Architecture Design
 ```
-ТЗ + Описание проекта → Архитектор → Архитектура
+TZ + Project Description → Architect → Architecture
                             ↓
-                     Ревьюер архитектуры → Замечания
+                     Architecture Reviewer → Comments
                             ↓
-                     Архитектор (доработка)
+                     Architect (Revision)
                             ↓
-                     Ревьюер архитектуры (повторно)
+                     Architecture Reviewer (Repeat)
 ```
-**Циклы:** Максимум 2 итерации review
+**Cycles:** Maximum 2 review iterations
 
-**Блокировка:** При критичных замечаниях после 2-го review
+**Block:** Upon critical issues after 2nd review
 
-### Этап 3: Планирование
+### Stage 3: Planning
 ```
-ТЗ + Архитектура + Описание проекта + код → Планировщик → План + Описания задач
+TZ + Architecture + Project Description + Code → Planner → Plan + Task Descriptions
                                                 ↓
-                                          Ревьюер плана → Замечания
+                                          Plan Reviewer → Comments
                                                 ↓
-                                          Планировщик (доработка)
+                                          Planner (Revision)
                                                 ↓
-                                          Ревьюер плана (повторно)
+                                          Plan Reviewer (Repeat)
 ```
-**Циклы:** 1 итерация доработки (всего 2 review)
+**Cycles:** 1 revision iteration (total 2 reviews)
 
-**Блокировка:** При критичных замечаниях после 2-го review
+**Block:** Upon critical issues after 2nd review
 
-### Этап 4: Выполнение задач
+### Stage 4: Task Execution
 ```
-Для каждой задачи из плана:
-    Описание задачи → Разработчик → Код + Тесты + Отчёт
+For each task in the plan:
+    Task Description → Developer → Code + Tests + Report
                            ↓
-                     Ревьюер кода → Замечания
+                     Code Reviewer → Comments
                            ↓
-                     Разработчик (исправление)
+                     Developer (Fix)
                            ↓
-                     Ревьюер кода (повторно)
+                     Code Reviewer (Repeat)
 ```
-**Циклы:** 1 итерация исправлений (всего 2 review)
+**Cycles:** 1 fix iteration (total 2 reviews)
 
-## Документация проекта
+## Project Documentation
 
-### Структура документации
-1. **Общее описание проекта** (отдельно для людей и для агентов)
-2. **Описание каждого каталога:**
-   - Список файлов
-   - Список функций
-   - Краткое описание функциональности
-3. **Частные детальные документы** (при большом объёме, на них ссылки в общем описании)
+### Documentation Structure
+1. **General Project Description** (Separate for humans and agents)
+2. **Directory Descriptions (`.AGENTS.md`):**
+   - List of files
+   - List of functions
+   - Brief functionality description
+3. **Specific Detailed Documents** (For large volumes, linked in the general description)
 
-### Актуализация
-Разработчик обязан актуализировать документацию при каждом изменении кода.
+### Updating
+The Developer is obliged to update documentation with every code change.
 
-## Ключевые правила
+## Key Rules
 
-### Для всех агентов
-- ❌ Не выходить за рамки своей роли
-- ❌ Не рефакторить без явного указания
-- ✅ Задавать вопросы при неясностях
-- ✅ Документировать свою работу
+### For All Agents
+- ❌ Do not go beyond your role
+- ❌ Do not refactor without explicit instruction
+- ✅ Ask questions when unclear
+- ✅ Document your work
 
-### Для оркестратора
-- Строго следовать количеству циклов review
-- Останавливать процесс при блокирующих вопросах
-- Передавать полный контекст между агентами
+### For Orchestrator
+- Strictly follow the number of review cycles
+- Stop the process upon blocking questions
+- Pass full context between agents
 
-### Для разработчика
-- Точно следовать описанию задачи
-- Запускать все тесты (новые + регресс)
-- Предоставлять отчёт о тестировании
-- Исправлять только указанные замечания
+### For Developer
+- Follow the task description exactly
+- Run all tests (new + regression)
+- Provide a test report
+- Fix only specified issues
