@@ -5,7 +5,11 @@
 
 # Multi-Agent Software Development System v2.0
 
-This is a guide for using the agent system for software development. The system is built on a pipeline principle, where each agent performs a specialized role.
+This framework orchestrates a multi-agent system for structured software development. It transforms vague requirements into high-quality code through a strict pipeline of specialized agents (Analyst, Architect, Planner, Developer, Reviewer).
+
+The methodology combines two key approaches:
+- **TDD (Test-Driven Development)**: The "Stub-First" strategy ensures that tests are written and verified against stubs before actual implementation begins.
+- **VDD (Verification-Driven Development)**: A high-integrity mode where an adversarial agent proactively challenges the plan and code to eliminate hallucinations and logic errors before they are committed.
 
 ## 📁 Installation
 **IMPORTANT:** The entire set of files (prompts 00-09, README) must be located in a separate directory in the root of your project:
@@ -144,17 +148,23 @@ During the development process, agents create various artifacts. Here is how to 
 
 | Artifact | Path | Status | Recommendation |
 |----------|------|--------|----------------|
-| **Technical Specification** | `docs/TZ.md` | **Living / History** | Keep. Rewrite for new tasks, or archive old ones if desired. |
-| **Architecture** | `docs/ARCHITECTURE.md` | **Source of Truth** | **NEVER DELETE**. Keep updated. This is the map of your system. |
+| **Technical Specification** | `docs/TZ.md` | **Single Source of Truth (Current Task)** | **STRICTLY for current active task**. Overwrite for updates. Archive before new task. |
+| **Architecture** | `docs/ARCHITECTURE.md` | **Source of Truth (System)** | **NEVER DELETE**. Keep updated. This is the map of your system. |
 | **Known Issues** | `docs/KNOWN_ISSUES.md` | **Living Document** | Keep. Document bugs, workarounds, and complex logic explanation. |
-| **Task Archive** | `docs/tasks/task-ID-name.md` | **History** | **Create copy of TZ here**. Preserves history of what was implemented. |
+| **Task Archive** | `docs/tasks/task-ID-name.md` | **History / Immutable** | **Mandatory Archive**. All completed TZs move here. Never edit after archiving. |
+| **Subtask Description** | `docs/tasks/task-ID-SubID-slug.md` | **Granular Plan** | Created by Planner. detailed steps for Developer. |
 | **Implementation Plan** | `docs/PLAN.md` (or `implementation_plan.md`) | **Transient** | Can be kept for history or deleted after task completion. |
 | **Task Checklist** | `task.md` | **Transient** | Task tracking. Reset/overwrite for new tasks. |
 | **Agent Memory** | `.AGENTS.md` | **Long-term Memory** | **NEVER DELETE**. Commit to Git. |
 
-**Cleanup Rule:**
-- **Keep**: All `docs/*` files that describe the *current* state of the system.
-- **Cleanup**: Intermediate scratchpads if you used them outside of `docs/`.
+**Strict Artefact Rules (New v2.1):**
+1. **One Task = One TZ**: `docs/TZ.md` always reflects *only* what is being built right now.
+2. **Archive Strategy**:
+   - **Before** starting a fundamentally new task: Archive `docs/TZ.md` -> `docs/tasks/task-00N-name.md`.
+   - **During** the task: Only overwrite `docs/TZ.md`. Never append.
+3. **Cleanup**:
+   - **Keep**: All `docs/*` files that describe the *current* state of the system.
+   - **Cleanup**: Intermediate scratchpads if you used them outside of `docs/`.
 
 ---
 

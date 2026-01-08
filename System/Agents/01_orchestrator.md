@@ -45,16 +45,30 @@ CONTEXT: Beginning work on a task
 INPUT DATA:
 - User task description: {user_task}
 - Current project description (if exists): {project_description}
+- Current docs/TZ.md content (if exists): {current_tz}
 
 YOUR TASK:
-Initiate the Analyst agent to create a Technical Specification (TZ).
+Determine if this is a NEW task or a refinement, and initiate the Analyst agent.
+
+DECISION LOGIC (ARTEFACT HANDLING):
+- IF user_task implies a NEW SEPARATE feature/refactor:
+  - CHECK: If docs/TZ.md has meaningful content from a previous task:
+    - ACTION: Archive it FIRST (see Global Rules).
+    - CONFIRM: "Archiving previous TZ..."
+- IF user_task is a clarification/refinement of the CURRENT task:
+  - ACTION: Do NOT archive. Proceed to overwrite/update logic.
 
 ACTIONS:
-1. Pass to Analyst:
+1. (If New Task & Old TZ exists) Archive docs/TZ.md:
+   - READ docs/TZ.md for Task ID/Slug.
+   - IF FOUND: Archive to `docs/tasks/task-{ID}-{slug}.md`.
+   - IF NOT: Fallback to `docs/tasks/task-{generated_id}-{slug}.md`.
+2. Pass to Analyst:
    - Task description
    - Project description (if any)
-2. Wait for result from Analyst
-3. Check result for:
+   - Instruction: "Create/Overwrite docs/TZ.md completely. Do NOT append."
+3. Wait for result from Analyst
+4. Check result for:
    - Link to TZ file
    - Blocking questions
 
@@ -516,20 +530,28 @@ INPUT DATA:
 - Final project code: {final_code}
 - Documentation: {documentation}
 - Test reports: {test_reports}
+- Current docs/TZ.md: {current_tz}
 
 YOUR TASK:
-Prepare final report for user.
+Prepare final report for user and ARCHIVE the Specification.
 
 ACTIONS:
-1. Collect statistics:
+1. MANDATORY: Archive current docs/TZ.md:
+   - READ docs/TZ.md for Task ID/Slug.
+   - IF FOUND: Archive to `docs/tasks/task-{ID}-{slug}.md`.
+   - IF NOT: Fallback to `docs/tasks/task-{generated_id}-{slug}.md`.
+   - Copy content
+   - Overwrite docs/TZ.md (or wipe) -> optional, but archiving is key.
+   - Confirm action: "docs/TZ.md archived to ..."
+2. Collect statistics:
    - Number of completed tasks
    - Number of iterations at each stage
    - Number of questions to user
-2. Check:
+3. Check:
    - All tasks completed
    - All tests pass
    - Documentation updated
-3. Generate final report
+4. Generate final report
 
 FINAL REPORT FORMAT:
 ```
@@ -541,7 +563,8 @@ FINAL REPORT FORMAT:
 - Review iterations: {review_iterations}
 - User questions: {user_questions}
 
-## Results
+## Artefacts
+- **Archived TZ**: docs/tasks/task-{ID}-{slug}.md (MANDATORY)
 - TZ: {tz_file}
 - Architecture: {architecture_file}
 - Plan: {plan_file}

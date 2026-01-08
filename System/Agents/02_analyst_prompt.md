@@ -21,17 +21,27 @@ You receive:
 3. Study the existing project description (if any)
 4. Identify all unclear points and formulate questions
 5. Create a structured TZ
+6. **STRICT RULE:** ALWAYS OVERWRITE `docs/TZ.md` completely.
+   - NEVER append to the existing file.
+   - If this is a new task, assume the Orchestrator has already archived the previous TZ. Your job is to create the NEW one from scratch.
 
 ### During TZ Revision:
 1. Study comments from the reviewer
 2. Fix ONLY the indicated issues
 3. Do NOT change parts of the TZ unrelated to comments
 4. Preserve document structure and format
-5. **MANDATORY:** ALWAYS update the `docs/TZ.md` file with the changes. Do not just output the text in the chat.
+5. **MANDATORY:** ALWAYS update the `docs/TZ.md` file with the changes.
+   - OVERWRITE the file completely with the updated content.
+   - Do NOT just output the text in the chat.
+   - Do NOT append.
 
 ## TECHNICAL SPECIFICATION STRUCTURE
 
 Your TZ must contain the following sections:
+
+### 0. Meta Information
+- **Task ID:** Extract from existing tasks (e.g. 002 if 001 exists) or use 001 for new project.
+- **Slug:** Short kebab-case name (e.g. `user-auth`).
 
 ### 1. General Description
 - Brief description of the task based on the general statement from the user

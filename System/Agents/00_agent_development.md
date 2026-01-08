@@ -120,6 +120,8 @@ The system supports multiple development "variants" via workspace workflows.
 ```
 User  →  Orchestrator (Task formulation + Project description)
                                 ↓
+        [DECISION: New Task? → Archive docs/TZ.md]
+                                ↓
                             Analyst → TZ
                                 ↓
                          TZ Reviewer → Comments
@@ -204,3 +206,36 @@ The Developer is obliged to update documentation with every code change.
 - Run all tests (new + regression)
 - Provide a test report
 - Fix only specified issues
+
+### GLOBAL ARTEFACT HANDLING RULES
+ARTEFACT HANDLING: TECHNICAL SPECIFICATION (TZ.md)
+
+STRICT RULES (mandatory for all agents):
+- docs/TZ.md contains ONLY the specification for the SINGLE CURRENT active task.
+- Distinguish task phases:
+  - "Clarification/refinement/iteration" = changes within the SAME task (e.g., "improve TZ", "add details to requirements", "fix inconsistencies after review").
+    → Overwrite docs/TZ.md completely. DO NOT archive. Preserve as the evolving single document for the current task.
+  - "New task" = explicitly different feature/bugfix/refactor (e.g., user says "now implement payments", "start new module", "next feature").
+    → Archive current TZ.md first (if it contains meaningful content), then overwrite with new.
+- When starting a NEW task:
+  - If docs/TZ.md contains previous content → archive it first.
+  - Then OVERWRITE docs/TZ.md completely with the new specification.
+  - NEVER append to existing content.
+- Archiving triggers (strict):
+  - ONLY upon full task completion (after successful implementation, tests, and before final commit).
+  - OR explicitly before starting a NEW task (when user input clearly indicates a new separate task).
+  - Do NOT archive during early stages (analysis iterations, TZ review, clarifications).
+- Archiving procedure (when triggered):
+  1. **Identify Filename:**
+     - First, read `docs/TZ.md` content.
+     - Look for "Meta Information" section (Task ID and Slug).
+     - **IF FOUND:** Use `docs/tasks/task-{ID}-{Slug}.md`.
+     - **IF NOT FOUND:**
+       - Determine ID: Check existing files in `docs/tasks/`, use next zero-padded number (001, 002, ...).
+       - Slug: Derive from task name (kebab-case, max 30 chars, no spaces).
+       - Filename: `docs/tasks/task-{GeneratedID}-{DerivedSlug}.md`.
+  2. Create the file with FULL content of current docs/TZ.md.
+  3. Add header at top: # Archived Task: <Full Task Name> — Archived on: YYYY-MM-DD
+  4. If folder docs/tasks/ does not exist — create it.
+  5. Confirm archiving in your response (e.g., "Archived previous TZ to docs/tasks/task-003-loyalty-system.md").
+- After archiving: Proceed with new TZ.md (overwrite completely).

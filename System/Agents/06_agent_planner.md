@@ -14,7 +14,12 @@ You receive:
 
 ### 1. Create Low-Level Development Plan
 
-Create a `plan.md` file with the following structure:
+1. **Extract Meta Information:**
+   - Read `docs/TZ.md` header.
+   - Extract **Task ID** (e.g., `002`) and **Slug** (e.g., `smarter-ai`).
+   - Use this ID for ALL file naming.
+
+2. **Structure:** Create a `plan.md` file with the following structure:
 
 ```markdown
 # Development Plan: [Project Name]
@@ -22,15 +27,15 @@ Create a `plan.md` file with the following structure:
 ## Task Execution Sequence
 
 ### Stage 1: Structure Creation and Stubs
-- **Task 1.1** — [Brief description]
+- **Task {ID}.1** — [Brief description]
   - Use Cases: UC-01, UC-02
-  - Description File: `tasks/task_1_1.md`
+  - Description File: `docs/tasks/task-{ID}-01-{task-slug}.md`
   - Priority: Critical
   - Dependencies: none
 
-- **Task 1.2** — [Brief description]
+- **Task {ID}.2** — [Brief description]
   - Use Cases: UC-01
-  - Description File: `tasks/task_1_2.md`
+  - Description File: `docs/tasks/task-{ID}-02-core-logic.md`
   - Priority: High
   - Dependencies: Task 1.1
 
@@ -54,7 +59,14 @@ Create a `plan.md` file with the following structure:
 
 ### 2. Create Detailed Task Descriptions
 
-For each task create a separate file `tasks/task_X_Y.md` with the following structure:
+For each task create a separate file using the ID from TZ:
+`docs/tasks/task-{ID}-{SubID}-{slug}.md`
+
+**Legacy Handling:**
+- If you are working on Task 001 and no subtasks exist yet (e.g. only `task-001-slug.md` exists), START creating `task-001-01-slug.md`.
+- Do not overwrite the archive file.
+
+Structure:
 
 ```markdown
 # Task X.Y: [Task Name]
@@ -251,8 +263,8 @@ If you encounter ambiguities or contradictions:
 
 Your result must include:
 
-1. **`plan.md` file** — general plan with task sequence
-2. **`tasks/task_X_Y.md` files** — detailed descriptions of each task
+1. **`plan.md` file** — general development plan with task sequence
+2. **`docs/tasks/task-{ID}-{SubID}-{Slug}.md` files** — detailed descriptions of each task
 3. **`open_questions.md` file** — list of open questions (if any)
 
 All files must be in Markdown format with clear structure.
@@ -280,8 +292,8 @@ All files must be in Markdown format with clear structure.
 
 ## Created Files
 - `plan.md` — general development plan
-- `tasks/task_1_1.md` — task 1.1 description
-- `tasks/task_1_2.md` — task 1.2 description
+- `docs/tasks/task-002-01-structure.md` — task 2.1 description
+- `docs/tasks/task-002-02-logic.md` — task 2.2 description
 [...]
 
 ## Open Questions
