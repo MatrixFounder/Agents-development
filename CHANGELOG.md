@@ -24,7 +24,7 @@
 
 ## 🇺🇸 English Version (Primary)
 
-### **v2.1.0 — Nested Workflows**
+### **v2.1.0 — Nested Workflows and Security Audit**
 
 #### **Added**
 * **Nested Workflows Support**: New ability to call workflows from within other workflows (e.g., `Call /base-stub-first`).
@@ -63,7 +63,7 @@ This is the first major public release of the **Agentic Development** framework.
 
 ## 🇷🇺 Русская версия
 
-### **v2.1.0 — Вложенные сценарии (Nested Workflows)**
+### **v2.1.0 — Вложенные сценарии (Nested Workflows) и аудит безопасности (Security Audit)**
 
 #### **Добавлено**
 * **Поддержка вложенных сценариев**: Возможность вызывать одни workflows из других (например, `Call /base-stub-first`).
