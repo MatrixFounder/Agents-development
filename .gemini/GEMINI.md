@@ -15,11 +15,17 @@ When the pipeline requires reading a specific file (e.g., `02_analyst_prompt.md`
 ## WORKSPACE WORKFLOWS (Dynamic Dispatch)
 Before starting the standard pipeline, check if the user's request matches a workflow in `.agent/workflows/`.
 1. **Discovery**: Look for files matching the pattern `[variant]-[stage]-[action].md`.
+    - **Available Workflows**:
+      - `/base-stub-first`: Standard Stub-First pipeline.
+      - `/vdd-adversarial`: Adversarial Refinement Loop.
+      - `/vdd-enhanced`: Nested (Stub-First + Adversarial).
+      - `/full-robust`: Nested (Enhanced + Security).
 2. **Dispatch**:
    - If user asks for "VDD", prioritize `vdd-*` workflows.
    - If user asks for "TDD", prioritize `tdd-*` workflows.
    - If no variant specified, default to standard `01-04`.
 3. **Execution**: If a matching workflow is found, execute its steps strictly INSTEAD of the hardcoded pipeline below.
+   - Support for **Nested Calls**: Use `Call /workflow-name` syntax to invoke other workflows.
 
 ## THE PIPELINE (EXECUTE SEQUENTIALLY)
 

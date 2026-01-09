@@ -1,4 +1,41 @@
+<!--
+## [Unreleased]
+
+### 🇺🇸 English
+#### Added
+- ...
+
+#### Changed
+- ...
+
+#### Fixed
+- ...
+
+### 🇷🇺 Русский
+#### Добавлено
+- ...
+
+#### Изменено
+- ...
+
+#### Исправлено
+- ...
+-->
+
 ## 🇺🇸 English Version (Primary)
+
+### **v2.1.0 — Nested Workflows**
+
+#### **Added**
+* **Nested Workflows Support**: New ability to call workflows from within other workflows (e.g., `Call /base-stub-first`).
+* **New Workflows**:
+  * `/base-stub-first`: Foundational stub-first pipeline.
+  * `/vdd-adversarial`: Isolated adversarial loop.
+  * `/vdd-enhanced`: Nested combination of Stub-First + VDD.
+  * `/full-robust`: Full pipeline including future Security Audit steps.
+* **Documentation**: Updated `WORKFLOWS.md`, `README.md`, and `GEMINI.md` to reflect these changes.
+
+---
 
 ### **v2.0.0 — Public Release: Multi-Agent Software Development System**
 
@@ -22,6 +59,19 @@ This is the first major public release of the **Agentic Development** framework.
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v2.1.0 — Вложенные сценарии (Nested Workflows)**
+
+#### **Добавлено**
+* **Поддержка вложенных сценариев**: Возможность вызывать одни workflows из других (например, `Call /base-stub-first`).
+* **Новые сценарии**:
+  * `/base-stub-first`: Базовый пайплайн Stub-First.
+  * `/vdd-adversarial`: Изолированный цикл адверсариальной проверки.
+  * `/vdd-enhanced`: Комбинация Stub-First + VDD.
+  * `/full-robust`: Полный пайплайн с будущим аудитом безопасности.
+* **Документация**: Обновлены `WORKFLOWS.md`, `README.md` и `GEMINI.md`.
+
+---
 
 ### **v2.0.0 — Публичный релиз: Система мультиагентной разработки**
 

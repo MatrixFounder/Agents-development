@@ -60,6 +60,18 @@ VDD is designed to eliminate "code slop" (lazy patterns, hidden technical debt, 
 - **[vdd-03-develop](file:///Users/sergey/Antigravity/agentic-development/.agent/workflows/vdd-03-develop.md)**
     - *Focus*: **The Adversarial Loop** (Implement -> Verify -> Sarcasmotron -> Refine).
 
+### 3. Nested & Advanced Workflows
+These workflows leverage the **Nesting** capability (one workflow calling another) to create complex, robust pipelines without duplication.
+
+- **[base-stub-first](file:///Users/sergey/Antigravity/agentic-development/.agent/workflows/base-stub-first.md)**
+    - The foundational Stub-First pipeline. Callable by other workflows.
+- **[vdd-adversarial](file:///Users/sergey/Antigravity/agentic-development/.agent/workflows/vdd-adversarial.md)**
+    - The isolated Adversarial Refinement Loop.
+- **[vdd-enhanced](file:///Users/sergey/Antigravity/agentic-development/.agent/workflows/vdd-enhanced.md)**
+    - **Nested**: Calls `/base-stub-first` → `/vdd-adversarial`.
+- **[full-robust](file:///Users/sergey/Antigravity/agentic-development/.agent/workflows/full-robust.md)**
+    - **Nested**: Calls `/vdd-enhanced` → Security Audit.
+
 ## Extension Guide
 To add a new variant (e.g., `tdd`):
 1. **Define the Philosophy**: What makes it different? (e.g., "Write tests BEFORE code").

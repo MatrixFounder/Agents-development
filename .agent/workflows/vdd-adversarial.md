@@ -1,0 +1,17 @@
+# Workflow: VDD Adversarial Refinement
+
+**Description:**  
+Post-implementation adversarial cycle for zero-slop robustness.
+
+**Steps:**
+
+1. For each implemented module:
+   a. Activate Adversary (Sarcasmotron)
+      - Prompt: [Full Sarcasmotron prompt with cynicism, fresh context, hallucination termination]
+      - Review all code + tests
+   b. If real issues found:
+      - Call /developer-fix + add tests
+      - Call /code-review-final
+      - Repeat this workflow (recursive call if needed)
+   c. Terminate when adversary hallucinations dominate
+2. Announce: "VDD cycle complete: zero-slop achieved"

@@ -26,6 +26,8 @@ System/
 4. **Planner** (Agent 06) creates a Task Plan.
 5. **Developer** (Agent 08) executes the plan using Stub-First methodology.
 
+Workflows can be **nested**: A workflow can call another workflow (e.g., VDD invokes Base Stub-First), allowing for composable and reusable process definitions.
+
 ## 4. Key Principles
 - **Stub-First**: Always create stubs/interfaces before implementation.
 - **One Giant Column**: (Metaphor for keeping context constraints in mind).

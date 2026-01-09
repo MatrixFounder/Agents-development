@@ -6,9 +6,12 @@ Nested workflows полностью поддерживаются в Google Antig
 
 ## Рабочие примеры nested workflows
 
-Эти примеры адаптированы под стиль репозитория (markdown в .agent/workflows). Их стоит добавить как отдельные файлы. Nesting реализуется через шаг "Call /other-workflow-name" (Antigravity выполнит его автоматически).
-1. /base-stub-first.md (базовый, без nesting — для основания)
-Markdown# Workflow: Base Stub-First Development
+Эти примеры нужно адаптировать под стиль репозитория (markdown в .agent/workflows). Их стоит добавить как отдельные файлы. Nesting реализуется через шаг "Call /other-workflow-name" (Antigravity выполнит его автоматически).
+
+### 1. /base-stub-first.md (базовый, без nesting — для основания)
+
+```Markdown
+# Workflow: Base Stub-First Development
 
 **Description:**  
 Core pipeline with Stub-First and TDD. Used as foundation for others.
@@ -27,8 +30,11 @@ Core pipeline with Stub-First and TDD. Used as foundation for others.
    - Call /developer-impl
    - Call /code-review-final
 8. Final validation and commit preparation
-2. /vdd-adversarial.md (адверсариальная часть — для nesting)
-Markdown# Workflow: VDD Adversarial Refinement
+```
+
+### 2. /vdd-adversarial.md (адверсариальная часть — для nesting)
+```Markdown
+# Workflow: VDD Adversarial Refinement
 
 **Description:**  
 Post-implementation adversarial cycle for zero-slop robustness.
@@ -45,8 +51,11 @@ Post-implementation adversarial cycle for zero-slop robustness.
       - Repeat this workflow (recursive call if needed)
    c. Terminate when adversary hallucinations dominate
 2. Announce: "VDD cycle complete: zero-slop achieved"
-3. /vdd-enhanced.md (nested: base + VDD)
-Markdown# Workflow: VDD-Enhanced Development
+```
+
+### 3. /vdd-enhanced.md (nested: base + VDD)
+```Markdown
+# Workflow: VDD-Enhanced Development
 
 **Description:**  
 Full robust mode: Standard Stub-First + adversarial refinement.
@@ -57,8 +66,12 @@ Full robust mode: Standard Stub-First + adversarial refinement.
 2. After completion:
    Call /vdd-adversarial          # Add adversarial roast on top
 3. Final regression tests and commit
-4. /full-robust.md (пример сложного nesting с будущей вариацией)
-Markdown# Workflow: Full Robust Development
+```
+
+### 4. /full-robust.md (пример сложного nesting с будущей вариацией)
+
+```Markdown
+# Workflow: Full Robust Development
 
 **Description:**  
 Maximum reliability: Base + VDD + (future) Security audit.
@@ -68,11 +81,13 @@ Maximum reliability: Base + VDD + (future) Security audit.
 1. Call /vdd-enhanced              # Already nested: base + adversarial
 2. (Optional future) Call /security-audit
 3. Final documentation update
-Как внедрить
+```
 
-Добавьте файлы в .agent/workflows.
-В .gemini/GEMINI.md добавьте: "Available workflows: /base-stub-first, /vdd-enhanced etc. Use Call /workflow-name in steps."
-Запуск: В Antigravity — "/vdd-enhanced" или "Start feature X in VDD mode" (оркестратор направит).
-Бонус: Если создадите через UI Antigravity — slash-commands заработают идеально.
+## Что нужно сделать?
 
-Это сделает фреймворк ещё мощнее — nested позволит бесконечно комбинировать вариации без дублирования. Рекомендую добавить!
+1. Добавить файлы в .agent/workflows.
+2. В .gemini/GEMINI.md добавить: "Available workflows: /base-stub-first, /vdd-enhanced etc. Use Call /workflow-name in steps."
+3. Запуск: В Antigravity — "/vdd-enhanced" или "Start feature X in VDD mode" (оркестратор направит).
+4. Обновить readme, workflows.md 
+
+Это сделает фреймворк ещё мощнее — nested позволит бесконечно комбинировать вариации без дублирования. 

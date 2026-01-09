@@ -3,13 +3,13 @@
 > [!NOTE]
 > This is the primary version. Translations may lag behind.
 
-# Multi-Agent Software Development System v2.0
+# Multi-Agent Software Development System v2.1
 
 This framework orchestrates a multi-agent system for structured software development. It transforms vague requirements into high-quality code through a strict pipeline of specialized agents (Analyst, Architect, Planner, Developer, Reviewer).
 
-The methodology combines two key approaches:
-- **TDD (Test-Driven Development)**: The "Stub-First" strategy ensures that tests are written and verified against stubs before actual implementation begins.
-- **VDD (Verification-Driven Development)**: A high-integrity mode where an adversarial agent proactively challenges the plan and code to eliminate hallucinations and logic errors before they are committed.
+The methodology combines two key approaches (see [Comparison](docs/TDD_VS_VDD.md)):
+- **TDD (Test-Driven Development)**: The "Stub-First" strategy ensures that tests are written and verified against stubs before actual implementation begins. [Read more](docs/TDD.md).
+- **VDD (Verification-Driven Development)**: A high-integrity mode where an adversarial agent proactively challenges the plan and code to eliminate hallucinations and logic errors before they are committed. [Read more](docs/VDD.md).
 
 ## 📁 Installation
 **IMPORTANT:** The entire set of files (prompts 00-09, README) must be located in a separate directory in the root of your project:
@@ -94,6 +94,9 @@ You can run a workflow simply by asking the agent:
 ### Variants
 1. **Standard**: Basic mode, focused on speed and structure (Stub-First).
 2. **VDD (Verification-Driven)**: High-reliability mode using an "Adversarial Agent" (Sarcasmotron) that harshly criticizes code.
+3. **Nested & Advanced**:
+   - **VDD Enhanced** (`/vdd-enhanced`): Runs Stub-First then VDD Refinement.
+   - **Full Robust** (`/full-robust`): Runs VDD Enhanced then Security Audit.
 
 ---
 
