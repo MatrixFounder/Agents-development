@@ -24,6 +24,12 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v2.1.3 — Documentation & Workflow Consistency**
+
+#### **Fixed**
+* **ARCHITECTURE.md**: Updated to reflect the actual project structure (added `.agent` and `docs` directories).
+* **Workflows**: `full-robust.md` now explicitly calls `/security-audit` (Agent 10) instead of a placeholder.
+
 ### **v2.1.2 — Fix .AGENTS.md Generation Bug**
 
 #### **Fixed**
@@ -77,6 +83,12 @@ This is the first major public release of the **Agentic Development** framework.
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v2.1.3 — Документация и согласованность сценариев**
+
+#### **Исправлено**
+* **ARCHITECTURE.md**: Обновлен для соответствия реальной структуре проекта (добавлены папки `.agent` и `docs`).
+* **Workflows**: `full-robust.md` теперь явно вызывает `/security-audit` (Агент 10) вместо заглушки.
 
 ### **v2.1.2 — Исправление генерации .AGENTS.md**
 

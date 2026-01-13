@@ -9,5 +9,5 @@ Maximum reliability: Base + VDD + (future) Security audit.
 **Steps:**
 
 1. Call /vdd-enhanced              # Already nested: base + adversarial
-2. (Optional future) Call /security-audit
+2. Call /security-audit
 3. Final documentation update
