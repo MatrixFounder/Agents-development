@@ -1,52 +1,58 @@
-# Technical Specification: Skills System Integration & Local Artifacts Optimization
+# Technical Specification: Comprehensive Skills Documentation
 
 ## 0. Meta Information
-- **Task ID:** 010
-- **Slug:** skills-and-artifacts
+- **Task ID:** 011
+- **Slug:** skills-documentation-refining
 
 ## 1. General Description
-The goal is to transform the Agentic-development framework into an enterprise-ready solution for multi-agent software development. This involves introducing modular "skills" to encapsulate repetitive processes, reinforcing the system of local artifacts (`.AGENTS.md`) as distributed long-term memory, and ensuring cross-platform compatibility (Antigravity + Cursor). The key focus is on preserving the unique behavior of agents while simplifying their prompts and establishing a "single writer" protocol for code and documentation to minimize conflicts.
+The objective is to upgrade `docs/SKILLS.md` into a self-sufficient guide for the Skills System. This will allow any contributor to understand valid skills usage, dynamic loading mechanisms, and how to test skills in isolation without needing to reverse-engineer the Orchestrator code. The update covers documentation of the dynamic loading process, isolated testing methods (Python & n8n), and best practices.
 
 ## 2. List of Use Cases
 
-### UC-01: Agent Executes Task with Skills
-**Actors:** Orchestrator, Agent (Developer/Reviewer/etc.)
-**Preconditions:** Task assigned to agent.
+### UC-01: Developer Comprehends Dynamic Loading
+**Actors:** Developer/Contributor
+**Preconditions:** User opens `docs/SKILLS.md`.
 **Main Scenario:**
-1. Orchestrator assigns a task to an Agent.
-2. Agent reads relevant local `.AGENTS.md` files in the target directories.
-3. Agent activates necessary skills (starting with `core-principles`).
-4. Agent executes the task using the logic defined in the skills (e.g., TDD, verification).
-5. Agent completes the task.
+1. User reads the "Dynamic Loading" section.
+2. User understands how the Orchestrator assembles the final prompt by combining the Base Role, Active Skills list, and Skill definitions.
+3. User sees a concrete example using `08_agent_developer.md`.
 
-### UC-02: Developer Updates Code and Artifacts
-**Actors:** Developer Agent
-**Preconditions:** Code changes are required.
+### UC-02: Developer Tests Skill in Isolation (Python)
+**Actors:** Developer
+**Preconditions:** Developer wants to verify a prompt change in a skill.
 **Main Scenario:**
-1. Developer modifies code in a specific directory (e.g., `src/services/`).
-2. Developer checks for existing `.AGENTS.md` in that directory.
-3. Developer creates or updates `.AGENTS.md` to reflect the changes (new files, methods, dependencies), following the "Documentation First" protocol.
-4. Developer saves both code and artifact changes.
+1. Developer references the "Isolated Testing" section.
+2. Developer copies the provided Python script template (`examples/skill-testing/test_skill.py`).
+3. Developer runs the script with their specific skill and mock task.
+4. Developer verifies the LLM output against expected behavior.
 
-### UC-03: New Skill Integration
-**Actors:** System Maintainer (User/Agent)
-**Preconditions:** A new recurring process is identified.
+### UC-03: Developer Tests Skill in Isolation (n8n)
+**Actors:** Developer (Low-Code preference)
+**Preconditions:** Developer uses n8n for workflows.
 **Main Scenario:**
-1. Maintainer creates a new skill directory in `.agent/skills/` (and duplicates to `.cursor/skills/`).
-2. Maintainer adds `SKILL.md` with YAML frontmatter and instructions.
-3. Maintainer optionally updates agent prompts to reference user the new skill if needed.
+1. Developer imports the provided JSON workflow for n8n.
+2. Developer configures the nodes with Role, Skills, and Task.
+3. Developer executes the node to observe the assembled prompt and model response.
 
-## 3. Non-functional Requirements
-- **Consistency:** `.AGENTS.md` must strictly follow the defined template.
-- **Traceability:** All changes to code must be reflected in local artifacts.
-- **Compatibility:** Skills must work in both Antigravity and Cursor environments.
-- **Preservation:** Original agent behaviors (e.g., Anti-Loop, Stub-First) must be preserved during refactoring.
+## 3. Requirements & Acceptance Criteria
+
+### 3.1 Content Requirements
+- **Dynamic Loading Section:** Must explain the prompt assembly steps.
+- **Isolated Testing Section:** Must provide **working** code examples for Python and n8n.
+- **Best Practices Section:** Must cover size limits, anti-patterns, and versioing.
+- **Table of Contents:** Updated with new sections and anchors.
+
+### 3.2 Technical Requirements
+- **File Format:** Markdown (`.md`).
+- **Code Blocks:** Syntax highlighting for `python`, `json`, `markdown`.
+- **Artifacts:**
+    - `docs/SKILLS.md`: Updated content.
+    - `examples/skill-testing/test_skill.py`: New file implementing the example.
 
 ## 4. Constraints and Assumptions
-- **Single Writer:** Only the Developer agent is allowed to write/update `.AGENTS.md` files in code directories. Other agents only read.
-- **Filesystem:** The system assumes a standard filesystem structure accessible by the agents.
+- Examples must be "copy-paste" ready (modulo API keys).
+- The Python script should use a standard library or minimal dependencies (`openai` package).
+- The documentation should be consistent with the actual Orchestrator logic.
 
 ## 5. Open Questions
-- Are there any specific specific naming conventions for the skills beyond kebab-case? (Assumed kebab-case based on examples).
-- Should existing `.AGENTS.md` files (if any) be migrated automatically? (Assumed manual migration or "as touched" basis).
-
+- None.

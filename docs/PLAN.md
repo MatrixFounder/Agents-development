@@ -1,32 +1,18 @@
-# Development Plan: Skills Integration & Artifacts
+# Development Plan: Comprehensive Skills Documentation
 
 ## Task Execution Sequence
 
-### Stage 1: Skill System Skeleton
-- **Task 010.1** — Create Skill Directory Structure and Core Skills
-  - Use Cases: UC-03
-  - Description File: `docs/tasks/task-010-01-create-skills.md`
+### Stage 1: Documentation & Examples
+- **Task 011.1** — Update Skills Documentation & Add Examples
+  - Use Cases: UC-01, UC-02, UC-03
+  - Description File: `docs/tasks/task-011-01-doc-update.md`
   - Priority: Critical
   - Dependencies: none
-
-### Stage 2: Agent Refactoring
-- **Task 010.2** — Update Agent System Prompts
-  - Use Cases: UC-01, UC-02
-  - Description File: `docs/tasks/task-010-02-update-agents.md`
-  - Priority: Critical
-  - Dependencies: Task 010.1
-
-### Stage 3: Verification
-- **Task 010.3** — Verify Skill Integration
-  - Use Cases: UC-01, UC-02
-  - Description File: `docs/tasks/task-010-03-verification.md`
-  - Priority: High
-  - Dependencies: Task 010.2
 
 ## Use Case Coverage
 
 | Use Case | Tasks |
 |-----------|--------|
-| UC-01 | 010.2, 010.3 |
-| UC-02 | 010.2, 010.3 |
-| UC-03 | 010.1 |
+| UC-01 | 011.1 |
+| UC-02 | 011.1 |
+| UC-03 | 011.1 |

@@ -1,0 +1,138 @@
+{
+    "name": "Skill Evaluation Workflow",
+    "nodes": [
+        {
+            "parameters": {},
+            "id": "manual-trigger-node",
+            "name": "Start",
+            "type": "n8n-nodes-base.manualTrigger",
+            "typeVersion": 1,
+            "position": [
+                250,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// Configuration Data\n// Edit these values to test different scenarios\n\nreturn {\n  json: {\n    role_content: \"You are a Senior Python Developer. Always write clean, typed code.\",\n    task_description: \"Write a function to calculate Fibonacci numbers using memoization.\",\n    skills_list: [\"skill-tdd-stub-first\", \"skill-documentation-standards\"]\n  }\n};\n"
+            },
+            "id": "config-node",
+            "name": "Config Input",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                450,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "jsCode": "// 1. Extract Inputs\nconst role = $input.first().json.role_content;\nconst skills = $input.first().json.skills_list;\nconst task = $input.first().json.task_description;\n\n// 2. Assemble Prompt (Simulating Orchestrator)\nlet prompt = role + '\\n\\n### ACTIVE SKILLS\\n';\nskills.forEach(s => prompt += `- ${s}\\n`);\n\n// In a real scenario, you would load skill content here.\n// For this example, we placehold it.\nprompt += `\\n[...Content of ${skills.join(', ')}...]\\n`;\n\nprompt += `\\n### TASK\\n${task}`;\nprompt += `\\n\\nIMPORTANT: Analyze the task using your skills.`;\n\nreturn { json: { prompt } };"
+            },
+            "id": "prompt-assembly-node",
+            "name": "Build Prompt",
+            "type": "n8n-nodes-base.code",
+            "typeVersion": 2,
+            "position": [
+                650,
+                300
+            ]
+        },
+        {
+            "parameters": {
+                "resource": "chat",
+                "operation": "chat",
+                "model": "gpt-4-turbo",
+                "messages": {
+                    "values": [
+                        {
+                            "content": "={{ $json.prompt }}",
+                            "role": "user"
+                        }
+                    ]
+                }
+            },
+            "id": "openai-node",
+            "name": "AI Evaluation",
+            "type": "n8n-nodes-base.openAi",
+            "typeVersion": 1,
+            "position": [
+                850,
+                300
+            ],
+            "credentials": {
+                "openAiApi": {
+                    "id": "YOUR_ID_HERE",
+                    "name": "OpenAI Account"
+                }
+            }
+        },
+        {
+            "parameters": {
+                "content": "💡 **HINT**:\nEdit the **Config Input** node (JavaScript) to change the Role, Task, or Skills for testing.",
+                "height": 130,
+                "width": 240,
+                "color": 4
+            },
+            "id": "sticky-note-1",
+            "name": "Sticky Note",
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+                430,
+                140
+            ]
+        },
+        {
+            "parameters": {
+                "content": "📝 **LOGIC**:\nThis JavaScript code simulates the Orchestrator's prompt assembly logic. It combines Role + Skills + Task.",
+                "height": 130,
+                "width": 240,
+                "color": 2
+            },
+            "id": "sticky-note-2",
+            "name": "Sticky Note 1",
+            "type": "n8n-nodes-base.stickyNote",
+            "typeVersion": 1,
+            "position": [
+                630,
+                140
+            ]
+        }
+    ],
+    "connections": {
+        "Start": {
+            "main": [
+                [
+                    {
+                        "node": "Config Input",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Config Input": {
+            "main": [
+                [
+                    {
+                        "node": "Build Prompt",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        },
+        "Build Prompt": {
+            "main": [
+                [
+                    {
+                        "node": "AI Evaluation",
+                        "type": "main",
+                        "index": 0
+                    }
+                ]
+            ]
+        }
+    }
+}

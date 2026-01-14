@@ -24,6 +24,18 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.0.2 — Skills Doc & Examples**
+  
+#### **Added**
+* **Examples**:
+    * `examples/skill-testing/test_skill.py`: Python script for isolated skill testing.
+    * `examples/skill-testing/n8n_skill_eval_workflow.json`: n8n workflow for skill evaluation (with Sticky Notes hints).
+* **Skills Documentation**:
+    * Added "Dynamic Loading", "Isolated Testing", and "Best Practices" sections to `docs/SKILLS.md`.
+    * Added explicit links to example files.
+
+---
+
 ### **v3.0.1 — Skills System Refinement**
 
 #### **Improved**
@@ -110,6 +122,18 @@ This is the first major public release of the **Agentic Development** framework.
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.0.2 — Примеры и Доработка Документации**
+  
+#### **Добавлено**
+* **Примеры (Examples)**:
+    * `examples/skill-testing/test_skill.py`: Python скрипт для изолированного тестирования навыков.
+    * `examples/skill-testing/n8n_skill_eval_workflow.json`: n8n workflow с подсказками (Sticky Notes) для проверки промптов.
+* **Документация (Skills)**:
+    * В `docs/SKILLS.md` добавлены разделы "Dynamc Loading", "Isolated Testing" и "Best Practices".
+    * Добавлены прямые ссылки на файлы примеров.
+
+---
 
 ### **v3.0.1 — Улучшение Системы Навыков**
 

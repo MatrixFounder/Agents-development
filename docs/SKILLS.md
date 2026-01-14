@@ -2,6 +2,14 @@
 
 The Agentic System v3.0 relies on a modular **Skills System**. Skills are reusable packages of instructions that extend agent capabilities.
 
+## Table of Contents
+- [Library Layout](#-library-layout)
+- [How it Works](#️-how-it-works)
+- [Available Skills](#-available-skills)
+- [Dynamic Loading](#-dynamic-loading)
+- [Isolated Testing](#-isolated-testing-skills)
+- [Best Practices](#-best-practices)
+
 ## 📁 Library Layout
 Skills are located in `.agent/skills/`.
 
@@ -54,3 +62,81 @@ The Skills System separates **"Who"** (Agent Persona) from **"What"** (Capabilit
 |-------|-------------|----------------------|----------------|
 | **`vdd-adversarial`** | Adversarial verification: challenging assumptions and finding weak spots. <br> **[Read Full Role Description](docs/VDD.md#core-philosophy)** | `vdd-03-develop`, `/vdd-adversarial` | **Virtual Persona** <br> (Adversarial Agent) |
 | **`vdd-sarcastic`** | Adversarial verification with a sarcastic/provocative tone. (Variant of `vdd-adversarial`) | `/vdd-sarcastic` | **Virtual Persona** <br> (Adversarial Agent) |
+
+## 🚀 Dynamic Loading
+
+The Orchestrator dynamically dynamically constructs the Agent's prompt by combining three elements:
+
+1.  **Base Role** (`System/Agents/<agent_name>.md`): The core persona (e.g., "You are a Developer").
+2.  **Active Skills** (`ACTIVE SKILLS` list in Role): The specific capabilities required for the task.
+3.  **Task Context**: The user's request and project context.
+
+### Prompt Assembly Process
+When an Agent is initialized:
+1.  The system reads the **Base Role** file.
+2.  It parses the `ACTIVE SKILLS` section (YAML or list mechanism).
+3.  It loads the content of each referenced skill from `.agent/skills/`.
+4.  It appends a `### LOADED SKILLS` section to the system prompt containing the full text of these skills.
+
+**Simplified Prompt Structure:**
+
+```markdown
+[Base Role Content: "You are the Developer..."]
+
+### LOADED SKILLS
+
+#### SKILL: skill-tdd-stub-first
+[Content of skill-tdd-stub-first.md]
+
+#### SKILL: skill-core-principles
+[Content of skill-core-principles.md]
+
+[Task Description]
+```
+
+## 🧪 Isolated Testing Skills
+
+Testing skills in isolation allows you to verify prompts, check compliance with instructions, and iterate quickly without running the full Orchestrator pipeline.
+
+### Option 1: Python Script (Recommended)
+We provide a helper script to test skills with any OpenAI-compatible API (OpenAI, xAI, OpenRouter, etc.).
+
+1.  **Locate the script**: [`examples/skill-testing/test_skill.py`](examples/skill-testing/test_skill.py).
+2.  **Configure**: Edit the `ROLE_FILE`, `TARGET_SKILLS`, and `TEST_TASK` variables in the `__main__` block.
+3.  **Run**:
+    ```bash
+    export OPENAI_API_KEY="your-key"
+    # Optional: export OPENAI_BASE_URL="https://api.other-provider.com/v1"
+    python3 examples/skill-testing/test_skill.py
+    ```
+
+### Option 2: n8n / Low-Code
+You can use n8n or any flow-based tool. We provide a ready-to-import workflow with **Sticky Notes (Stickers)** acting as hints for configuration.
+
+1.  **Download the Workflow**: [`examples/skill-testing/n8n_skill_eval_workflow.json`](examples/skill-testing/n8n_skill_eval_workflow.json).
+2.  **Import to n8n**: Go to Workflow -> Import from File.
+3.  **Follow the Stickers**: The workflow canvas contains Sticky Notes explaining where to paste your Role content and where the Prompt Assembly logic lives.
+4.  **Execute**: Run the workflow to see the assembled prompt and the AI's response.
+
+## ✅ Best Practices
+
+When creating or modifying skills, follow these guidelines to ensure effectiveness and maintainability.
+
+### 1. Granularity & Size
+- **Keep it Focused**: A skill should do *one* thing well (e.g., "Requirements Analysis" vs "Do Everything").
+- **Token Limit**: Try to keep skill files under **1500 tokens**. Large prompts dilute attention.
+- **Reference**: If a skill needs to reference another (e.g., "See Architecture Guide"), use the file path or a brief summary, don't copy-paste.
+
+### 2. Instruction Style
+- **Imperative**: Use "You MUST", "DO NOT", "ALWAYS". avoid "It is recommended to".
+- **Structured**: Use Markdown extensively. Lists, bold text, and code blocks help the model parse instructions.
+- **Examples**: Provide "Good vs Bad" examples. This is the most effective way to align the model.
+
+### 3. Versioning & Updates
+- **Breaking Changes**: If you fundamentally change a skill (e.g., `skill-tdd-stub-first`), verify it against *all* agents that use it.
+- **Backwards Compatibility**: If possible, keep the same file name. If a total rewrite is needed, create `skill-name-v2.md` and gradually migrate agents.
+
+### 4. Anti-Patterns
+- ❌ **Duplication**: Don't repeat "You are a helpful assistant" in every skill. That belongs in the Base Role.
+- ❌ **Conflict**: Ensure `skill-A` doesn't contradict `skill-B` (e.g., one says "write tests first", another says "write tests last").
+- ❌ **Hardcoded Paths**: Use relative paths or context variables where possible, as directory structures vary.
