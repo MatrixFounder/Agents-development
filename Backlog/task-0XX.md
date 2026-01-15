@@ -81,6 +81,20 @@
 
 2. **Реализовать поддержку tool calling в Orchestrator**
    - Добавить загрузку схем из `.agent/tools/schemas.py`.
+     > **Важно:** Так как папка начинается с точки, стандартный `import` работать не будет.
+     >
+     > **Предпочтительный вариант (importlib):**
+     > ```python
+     > import importlib.util
+     > # Dynamic loading support for hidden directories
+     > spec = importlib.util.spec_from_file_location("schemas", ".agent/tools/schemas.py")
+     > module = importlib.util.module_from_spec(spec)
+     > spec.loader.exec_module(module)
+     > tools = module.TOOLS_SCHEMAS
+     > ```
+     >
+     > **Альтернатива (JSON):**
+     > `json.load(open(".agent/tools/schemas.json"))` (менее гибко, нет комментариев).
    - Реализовать обработку `tool_calls` в основном цикле.
    - Реализовать функцию `execute_tool` (диспетчер).
 
