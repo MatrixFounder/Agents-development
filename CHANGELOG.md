@@ -38,6 +38,12 @@
 * **Localization**: Aligned Russian translations (`Translations/RU`) with the new global standard.
 * **Workflows**: Fixed a critical bug in `01-start-feature` and `vdd-01-start-feature` where the previous `docs/TASK.md` was overwritten instead of archived. Added explicit archiving step.
 
+#### **Migration Guide**
+To upgrade from v3.0.x to v3.1.0:
+1. **Rename**: `mv docs/TZ.md docs/TASK.md`
+2. **Update Agents**: Replace `System/Agents/` with the new version (Note: `03_tz_reviewer_prompt.md` -> `03_task_reviewer_prompt.md`).
+3. **Update Skills**: Replace `.agent/skills/` with the new version.
+
 ---
 
 ### **v3.0.3 — Documentation Sync & Artifacts**
@@ -159,6 +165,12 @@
 #### **Исправлено**
 * **Согласованность**: Устранено смешанное использование "ТЗ" и "Task Specification" во всем фреймворке.
 * **Сценарии (Workflows)**: Исправлена критическая ошибка в `01-start-feature` и `vdd-01-start-feature`, из-за которой старое ТЗ перезаписывалось без архивации. Добавлен явный шаг архивирования.
+
+#### **Инструкция по миграции**
+Для обновления с v3.0.x до v3.1.0:
+1. **Переименование**: `mv docs/TZ.md docs/TASK.md`
+2. **Обновление Агентов**: Замените `System/Agents/` на новую версию (Важно: `03_tz_reviewer_prompt.md` -> `03_task_reviewer_prompt.md`).
+3. **Обновление Навыков**: Замените `.agent/skills/` на новую версию.
 
 ---
 
