@@ -24,6 +24,16 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.0.3 — Documentation Sync & Artifacts**
+
+#### **Fixed**
+* **Documentation**: Replaced obsolete references to `UNKNOWN.md` with `docs/open_questions.md` in `README.md` and `README.ru.md` to align with actual Agent prompts.
+
+#### **Added**
+* **Artifacts**: Added missing `docs/open_questions.md` template for tracking unresolved issues.
+
+---
+
 ### **v3.0.2 — Skills Doc & Examples**
   
 #### **Added**
@@ -122,6 +132,16 @@ This is the first major public release of the **Agentic Development** framework.
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.0.3 — Синхронизация документации и артефакты**
+
+#### **Исправлено**
+* **Документация**: Заменены устаревшие ссылки на `UNKNOWN.md` на `docs/open_questions.md` в `README.md` и `README.ru.md` для соответствия реальным промптам Агентов.
+
+#### **Добавлено**
+* **Артефакты**: Добавлен отсутствующий шаблон `docs/open_questions.md` для отслеживания нерешенных вопросов.
+
+---
 
 ### **v3.0.2 — Примеры и Доработка Документации**
   

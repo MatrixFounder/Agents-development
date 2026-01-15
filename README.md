@@ -188,6 +188,7 @@ During the development process, agents create various artifacts. Here is how to 
 | **Walkthrough** | `walkthrough.md` | **Proof of Work** | Created after verification. Demonstrates changes and validation results. |
 | **Task Checklist** | `task.md` | **Transient** | Task tracking. Reset/overwrite for new tasks. |
 | **Agent Memory** | `.AGENTS.md` | **Long-term Memory** | **NEVER DELETE**. Commit to Git. |
+| **Open Questions** | `docs/open_questions.md` | **Unresolved Issues** | Track unresolved architectural questions here. |
 
 **Strict Artefact Rules (New v2.1):**
 1. **One Task = One TZ**: `docs/TZ.md` always reflects *only* what is being built right now.
@@ -216,7 +217,7 @@ The `.AGENTS.md` files are the project's "long-term memory" for agents (and huma
 To make the next iteration go smoothly:
 1. **Green Tests:** Leave the project with passing tests. A broken test at the start of the next task will confuse agents.
 2. **Actual Map:** Check that `.AGENTS.md` matches reality.
-3. **Open Questions:** If unresolved architectural questions remain, record them in `UNKNOWN.md` or a similar file in `docs/` so the Architect of the next iteration sees them.
+3. **Open Questions:** If unresolved architectural questions remain, record them in `docs/open_questions.md` so the Architect of the next iteration sees them.
 
 ---
 
