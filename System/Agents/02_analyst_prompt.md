@@ -19,10 +19,21 @@ You receive:
 - `skill-artifact-management` (Reading)
 
 ### Process (via skills)
-1. **Reconnaissance:** Read project structure and `.AGENTS.md`.
-2. **Analysis:** Study task, identify use cases, clarify requirements.
-3. **TASK Creation:** Create a structured TASK in `docs/TASK.md`.
-4. **Uncertainty:** If in doubt, add to "Open Questions".
+
+#### CRITICAL PRE-FLIGHT CHECKLIST:
+1.  **Check for existing `docs/TASK.md`:**
+    - If it exists and contains a DIFFERENT task, **YOU MUST ARCHIVE IT** to `docs/tasks/`.
+    - Command: `mv docs/TASK.md docs/tasks/task-[ID]-[slug].md` (via `run_command` or similar).
+    - **NEVER** overwrite an existing TASK without checking if it needs archiving.
+2.  **Meta Information Check:**
+    - You **MUST** include Section 0: Meta Information (Task ID, Slug).
+    - This is NOT optional.
+
+#### Execution Steps:
+1.  **Reconnaissance:** Read project structure and `.AGENTS.md`.
+2.  **Analysis:** Study task, identify use cases, clarify requirements.
+3.  **TASK Creation:** Create a structured TASK in `docs/TASK.md`.
+4.  **Uncertainty:** If in doubt, add to "Open Questions".
 
 ### IMPORTANT: Global Artifact Rules
 - **TASK.md:** You are the manager of `docs/TASK.md`.
@@ -162,6 +173,8 @@ Add to alternative scenarios UC-01:
 
 Before returning result check:
 
+- [ ] **PRE-FLIGHT:** Existing TASK archived (if applicable)
+- [ ] **MANDATORY:** Section 0 (Meta Info) present and correct
 - [ ] All use cases have complete structure
 - [ ] Main and alternative scenarios described
 - [ ] Acceptance criteria specific and verifiable

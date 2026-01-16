@@ -1,26 +1,29 @@
-# Development Plan: Refactor TZ to TASK
+# Implementation Plan - Skill Audit & Path Standards
 
-## Task Execution Sequence
+## Goal Description
+1.  Ensure all Skill definitions have valid YAML.
+2.  Refactor `docs/PLAN.md` to use relative paths.
+3.  Enforce "Relative Paths Only" rule in System Prompts and Documentation Standards.
+4.  **Create Localization Sync Rule.**
 
-### Stage 1: Documentation & Artifacts renaming
-- **Task 012.1** — Rename artifacts and update System Prompts
-  - Use Cases: UC-01
-  - Description File: `docs/tasks/task-012-01-rename-artifacts.md`
-  - Priority: Critical
-  - Dependencies: none
+## User Review Required
+None.
 
-### Stage 2: Global Codebase Refactoring
-- **Task 012.2** — Global Search & Replace (TZ -> TASK)
-  - Use Cases: UC-02, UC-03, UC-04
-  - Description File: `docs/tasks/task-012-02-global-refactor.md`
-  - Priority: High
-  - Dependencies: Task 012.1
+## Proposed Changes
 
-## Use Case Coverage
+### 1. Skill Audit & Fixes (Completed)
+- Fixed YAML in `core-principles`, `code-review-checklist`, etc.
 
-| Use Case | Tasks |
-|-----------|--------|
-| UC-01 | 012.1 |
-| UC-02 | 012.2 |
-| UC-03 | 012.2 |
-| UC-04 | 012.2 |
+### 2. Artifact Standards (Completed)
+- Updated `documentation-standards` and `06_agent_planner`.
+- Refactored `docs/PLAN.md`.
+
+### 3. Localization Sync Rule
+#### [NEW] [.agent/rules/localization-sync.md](.agent/rules/localization-sync.md)
+- Create a new rule file.
+- Content: "Mandatory Synchronization: Changes in `System/Agents` must be mirrored in `Translations`."
+
+## Verification Plan
+- **YAML Check:** Verify all skills start with valid YAML.
+- **Link Check:** Verify links in `docs/PLAN.md` work (in IDE) and are relative.
+- **Rule Check:** Verify creation of `.agent/rules/localization-sync.md`.

@@ -1,6 +1,6 @@
 ---
 name: artifact-management
-description: Rules for managing local .AGENTS.md and global artifacts (TASK.md, ARCHITECTURE.md).
+description: "Rules for managing local .AGENTS.md and global artifacts (TASK.md, ARCHITECTURE.md)."
 version: 1.0
 ---
 # Artifact Management

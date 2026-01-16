@@ -24,6 +24,24 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.1.2 — Analyst Protocol & YAML Fixes**
+
+#### **Fixed**
+* **Skills**: Fixed YAML syntax error in `core-principles` skill (quoted description).
+
+#### **Improved**
+* **Analyst Agent**: Added "CRITICAL PRE-FLIGHT CHECKLIST" to `02_analyst_prompt.md` to strictly enforce:
+    * Archiving of existing `docs/TASK.md` before starting new work.
+    * Mandatory inclusion of Section 0 (Meta Information: Task ID, Slug).
+* **Skills**: Updated `skill-requirements-analysis` to mark Meta Information as **MANDATORY**.
+* **Documentation**: Enforced "Relative Paths Only" rule for Artifacts in `skill-documentation-standards` and `06_agent_planner.md`.
+
+#### **Refactored**
+* **Skills**: Audited and fixed YAML frontmatter in `code-review-checklist`, `developer-guidelines`, `security-audit`, and `artifact-management`.
+* **PLAN.md**: Converted absolute paths to relative paths.
+
+---
+
 ### **v3.1.1 — Plan & Structure Fixes**
 
 #### **Fixed**
@@ -161,6 +179,24 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.1.2 — Протокол Аналитика и Fix YAML**
+
+#### **Исправлено**
+* **Навыки**: Исправлена синтаксическая ошибка YAML в навыке `core-principles` (добавлены кавычки в описание).
+
+#### **Улучшено**
+* **Агент-Аналитик**: Добавлен "CRITICAL PRE-FLIGHT CHECKLIST" в `02_analyst_prompt.md`, строго требующий:
+    * Архивирования существующего `docs/TASK.md` перед началом работы.
+    * Обязательного включения Секции 0 (Meta Information: Task ID, Slug).
+* **Навыки**: Обновлен `skill-requirements-analysis`, помечающий Meta Information как **ОБЯЗАТЕЛЬНУЮ**.
+* **Документация**: Внедрено правило "Только относительные пути" (Relative Paths Only) для Артефактов в `skill-documentation-standards` и `06_agent_planner.md`.
+
+#### **Рефакторинг**
+* **Навыки**: Проведен аудит и исправление YAML-заголовков в `code-review-checklist`, `developer-guidelines`, `security-audit` и `artifact-management`.
+* **PLAN.md**: Абсолютные пути заменены на относительные.
+
+---
 
 ### **v3.1.1 — Исправление путей Плана и Структуры**
 

@@ -14,9 +14,10 @@ version: 1.3
 
 Your TASK must contain the following sections:
 
-### 0. Meta Information
-- **Task ID:** Extract from existing tasks (e.g. 002 if 001 exists) or use 001 for new project.
-- **Slug:** Short kebab-case name (e.g. `user-auth`).
+### 0. Meta Information (MANDATORY)
+- **Task ID:** Extract from existing tasks (e.g. 002 if 001 exists) or use 001 for new project. **REQUIRED.**
+- **Slug:** Short kebab-case name (e.g. `user-auth`). **REQUIRED.**
+- **WARNING:** Do not skip this section. It is crucial for tracking.
 
 ### 1. General Description
 - Brief description of the task based on the general statement from the user

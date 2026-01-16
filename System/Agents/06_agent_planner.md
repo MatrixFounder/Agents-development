@@ -165,6 +165,7 @@ Your result must include:
 3. **`docs/open_questions.md` file** — list of open questions (if any)
 
 All files must be in Markdown format with clear structure.
+**CRITICAL:** Use only RELATIVE paths for file links (e.g., `[Link](docs/tasks/file.md)`), never absolute.
 
 ## What NOT to do
 
