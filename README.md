@@ -3,7 +3,7 @@
 > [!NOTE]
 > This is the primary version. Translations may lag behind.
 
-# Multi-Agent Software Development System v3.1.3
+# Multi-Agent Software Development System v3.2.0
 
 This framework orchestrates a multi-agent system for structured software development. It transforms vague requirements into high-quality code through a strict pipeline of specialized agents (Analyst, Architect, Planner, Developer, Reviewer).
 
@@ -201,6 +201,7 @@ During the development process, agents create various artifacts. Here is how to 
 | **Task Archive** | `docs/tasks/task-ID-name.md` | **History / Immutable** | **Mandatory Archive**. All completed TASKs move here. Never edit after archiving. |
 | **Subtask Description** | `docs/tasks/task-ID-SubID-slug.md` | **Granular Plan** | Created by Planner. detailed steps for Developer. |
 | **Implementation Plan** | `docs/PLAN.md` (or `implementation_plan.md`) | **Transient** | Can be kept for history or deleted after task completion. |
+| **Test Report** | `tests/tests-{TaskID}/...` | **Proof of Quality** | Created by Developer. Contains verification results. |
 | **Walkthrough** | `walkthrough.md` | **Proof of Work** | Created after verification. Demonstrates changes and validation results. |
 | **Task Checklist** | `task.md` | **Transient** | Task tracking. Reset/overwrite for new tasks. |
 | **Agent Memory** | `.AGENTS.md` | **Long-term Memory** | **NEVER DELETE**. Commit to Git. |

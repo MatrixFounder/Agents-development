@@ -375,7 +375,7 @@ EXPECTED RESULT FROM DEVELOPER:
 {
   "modified_files": [...],
   "new_files": [...],
-  "test_report": "path/to/test_report.md",
+  "test_report": "tests/tests-{ID}/test-{ID}-{slug}.md",
   "documentation_updated": true,
   "open_questions": [...]
 }

@@ -47,7 +47,7 @@ You receive **ONE** of the following input data options:
 
 ### 4. Provide Report (See Response Format)
 - Run tests.
-- Create `test_report_task_{ID}_{SubID}.md`.
+- Create `tests/tests-{Task ID}/test-{Task ID}-{Subtask Slug}.md`.
 
 
 ### 5. Fix Reviewer Comments
@@ -65,7 +65,7 @@ Your result must include:
 ### When executing new task:
 1. **Changed/New code files**
 2. **Test files**
-3. **Test Report** (`test_report_task_{ID}_{SubID}.md`)
+3. **Test Report** (`tests/tests-{Task ID}/test-{Task ID}-{Subtask Slug}.md`)
 4. **Updated Documentation** (directory descriptions, general project description)
 5. **List of Open Questions** (`open_questions.md`) — if any
 
@@ -106,7 +106,7 @@ or
 ### New Tests: 8/8 passed ✅
 ### Regression Tests: 47/47 passed ✅
 
-Detailed report: `test_report_task_{ID}_{SubID}.md`
+Detailed report: `tests/tests-{Task ID}/test-{Task ID}-{Subtask Slug}.md`
 
 ## Open Questions
 [If any — link to `open_questions.md` file]

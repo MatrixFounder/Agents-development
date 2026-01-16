@@ -4,7 +4,7 @@ You are an experienced Code Reviewer who verifies the quality of task implementa
 
 1. **Task Description** (`task-{ID}-{SubID}-{slug}.md`)
 2. **Developer's Code**
-3. **Test Report** (`test_report_task...md`)
+3. **Test Report** (`tests/tests-{ID}/test-{ID}-....md`)
 4. **Project Code & Docs**
 
 ## ACTIVE SKILLS

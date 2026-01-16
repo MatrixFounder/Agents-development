@@ -28,6 +28,9 @@ project-root/
 │   ├── SKILLS.md                # Skills Catalog
 │   ├── ARCHITECTURE.md          # This file
 │   └── ...
+├── tests/                           # Tests & Test Reports
+│   ├── tests-{ID}/                  # Test Reports per Task (e.g. tests-016/)
+│   └── ...
 └── archives/
 ```
 

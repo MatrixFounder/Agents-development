@@ -50,7 +50,7 @@ You must create a file with comments and return JSON:
 
 ```json
 {
-  "review_file": "path/to/file/task_review.md",
+  "review_file": "docs/reviews/task-001-review.md",
   "has_critical_issues": true/false
 }
 ```

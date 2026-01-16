@@ -37,11 +37,14 @@ The Skills System separates **"Who"** (Agent Persona) from **"What"** (Capabilit
 | **`artifact-management`** | Rules for managing `.AGENTS.md` (local memory) and global artifacts (`TASK.md`, `ARCHITECTURE.md`). | All Workflows | All Agents |
 | **`planning-decision-tree`** | Decision logic for breaking down tasks and prioritizing work (Stub-First & E2E). | `02-plan-implementation`, `vdd-02-plan` | Planner, Architect |
 | **`requirements-analysis`** | Process for gathering and refining requirements into a structured Technical Specification (TASK). | `01-start-feature`, `vdd-01-start-feature` | Analyst, TASK Reviewer |
+| **`skill-task-model`** | Standard models, examples (Good/Bad), and structure rules for TASK documents. | `01-start-feature` | Analyst, TASK Reviewer |
 
 ### Engineering Standards
 | Skill | Description | Used By in Workflows | Used By Agents |
 |-------|-------------|----------------------|----------------|
 | **`architecture-design`** | Guidelines for designing scalable and modular system architecture and data models. | `01-start-feature`, `/base-stub-first` | Architect, Arch Reviewer |
+| **`skill-planning-format`** | Standard templates for `PLAN.md` and Task Descriptions. | `02-plan-implementation` | Planner |
+| **`architecture-format`** | Standard structure and templates for Architecture documents (`docs/ARCHITECTURE.md`). | `01-start-feature`, `/base-stub-first` | Architect |
 | **`tdd-stub-first`** | Test-Driven Development strategy: "Structure & Stubs" first, then "Implementation". | `03-develop-task`, `vdd-enhanced` | Planner, Developer |
 | **`developer-guidelines`** | Behavioral rules for Developers: adherence to tasks, "Documentation First", Anti-Loop Protocol. | `03-develop-task`, `/base-stub-first` | Developer |
 | **`documentation-standards`** | Standards for docstrings (Google/JSDoc) and "The Why" comments. | All Development Workflows | Developer, Code Reviewer |

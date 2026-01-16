@@ -24,17 +24,29 @@
 
 ## 🇺🇸 English Version (Primary)
 
-### **v3.2.0 — Structured Tool Calling**
+### **v3.2.0 — Structured Tool Calling & Skills Optimization**
 
 #### **Added**
 * **Tool Execution Subsystem**: The Orchestrator now natively supports structured tool calling (Function Calling).
-* **Tool Dispatcher**: `scripts/tool_runner.py` executes actions safely.
-* **Workflows**:
-    * Refactored `03-develop-task` -> `03-develop-single-task` (clearer naming).
-    * Updated `base-stub-first` to call the automation engine (`05`).
-    * Rewrote `docs/WORKFLOWS.md` with "Pipelines" vs "Actions" categorization.
+* **New Skills**:
+    * `skill-task-model`: Standardized examples and rules for `docs/TASK.md`.
+    * `skill-planning-format`: Standardized templates for `docs/PLAN.md` and Task Descriptions.
+    * `skill-architecture-format`: Consolidated architecture document templates.
 * **Standard Tools**: Added `run_tests`, `git_ops`, `file_ops` to `.agent/tools/schemas.py`.
 * **Documentation**: Added `docs/ORCHESTRATOR.md` and `docs/USER_TOOLS_GUIDE.md`.
+
+#### **Improved**
+* **Prompt Engineering**: Significantly reduced the size of Analyst (`02`), Architect (`04`), and Planner (`06`) agents by extracting static templates into the Skills System.
+* **Maintenance**: Centralized critical document templates (TASK, PLAN, Architecture) in `.agent/skills/` to ensure consistency and easier updates.
+* **Workflows**: Refactored `03-develop-task` -> `03-develop-single-task` and updated `base-stub-first`.
+
+#### **Changed**
+* **Test Reports**: Standardized storage location. Reports moved from `docs/test_reports` to `tests/tests-{Task ID}/`.
+* **Path Enforcement**: Updated all Agent prompts to use strictly project-relative path examples.
+* **Agents**: Updated Orchestrator, Developer, and Reviewers to enforce new protocols.
+
+#### **Fixed**
+* **Cleanup**: Removed legacy `docs/test_reports` directory.
 
 ---
 
@@ -203,6 +215,32 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.2.0 — Структурированные инструменты и Оптимизация Навыков**
+
+#### **Добавлено**
+* **Подсистема выполнения инструментов**: Оркестратор теперь нативно поддерживает структурированный вызов инструментов.
+* **Новые навыки**:
+    * `skill-task-model`: Стандартизированные примеры и правила для `docs/TASK.md`.
+    * `skill-planning-format`: Шаблоны для `docs/PLAN.md` и описаний задач.
+    * `skill-architecture-format`: Консолидированные шаблоны архитектурной документации.
+* **Стандартные инструменты**: Добавлены `run_tests`, `git_ops`, `file_ops`.
+* **Документация**: Добавлены `docs/ORCHESTRATOR.md`.
+
+#### **Улучшено**
+* **Промпт-инжиниринг**: Значительно уменьшен размер агентов-Аналитика (`02`), Архитектора (`04`) и Планировщика (`06`) за счет выноса статических шаблонов в Систему Навыков.
+* **Поддержка**: Критические шаблоны документов централизованы в `.agent/skills/`.
+
+#### **Изменено**
+* **Протоколы тестирования**: Стандартизировано место хранения отчетов (`tests/tests-{Task ID}/`).
+* **Гигиена путей**: В промптах агентов теперь используются строго относительные пути проекта.
+* **Агенты**: Обновлены промпты Оркестратора, Разработчика и Ревьюеров.
+
+#### **Исправлено**
+* **Очистка**: Удалена устаревшая директория `docs/test_reports`.
+
+---
+
 
 ### **v3.1.3 — Очистка Skills и исправление интеграции Cursor**
 
