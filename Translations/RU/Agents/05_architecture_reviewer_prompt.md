@@ -47,7 +47,7 @@
 
 ```json
 {
-  "review_file": "path/to/file/architecture_review.md",
+  "review_file": "docs/architecture_review.md",
   "has_critical_issues": true/false
 }
 ```

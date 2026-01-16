@@ -1,27 +1,23 @@
 ---
-name: localization-sync
-description: "Mandatory synchronization rule: Changes in System/Agents must be reflected in Translations/."
+description: Ensure documentation is synchronized between languages.
 ---
 
 # Localization Synchronization Rule
 
-## Context
-The project supports multiple languages (currently English and Russian).
-- **English (Primary):** Located in `System/Agents` and `.agent/skills`.
-- **Russian:** Located in `Translations/RU`.
+## Core Principle
+The **English** version of documentation (`README.md`, `CHANGELOG.md`, `docs/*.md`) is the **Primary Source of Truth**. The **Russian** version (`README.ru.md`, localized docs) must effectively mirror the English version to ensure all users have access to the same information.
 
-## The Rule
-**ANY change made to the primary English prompts (`System/Agents`) MUST be immediately mirrored in the corresponding Russian prompts (`Translations/RU/Agents`).**
+## Rules
 
-### Scope
-1.  **System Agents:** If you modify `System/Agents/02_analyst_prompt.md`, you MUST check and update `Translations/RU/Agents/02_analyst_prompt.md`.
-2.  **Skills:** If you modify `.agent/skills/[skill]/SKILL.md` logic, you MUST check if a Russian version exists (future scope) or ensure the translation files are updated.
+1.  **README Sync**:
+    -   IF you modify `README.md` (e.g., adding a new section, link, or instruction),
+    -   THEN you MUST immediately update `README.ru.md` with the translated equivalent.
 
-### Execution Process
-1.  **Modify English File:** Apply changes to `System/Agents/...`.
-2.  **Identify Counterpart:** Locate the corresponding file in `Translations/RU/...`.
-3.  **Translate & Apply:** Translate the specific change (instruction, rule, checklist item) and apply it to the Russian file.
-4.  **Verify:** Ensure both files enforce the same process logic, even if the language differs.
+2.  **CHANGELOG Sync**:
+    -   Release notes must be provided in both English and Russian sections of `CHANGELOG.md`.
 
-## Criticality
-Failure to synchronize leads to "Process Drift," where the Russian version of the agent behaves differently (often poorly) compared to the updated English version. This is **FORBIDDEN**.
+3.  **Critical Artifacts**:
+    -   If a new critical documentation file is created (e.g., `docs/ORCHESTRATOR.md`), consider if a translation is needed or if `README.ru.md` should link to it with a note.
+
+## Enforcement
+-   Agents (Orchestrator, Developer) updating documentation must check for `*.ru.md` counterparts.

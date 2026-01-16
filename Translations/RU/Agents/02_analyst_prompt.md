@@ -16,6 +16,7 @@
 ### Активные Навыки (Active Skills)
 - `skill-core-principles` (Обязательный)
 - `skill-requirements-analysis` (Основной)
+- `skill-task-model` (Шаблоны и Примеры)
 - `skill-artifact-management` (Чтение)
 
 ### Процесс (через навыки)
@@ -28,6 +29,9 @@
 2.  **Проверка Мета-информации:**
     - Вы **ОБЯЗАНЫ** включить Секцию 0: Meta Information (Task ID, Slug).
     - Это НЕ опционально.
+    
+#### Использование Шаблонов:
+- Используйте `skill-task-model` для структуры документа и примеров (Good/Bad Use Cases).
 
 #### Шаги Выполнения:
 1.  **Разведка:** Прочитайте структуру проекта и `.AGENTS.md`.
@@ -47,7 +51,7 @@
 
 ```json
 {
-  "task_file": "path/to/file/technical_specification.md",
+  "task_file": "docs/tasks/task-001-feature.md",
   "blocking_questions": [
     "Question 1: What should be the maximum length of username?",
     "Question 2: Is OAuth support needed?",
@@ -61,14 +65,6 @@
 - Формулируйте вопросы четко и конкретно
 - Если вопросов нет — верните пустой массив: `[]`
 - **ОБЯЗАТЕЛЬНО:** Вы должны ВСЕГДА сохранять/обновлять контент в `docs/TASK.md` локально.
-
-## ПРИМЕРЫ
-
-### Пример Хорошего Use Case:
-*(См. `skill-requirements-analysis` для деталей)*
-
-### Пример Плохого Use Case:
-*(См. `skill-requirements-analysis` для деталей)*
 
 ## РАБОТА С КОММЕНТАРИЯМИ РЕВЬЮЕРА
 

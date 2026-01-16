@@ -3,7 +3,7 @@
 > [!NOTE]
 > This is the primary version. Translations may lag behind.
 
-# Multi-Agent Software Development System v3.2.0
+# Multi-Agent Software Development System v3.2.1
 
 This framework orchestrates a multi-agent system for structured software development. It transforms vague requirements into high-quality code through a strict pipeline of specialized agents (Analyst, Architect, Planner, Developer, Reviewer).
 
@@ -56,6 +56,7 @@ New in v3.1: The system supports **Native Tools** executed by the Orchestrator (
 - **Capabilities**: Run tests, Git operations, File I/O.
 
 **[>> View Full Skills Catalog <<](docs/SKILLS.md)**
+**[>> Orchestrator & Tools Guide <<](docs/ORCHESTRATOR.md)** (Configuration & New Tools)
 
 By default, the system uses English prompts. To use **Russian** context:
 1.  Copy content from `Translations/RU/Agents` to `System/Agents`.

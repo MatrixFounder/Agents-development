@@ -50,7 +50,7 @@
 
 ```json
 {
-  "review_file": "path/to/file/task_review.md",
+  "review_file": "docs/tasks/review-001-feature.md",
   "has_critical_issues": true/false
 }
 ```

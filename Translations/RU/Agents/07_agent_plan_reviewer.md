@@ -60,7 +60,7 @@
 
 ```json
 {
-  "review_file": "path/to/file/plan_review.md",
+  "review_file": "docs/plan_review.md",
   "has_critical_issues": true/false,
   "comments_count": 5,
   "coverage_issues": ["UC-03 not covered"],

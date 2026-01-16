@@ -24,7 +24,22 @@
 
 ## 🇺🇸 English Version (Primary)
 
-### **v3.2.0 — Structured Tool Calling & Skills Optimization**
+### **v3.2.1 — Skills System Optimization**
+
+#### **Added**
+* **Skills**:
+    * `skill-task-model`: Standardized examples and rules for `docs/TASK.md`.
+    * `skill-planning-format`: Standardized templates for `docs/PLAN.md` and Task Descriptions.
+* **Rules**: Added `.agent/rules/localization-sync.md` to enforce bilingual documentation updates.
+
+#### **Improved**
+* **Prompt Engineering**: Significantly reduced the size of Analyst (`02`), Architect (`04`), and Planner (`06`) agents by extracting static templates into the Skills System.
+* **Localization**: Synced `README.ru.md` with English version (added Tool Calling section).
+* **Russian Agents**: Updated `Translations/RU/Agents/*.md` to match v3.2.0 optimizations (Tool Calling logic, Skills extraction, Path Hygiene).
+
+---
+
+### **v3.2.0 — Structured Tool Calling & Path Hygiene**
 
 #### **Added**
 * **Tool Execution Subsystem**: The Orchestrator now natively supports structured tool calling (Function Calling).
@@ -216,7 +231,22 @@ To upgrade from v3.0.x to v3.1.0:
 
 ## 🇷🇺 Русская версия
 
-### **v3.2.0 — Структурированные инструменты и Оптимизация Навыков**
+### **v3.2.1 — Оптимизация Системы Навыков**
+
+#### **Добавлено**
+* **Навыки**:
+    * `skill-task-model`: Стандартизированные примеры и правила для `docs/TASK.md`.
+    * `skill-planning-format`: Шаблоны для `docs/PLAN.md` и описаний задач.
+* **Правила**: Добавлен файл `.agent/rules/localization-sync.md` для автоматического контроля синхронизации документации.
+
+#### **Улучшено**
+* **Промпт-инжиниринг**: Значительно уменьшен размер агентов-Аналитика (`02`), Архитектора (`04`) и Планировщика (`06`) за счет выноса статических шаблонов в Систему Навыков.
+* **Локализация**: `README.ru.md` синхронизирован с английской версией (добавлен раздел Инструментов).
+* **Русские Агенты**: Обновлены `Translations/RU/Agents/*.md` до стандартов v3.2.0 (логика Инструментов, Навыки, относительные пути).
+
+---
+
+### **v3.2.0 — Структурированные инструменты и Гигиена путей**
 
 #### **Добавлено**
 * **Подсистема выполнения инструментов**: Оркестратор теперь нативно поддерживает структурированный вызов инструментов.

@@ -1,27 +1,20 @@
 ### 0. Meta Information
-- **Task ID:** 021
-- **Slug:** skills-optimization-planner-analyst
+- **Task ID:** 025
+- **Slug:** update-changelog-v3.2.1
 - **Status:** Completed
 
-# TASK: Optimize Planner and Analyst Prompts via Skills
-
-## Problem
-`02_analyst_prompt.md` and `06_agent_planner.md` contain large static sections (templates, examples) that bloat the context window and reduce maintainability.
+# TASK: Update CHANGELOG for Localization Fixes
 
 ## Goal
-Extract static content into dedicated skills, following the pattern established in Task 019 (Architect Refactor).
+Document recent changes regarding Localization Synchronization and Russian Agent Prompt updates in `CHANGELOG.md`.
 
-## Plan
-1.  **Analyst Optimization:**
-    -   Create `skill-task-model`: Move "Examples of Good/Bad Use Cases" and `TASK.md` structure here.
-    -   Update `02_analyst_prompt.md` to reference the skill.
-2.  **Planner Optimization:**
-    -   Create `skill-planning-format`: Move `PLAN.md` and `task-{ID}-{SubID}.md` templates here.
-    -   Update `06_agent_planner.md` to reference the skill.
-3.  **Documentation:**
-    -   Update `docs/SKILLS.md` with new skills.
+## Requirements
+1.  Create a new entry `v3.2.1`.
+2.  Document:
+    -   Sync of `README.ru` with `README`.
+    -   Update of Russian translations for Orchestrator, Analyst, Planner, Architect.
+    -   New rule `.agent/rules/localization-sync.md`.
+3.  Update English and Russian sections of CHANGELOG.
 
 ## Acceptance Criteria
-- Agents 02 and 06 are significantly smaller.
-- New skills `skill-task-model` and `skill-planning-format` exist and are correct.
-- `docs/SKILLS.md` is updated.
+-   `CHANGELOG.md` reflects latest work.
