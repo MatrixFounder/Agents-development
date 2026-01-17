@@ -59,6 +59,17 @@ The orchestration layer now supports **Structured Tool Calling**:
 - **Dispatch**: When the LLM requests a tool call, the Orchestrator intercepts it, executes the corresponding Python function (via `execute_tool` dispatcher), and returns the result as a `tool` role message.
 - **Security Check**: All tool arguments are validated; file operations are restricted to the project root (Anti-Path-Traversal).
 
+### Available Tools
+| Tool | Description |
+|------|-------------|
+| `run_tests` | Run pytest with custom commands |
+| `read_file` | Read file contents |
+| `write_file` | Create/overwrite files |
+| `list_directory` | List directory contents |
+| `git_status`, `git_add`, `git_commit` | Git operations |
+| `generate_task_archive_filename` | Generate unique sequential ID for task archival |
+
+
 ## 5. Key Principles
 - **Modular Skills**: Logic is decoupled from Personas. Agents load `skills` to perform specific tasks.
 - **Local Artifacts**: `.AGENTS.md` provide distributed long-term memory per directory.

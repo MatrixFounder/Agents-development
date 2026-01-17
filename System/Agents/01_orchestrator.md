@@ -32,6 +32,13 @@ The Orchestrator natively supports structured tool calling.
 - **Priority**: ALWAYS use native tools (`run_tests`, `git_ops`, `file_ops`) instead of asking the user to run shell commands.
 - **Reference**: See `docs/ORCHESTRATOR.md` for details.
 
+### Safe Commands (Auto-Run)
+The following are **SAFE TO AUTO-RUN** without user approval:
+- **Read-only**: `ls`, `cat`, `head`, `tail`, `grep`, `find`, `tree`
+- **Git read**: `git status`, `git log`, `git diff`, `git show`
+- **Archiving**: `mv docs/TASK.md docs/tasks/...`
+- **Tools**: `generate_task_archive_filename`, `list_directory`, `read_file`
+
 ---
 
 ## 1. Analysis Stage (Initiation)
@@ -51,15 +58,15 @@ DECISION LOGIC (ARTEFACT HANDLING):
 (See `skill-artifact-management` for detailed archiving rules)
 - IF user_task implies a NEW SEPARATE feature/refactor:
   - CHECK: If docs/TASK.md has meaningful content from a previous task:
-    - ACTION: Archive it FIRST.
+    - ACTION: Archive it FIRST using the `generate_task_archive_filename` tool.
     - CONFIRM: "Archiving previous TASK..."
 - IF user_task is a clarification/refinement of the CURRENT task:
   - ACTION: Do NOT archive. Proceed to overwrite/update logic.
 
 ACTIONS:
 1. CHECK & ARCHIVE: Execute the `Archiving Protocol` from `skill-artifact-management`.
-   - Verify if `docs/TASK.md` needs archiving.
-   - If yes, archive to `docs/tasks/task-{ID}-{Slug}.md`.
+   - Call `generate_task_archive_filename(slug="task-slug")` to get unique filename.
+   - Move file: `mv docs/TASK.md docs/tasks/{filename}`.
 2. Pass to Analyst:
    - Task description
    - Project description

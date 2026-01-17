@@ -6,7 +6,7 @@
 |----------|--------------------------------------|
 | Task ID  | 032                                  |
 | Slug     | task-archive-id-tool                 |
-| Status   | Completed                            |
+| Status   | Backlog                              |
 | Priority | Medium                               |
 
 ---
@@ -257,66 +257,40 @@ def generate_task_archive_filename(
 
 ## 6. Шаги выполнения
 
-### Phase 1: Создание Tool ✅
+### Phase 1: Создание Tool
 
 1. **Анализ текущего кода**
-   - [x] Просмотреть `.agent/tools/schemas.py` — добавить новую schema
-   - [x] Проверить, есть ли dispatcher/executor для tools → Найден `scripts/tool_runner.py`
+   - [ ] Просмотреть `.agent/tools/schemas.py` — добавить новую schema
+   - [ ] Проверить, есть ли dispatcher/executor для tools
 
 2. **Реализация**
-   - [x] Создать функцию `generate_task_archive_filename` в `.agent/tools/task_id_tool.py`
-   - [x] Добавить schema в `TOOLS_SCHEMAS`
-   - [x] Интегрировать с dispatcher (`scripts/tool_runner.py`)
+   - [ ] Создать функцию `generate_task_archive_filename` в `.agent/tools/task_id_tool.py`
+   - [ ] Добавить schema в `TOOLS_SCHEMAS`
+   - [ ] Интегрировать с dispatcher (если есть)
 
-### Phase 2: Тестирование ✅
+### Phase 2: Тестирование
 
-3. **Unit тесты** (29 тестов)
-   - [x] proposed_id=None → следующий ID
-   - [x] proposed_id свободен → использовать его
-   - [x] proposed_id занят + allow_correction=True → скорректировать
-   - [x] proposed_id занят + allow_correction=False → conflict
-   - [x] Некорректный proposed_id → error
-   - [x] Slug нормализация
-   - [x] **Добавлено:** Поддержка 4+ значных ID (`\d{3,}`)
+3. **Unit тесты**
+   - [ ] proposed_id=None → следующий ID
+   - [ ] proposed_id свободен → использовать его
+   - [ ] proposed_id занят + allow_correction=True → скорректировать
+   - [ ] proposed_id занят + allow_correction=False → conflict
+   - [ ] Некорректный proposed_id → error
+   - [ ] Slug нормализация
 
-### Phase 3: Интеграция ✅
+### Phase 3: Интеграция
 
 4. **Обновление skills и prompts**
-   - [x] Обновить `artifact-management` skill
-   - [x] Обновить промпты Orchestrator, Analyst
+   - [ ] Обновить `artifact-management` skill
+   - [ ] Обновить промпты Orchestrator, Analyst
 
 5. **Обновление документации**
-   - [x] Обновить `docs/ARCHITECTURE.md`
-   - [x] Обновить `docs/ORCHESTRATOR.md`
-   - [x] Обновить `docs/SKILLS.md`
+   - [ ] Обновить `docs/ARCHITECTURE.md`
 
-### Phase 4: VDD Adversarial Review ✅ (Дополнительная фаза)
+### Phase 4: Финализация
 
-6. **Sarcasmotron Roast**
-   - [x] Round 1: Найдены 2 проблемы (race condition, 3-digit limit)
-   - [x] Исправлены обе проблемы
-   - [x] Round 2: APPROVED (Hallucination Convergence)
-
-### Phase 5: Safe Commands Protocol ✅ (Дополнительная фаза)
-
-7. **Расширение протокола Auto-Run**
-   - [x] Добавлен список безопасных команд для автозапуска:
-     - Read-only: `ls`, `cat`, `head`, `tail`, `find`, `grep`, `tree`, `wc`
-     - Git read: `git status`, `git log`, `git diff`, `git show`, `git branch`
-     - Archiving: `mv docs/TASK.md docs/tasks/...`
-     - Tools: `generate_task_archive_filename`, `list_directory`, `read_file`
-
-### Phase 6: Финализация ✅
-
-8. **Dogfooding**
-   - [x] Протестирован tool на реальном `docs/TASK.md` (task-031)
-   - [x] Заархивирован task-031 → `docs/tasks/task-031-verify-docs-v322.md`
-   - [x] Создан новый `docs/TASK.md` для task-032
-
-9. **Обновление версии и документации**
-   - [x] CHANGELOG.md: v3.2.5 (EN + RU)
-   - [x] README.md: bump to v3.2.5 + Python installation requirements
-   - [x] README.ru.md: bump to v3.2.5 + Python installation requirements
+6. **Dogfooding**
+   - [ ] Заархивировать эту задачу с использованием нового tool
 
 ---
 
@@ -352,31 +326,6 @@ def generate_task_archive_filename(
 
 ## 9. Open Questions
 
-1. ~~Где хранится dispatcher/executor для tools?~~ → **Решено:** `scripts/tool_runner.py`
-2. ~~Нужен ли отдельный tool для полного цикла архивации (generate + move + git commit)?~~ → **Решение:** Нет, разделение ответственности лучше (tool генерирует имя, агент выполняет mv)
-3. ~~Должны ли гэпы в нумерации заполняться или игнорироваться?~~ → **Решение:** Игнорировать (max + 1)
-
----
-
-## 10. Implementation Summary (Добавлено по результатам)
-
-### Созданные файлы
-| Файл | Описание |
-|------|----------|
-| `.agent/tools/task_id_tool.py` | Основная реализация tool |
-| `.agent/tools/test_task_id_tool.py` | 29 unit-тестов |
-
-### Изменённые файлы
-| Файл | Изменения |
-|------|----------|
-| `.agent/tools/schemas.py` | Добавлена schema |
-| `scripts/tool_runner.py` | Зарегистрирован tool в dispatcher |
-| `.agent/skills/artifact-management/SKILL.md` | Обновлён Archiving Protocol + Safe Commands |
-| `System/Agents/01_orchestrator.md` | Safe Commands section + tool usage |
-| `System/Agents/02_analyst_prompt.md` | Tool usage for ID reservation |
-| `docs/ARCHITECTURE.md` | Добавлен tool в таблицу Available Tools |
-| `docs/ORCHESTRATOR.md` | Добавлен tool в таблицу Supported Tools |
-| `docs/SKILLS.md` | Добавлен tool в секцию Executable Skills |
-| `CHANGELOG.md` | v3.2.5 entry (EN + RU) |
-| `README.md` | v3.2.5 + Python requirements |
-| `README.ru.md` | v3.2.5 + Python requirements |
+1. ~~Где хранится dispatcher/executor для tools?~~ → Требует исследования codebase
+2. Нужен ли отдельный tool для полного цикла архивации (generate + move + git commit)?
+3. Должны ли гэпы в нумерации заполняться или игнорироваться? → **Решение:** Игнорировать (max + 1)

@@ -102,5 +102,31 @@ TOOLS_SCHEMAS = [
                 "required": ["message"]
             }
         }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "generate_task_archive_filename",
+            "description": "Generate a unique filename for task archival. Returns the next sequential ID or validates a proposed ID. Use before archiving docs/TASK.md to docs/tasks/.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "slug": {
+                        "type": "string",
+                        "description": "Short task name in Latin with dashes (e.g., 'new-feature'). Will be normalized."
+                    },
+                    "proposed_id": {
+                        "type": "string",
+                        "description": "Optional desired ID (e.g., '031' or '31'). If not provided, auto-generates next ID."
+                    },
+                    "allow_correction": {
+                        "type": "boolean",
+                        "default": True,
+                        "description": "If True, auto-correct to next available ID on conflict. If False, return conflict status."
+                    }
+                },
+                "required": ["slug"]
+            }
+        }
     }
 ]

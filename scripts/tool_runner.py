@@ -141,8 +141,35 @@ def execute_tool(tool_call) -> Dict[str, Any]:
             )
             return {"output": result.stdout, "error": result.stderr, "success": result.returncode == 0}
 
+        elif name == "generate_task_archive_filename":
+            # Import here to avoid circular imports and keep tool_runner standalone
+            import sys
+            tools_path = repo_root / ".agent" / "tools"
+            if str(tools_path) not in sys.path:
+                sys.path.insert(0, str(tools_path))
+            
+            from task_id_tool import generate_task_archive_filename
+            
+            slug = args.get("slug")
+            if not slug:
+                return {"error": "Missing 'slug' argument", "success": False}
+            
+            proposed_id = args.get("proposed_id")
+            allow_correction = args.get("allow_correction", True)
+            tasks_dir = str(repo_root / "docs" / "tasks")
+            
+            result = generate_task_archive_filename(
+                slug=slug,
+                proposed_id=proposed_id,
+                allow_correction=allow_correction,
+                tasks_dir=tasks_dir
+            )
+            result["success"] = result["status"] in ("generated", "corrected")
+            return result
+
         else:
             return {"error": f"Unknown tool: {name}", "success": False}
 
     except Exception as e:
         return {"error": str(e), "success": False}
+

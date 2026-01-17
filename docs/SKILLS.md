@@ -66,6 +66,7 @@ The Skills System separates **"Who"** (Agent Persona) from **"What"** (Capabilit
 | **`tools/*`** | Core system tools defined in `.agent/tools/schemas.py`. These are natively executed by the Orchestrator. | `01-start-feature`, `03-develop-task` | All Agents |
 | - `run_tests` | Runs pytest validation. | `03-develop-task` | Developer |
 | - `git_ops` | Git operations (status, add, commit). | `03-develop-task` | Developer |
+| - `generate_task_archive_filename` | Generates unique sequential ID for task archival. Handles conflicts. | `01-start-feature`, `04-update-docs` | Analyst, Orchestrator |
 
 ### Verification Driven Development (VDD)
 | Skill | Description | Used By in Workflows | Used By Agents |

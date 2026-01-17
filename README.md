@@ -3,7 +3,7 @@
 > [!NOTE]
 > This is the primary version. Translations may lag behind.
 
-# Multi-Agent Software Development System v3.2.4
+# Multi-Agent Software Development System v3.2.5
 
 This framework orchestrates a multi-agent system for structured software development. It transforms vague requirements into high-quality code through a strict pipeline of specialized agents (Analyst, Architect, Planner, Developer, Reviewer).
 
@@ -62,6 +62,27 @@ New in v3.2: The system supports **Native Tools** executed by the Orchestrator (
 By default, the system uses English prompts. To use **Russian** context:
 1.  Copy content from `Translations/RU/Agents` to `System/Agents`.
 2.  Copy content from `Translations/RU/Skills` to `.agent/skills`.
+
+### 4. Installation Requirements (Python)
+If you plan to use the **Tool Execution Subsystem** (native tools), you need Python 3.9+ with the following packages:
+
+```bash
+# Required for tool execution
+pip install pytest  # For run_tests tool
+
+# Optional: for AI orchestration (if using custom scripts)
+pip install openai  # OpenAI API client
+pip install python-dotenv  # Environment variables
+```
+
+**Minimal Setup** (read-only tools work without dependencies):
+```bash
+# No installation needed for basic tools like:
+# - generate_task_archive_filename
+# - list_directory
+# - read_file
+# These use Python's standard library only.
+```
 
 ---
 

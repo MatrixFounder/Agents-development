@@ -24,6 +24,31 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.2.5 — Task Archive ID Tool & Auto-Run Protocol**
+
+#### **Added**
+* **New Tool: `generate_task_archive_filename`**: Deterministic tool for generating unique sequential IDs when archiving tasks. Eliminates manual ID assignment errors and ID gaps.
+    * Auto-generates next available ID (`max + 1` strategy).
+    * Validates proposed IDs and handles conflicts (`allow_correction` flag).
+    * Normalizes slugs (lowercase, dashes).
+    * Future-proofed: supports IDs beyond 999 (regex `\d{3,}`).
+* **Dispatcher Integration**: Tool registered in `scripts/tool_runner.py` for native execution.
+* **Unit Tests**: 29 comprehensive tests covering all use cases.
+
+#### **Improved**
+* **Safe Commands Protocol**: Expanded list of auto-run commands in `skill-artifact-management` and Orchestrator prompt:
+    * Read-only: `ls`, `cat`, `head`, `tail`, `find`, `grep`, `tree`, `wc`
+    * Git read: `git status`, `git log`, `git diff`, `git show`, `git branch`
+    * Archiving: `mv docs/TASK.md docs/tasks/...`
+    * Tools: `generate_task_archive_filename`, `list_directory`, `read_file`
+* **Agent Prompts**: Updated Orchestrator (`01`) and Analyst (`02`) with explicit tool usage for archiving.
+
+#### **Documentation**
+* Updated `docs/ARCHITECTURE.md`, `docs/ORCHESTRATOR.md`, and `docs/SKILLS.md`.
+* Added Python installation requirements to README.
+
+---
+
 ### **v3.2.4 — Workflow Documentation Enhancement**
 
 #### **Added**
@@ -266,6 +291,31 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.2.5 — Инструмент генерации ID задач и Протокол Auto-Run**
+
+#### **Добавлено**
+* **Новый инструмент: `generate_task_archive_filename`**: Детерминированный инструмент для генерации уникальных последовательных ID при архивации задач. Устраняет ошибки ручного назначения ID и пробелы в нумерации.
+    * Автоматически генерирует следующий доступный ID (стратегия `max + 1`).
+    * Проверяет предложенные ID и обрабатывает конфликты (флаг `allow_correction`).
+    * Нормализует slug (нижний регистр, дефисы).
+    * Поддержка ID > 999 (регулярка `\d{3,}`).
+* **Интеграция с Dispatcher**: Инструмент зарегистрирован в `scripts/tool_runner.py`.
+* **Unit-тесты**: 29 тестов, покрывающих все сценарии использования.
+
+#### **Улучшено**
+* **Протокол Safe Commands**: Расширен список команд для автозапуска в `skill-artifact-management` и промпте Orchestrator:
+    * Только чтение: `ls`, `cat`, `head`, `tail`, `find`, `grep`, `tree`, `wc`
+    * Git чтение: `git status`, `git log`, `git diff`, `git show`, `git branch`
+    * Архивация: `mv docs/TASK.md docs/tasks/...`
+    * Инструменты: `generate_task_archive_filename`, `list_directory`, `read_file`
+* **Промпты агентов**: Обновлены Orchestrator (`01`) и Analyst (`02`) с явными инструкциями использования инструмента.
+
+#### **Документация**
+* Обновлены `docs/ARCHITECTURE.md`, `docs/ORCHESTRATOR.md`, `docs/SKILLS.md`.
+* Добавлены требования к установке Python в README.
+
+---
 
 ### **v3.2.4 — Улучшение Документации Сценариев**
 

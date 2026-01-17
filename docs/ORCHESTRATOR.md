@@ -99,6 +99,7 @@ elif tool_name == "web_search":
 | `git_status` | Checks repo status. |
 | `git_add` | Stages files. |
 | `git_commit` | Commits changes. |
+| `generate_task_archive_filename` | Generates unique sequential ID for task archival. |
 
 ## ❓ Troubleshooting
 
