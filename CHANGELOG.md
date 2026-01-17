@@ -24,6 +24,18 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.2.4 — Workflow Documentation Enhancement**
+
+#### **Added**
+* **Workflow Call Sequences**: Added comprehensive "Getting Started" section to `docs/WORKFLOWS.md` with:
+    * One-Step vs Multi-Step approach comparison table.
+    * TDD pipeline examples (`base-stub-first`, `01`→`02`→`03/05`→`04`) with pros/cons.
+    * VDD pipeline examples (`vdd-enhanced`, `full-robust`, VDD atomic steps) with pros/cons.
+    * Decision flowchart (Mermaid diagram) for choosing the right approach.
+    * Quick reference summary table for common scenarios.
+
+---
+
 ### **v3.2.3 — Archiving Protocol Refinement**
 
 #### **Changed**
@@ -254,6 +266,18 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.2.4 — Улучшение Документации Сценариев**
+
+#### **Добавлено**
+* **Последовательности вызовов Workflow**: Добавлен раздел "Getting Started" в `docs/WORKFLOWS.md`:
+    * Сравнительная таблица подходов One-Step vs Multi-Step.
+    * Примеры TDD пайплайна (`base-stub-first`, `01`→`02`→`03/05`→`04`) с плюсами и минусами.
+    * Примеры VDD пайплайна (`vdd-enhanced`, `full-robust`, атомарные VDD шаги) с плюсами и минусами.
+    * Диаграмма принятия решений (Mermaid) для выбора подхода.
+    * Сводная таблица рекомендаций для типичных сценариев.
+
+---
 
 ### **v3.2.3 — Уточнение Протокола Архивации**
 
