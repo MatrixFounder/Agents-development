@@ -2,7 +2,24 @@
 
 This document is the **Single Source of Truth** for all automation workflows in the Antigravity system. Workflows are defined in `.agent/workflows/` and can be executed by the Orchestrator to automate development processes.
 
-## 🚀 Workflow Categorization
+## � Table of Contents
+
+- [🚀 Workflow Categorization](#-workflow-categorization)
+- [1. Pipelines (Meta-Workflows)](#1-pipelines-meta-workflows)
+- [2. Automation Loops](#2-automation-loops)
+- [3. Atomic Actions](#3-atomic-actions)
+- [❓ FAQ](#-faq)
+- [🛡 Safety & Verification](#-safety--verification)
+- [📋 Getting Started: Workflow Call Sequences](#-getting-started-workflow-call-sequences)
+  - [Approaches Overview](#approaches-overview)
+  - [TDD (Test-Driven Development) Examples](#tdd-test-driven-development-examples)
+  - [VDD (Verification-Driven Development) Examples](#vdd-verification-driven-development-examples)
+  - [Quick Reference: Choosing Your Approach](#quick-reference-choosing-your-approach)
+  - [Summary Table](#summary-table)
+
+---
+
+## �🚀 Workflow Categorization
 
 The workflows are organized into three categories:
 

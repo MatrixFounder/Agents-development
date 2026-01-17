@@ -16,6 +16,7 @@ The methodology combines two key approaches (see [Comparison](docs/TDD_VS_VDD.md
 ## � Table of Contents
 - [Installation & Setup](#-installation--setup)
 - [Directory Structure](#-directory-structure)
+- [Workspace Workflows](#-workspace-workflows)
 - [How to Start Development](#-how-to-start-development-step-by-step-plan)
 - [Artifact Management](#-artifact-management)
 - [Migration Guide](#-migration-from-older-versions)
