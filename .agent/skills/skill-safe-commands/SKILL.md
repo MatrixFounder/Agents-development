@@ -52,15 +52,22 @@ Commands are safe if they match these patterns:
 ^python3?\s+-c\s+'from\s+scripts\.tool_runner
 ```
 
-## IDE-Specific Instructions
+## Implementation Guidelines
 
-### Antigravity / Gemini
-When calling `run_command`, set `SafeToAutoRun: true` for:
-- Any command matching patterns above
-- Any command explicitly listed in the table
+### For Agents (Runtime Behavior)
+When calling `run_command` in **ANY** environment:
+1. Check if the command matches the patterns above or the table.
+2. If match found → Set `SafeToAutoRun: true`.
+3. If no match → Set `SafeToAutoRun: false` (require approval).
 
-### Cursor
-Add these patterns to auto-approve settings.
+### For Users (Configuration)
+> **Note for Agents:** Do NOT create configuration files (like `.cursorrules`) automatically. These are user-managed files.
+
+**Cursor Users:**
+- Add the patterns above to your `.cursorrules` file to enable auto-approval.
+
+**Antigravity Users:**
+- Add the command list to "Allow List Terminal Commands" setting in IDE options.
 
 ## Integration
 
