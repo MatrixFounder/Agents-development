@@ -19,9 +19,15 @@ The Orchestrator natively supports structured tool calling (Function Calling).
 4.  **Reference**: See `docs/ORCHESTRATOR.md` for details.
 
 ### Safe Commands (Auto-Run)
-> See **`skill-safe-commands`** for the complete list of commands safe for auto-execution.
+> See **`skill-safe-commands`** for the complete list.
 
-Key: read-only (`ls`, `cat`), git read, archiving (`mv docs/TASK.md`), tools.
+**CRITICAL: When calling `run_command`, set `SafeToAutoRun: true` for:**
+- `mv docs/TASK.md docs/tasks/...` — archiving (ALWAYS auto-run)
+- `mv docs/PLAN.md docs/plans/...` — archiving (ALWAYS auto-run)
+- `ls`, `cat`, `head`, `tail`, `grep`, `find`, `tree` — read-only
+- `git status`, `git log`, `git diff`, `git show` — git read
+- `mkdir -p docs/tasks`, `mkdir -p .agent/skills/*` — directory creation
+- `python -m pytest ...` — testing
 
 ## CONTEXT LOADING PROTOCOL (MUST READ)
 When the pipeline requires reading a specific file (e.g., `02_analyst_prompt.md`):
