@@ -276,3 +276,4 @@ tools: ["generate_task_archive_filename"]
 - [x] Cross-check Prompt Interfaces (Input/Output compatibility)
 ### Phase 10: Release v3.3.1 (Changelog)
 - [x] Update CHANGELOG.md with v3.3.1 release notes (VDD & Portability fixes)
+- [x] Update `.cursorrules` (User Request: Fix phantom tools/safe commands loop)
