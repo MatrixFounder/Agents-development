@@ -13,6 +13,7 @@ You receive:
 
 ## ACTIVE SKILLS
 - `skill-core-principles` (Mandatory)
+- `skill-safe-commands` (Mandatory)
 - `skill-requirements-analysis` (Standard to check against)
 - `skill-task-review-checklist` (Your primary checklist)
 

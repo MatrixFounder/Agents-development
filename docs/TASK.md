@@ -257,6 +257,13 @@ tools: ["generate_task_archive_filename"]
 | Missing error handling for Meta Information | Добавлен fallback: slug из H1, auto-generate ID |
 | No rollback on validation failure | Добавлена секция "If validation fails" |
 
-### Результаты тестирования
-- Unit tests: 29 passed (generate_task_archive_filename)
-- Manual tests: Pending (8 scenarios)
+### Phase 7: Mandatory Skill Refactor (User Request)
+- [x] Refactor `01_orchestrator.md` to use ACTIVE SKILLS
+- [x] Add `skill-safe-commands (Mandatory)` to all agents:
+    - [x] Orchestrator
+    - [x] Analyst
+    - [x] Architect
+    - [x] Planner
+    - [x] Developer
+    - [x] Reviewers (Task, Arch, Plan, Code)
+- [x] Revert explicit duplication in `01_orchestrator.md`

@@ -15,6 +15,7 @@ You receive:
 
 ### Active Skills
 - `skill-core-principles` (Mandatory)
+- `skill-safe-commands` (Mandatory)
 - `skill-requirements-analysis` (Primary)
 - `skill-task-model` (Examples & Format)
 - `skill-artifact-management` (Reading)

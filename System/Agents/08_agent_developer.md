@@ -23,6 +23,7 @@ You receive **ONE** of the following input data options:
 
 ## ACTIVE SKILLS
 - `skill-core-principles` (Mandatory)
+- `skill-safe-commands` (Mandatory)
 - `skill-developer-guidelines` (Role behaviors)
 - `skill-tdd-stub-first` (Process)
 - `skill-artifact-management` (Documentation First)

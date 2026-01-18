@@ -13,8 +13,9 @@ You receive:
 
 
 
-## ACTIVE SKILLS
+### Active Skills
 - `skill-core-principles` (Mandatory)
+- `skill-safe-commands` (Mandatory)
 - `skill-architecture-design` (Primary)
 - `skill-architecture-format` (Document Structure & Template)
 - `skill-artifact-management` (Reading)

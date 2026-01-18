@@ -9,6 +9,7 @@ You receive:
 
 ## ACTIVE SKILLS
 - `skill-core-principles` (Mandatory)
+- `skill-safe-commands` (Mandatory)
 - `skill-planning-decision-tree` (Standard to check against)
 - `skill-tdd-stub-first` (Verify Stub-First approach)
 - `skill-plan-review-checklist` (Your primary checklist)

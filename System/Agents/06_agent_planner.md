@@ -32,6 +32,7 @@ For each task create a separate file using the ID from TASK and template from `s
 
 ## ACTIVE SKILLS
 - `skill-core-principles` (Mandatory)
+- `skill-safe-commands` (Mandatory)
 - `skill-planning-decision-tree` (Primary)
 - `skill-tdd-stub-first` (Critical Strategy)
 - `skill-planning-format` (Templates & Structure)
