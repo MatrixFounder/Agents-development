@@ -26,9 +26,8 @@ The methodology combines two key approaches (see [Comparison](System/Docs/TDD_VS
 ## 📁 Installation & Setup
 
 ### 1. Common Prerequisites
-Regardless of your tool, you need the **Agent Personas** in your project root:
-- Copy `/System/Agents` folder to your project root.
-- (Recommended) Copy `System/Docs/ORCHESTRATOR.md` to your `docs/` folder (referenced by Orchestrator).
+Regardless of your tool, you need the **Agent Personas** and **System Docs** in your project root:
+- Copy the entire `/System` folder to your project root.
 
 ### 2. Choose Your AI Assistant
 
@@ -98,7 +97,9 @@ project-root/
 ├── .gemini/GEMINI.md              # [Antigravity] System Config
 ├── .agent/skills/                 # [Common] Skills Library
 ├── .agent/workflows/              # [Common] Workflow Library
-├── System/Agents/                 # [Common] Agent Personas (00-10)
+├── System/
+│   ├── Agents/                  # [Common] Agent Personas (00-10)
+│   └── Docs/                    # [Common] Framework Documentation
 └── src/                           # Your Source Code
 ```
 

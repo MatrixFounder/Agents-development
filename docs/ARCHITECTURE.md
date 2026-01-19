@@ -14,22 +14,26 @@ project-root/
 │   ├── skills/                  # Skills Library (Source of Capabilities)
 │   └── tools/                   # [NEW] Executable Tools Schemas (schemas.py)
 ├── .cursor/skills/                # [Symlink] Mirrors .agent/skills for Cursor
-├── System/Agents/                 # Lightweight System Prompts (Personas)
-│   ├── 00_agent_development.md  # Meta-prompt / Orchestrator guide
-│   ├── 01_orchestrator.md       # Interaction handler
-│   ├── 02_analyst_prompt.md     # Requirements analysis
-│   └── ...
-├── Translations/                  # Localizations (RU)
-├── src/                           # Project Code
+├── System/
+│   ├── Agents/                  # Lightweight System Prompts (Personas)
+│   │   ├── 00_agent_development.md
+│   │   ├── 01_orchestrator.md
+│   │   └── ...
+│   └── Docs/                    # Framework Documentation & Guides
+│       ├── SKILLS.md            # Skills Catalog
+│       ├── ORCHESTRATOR.md      # Tools Guide
+│       └── ...
+├── Translations/                # Localizations (RU)
+├── src/                         # Project Code
 │   ├── services/
-│   │   └── .AGENTS.md             # Local Context Artifact (Per-directory)
+│   │   └── .AGENTS.md           # Local Context Artifact (Per-directory)
 │   └── ...
-├── docs/                          # Global Artifacts
-│   ├── SKILLS.md                # Skills Catalog
-│   ├── ARCHITECTURE.md          # This file
+├── docs/                        # Project Artifacts
+│   ├── TASK.md                  # Current Task
+│   ├── ARCHITECTURE.md          # System Architecture (This file)
 │   └── ...
-├── tests/                           # Tests & Test Reports
-│   ├── tests-{ID}/                  # Test Reports per Task (e.g. tests-016/)
+├── tests/                       # Tests & Test Reports
+│   ├── tests-{ID}/              # Test Reports per Task (e.g. tests-016/)
 │   └── ...
 └── archives/
 ```
