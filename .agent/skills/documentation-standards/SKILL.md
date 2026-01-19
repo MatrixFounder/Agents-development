@@ -8,15 +8,7 @@ version: 1.2
 ## 1. Docstrings & JSDoc
 All classes and functions must have documentation.
 
-### 3. Path Standards (CRITICAL)
-- **Relative Paths Only:** When linking to internal files in Artifacts (PLAN.md, TASK.md), ALWAYS use relative paths.
-    - ✅ `[Ref](src/main.py)`
-    - ✅ `[.agent/skills/core.md](.agent/skills/core.md)`
-    - ❌ `file:///Users/username/project/src/main.py`
-    - ❌ `/Absolute/System/Path`
-- **Portability:** Absolute paths break portability. Relative paths work everywhere.
-
-
+### Python
 ```python
 def calculate(price: float, rate: float) -> float:
     """
@@ -50,7 +42,15 @@ function calculate(price: number, rate: number): number {
 - **Why vs What:** Explain the *reason* for logic, not the syntax.
 - **TODOs:** Use `# TODO:` (Python) or `// TODO:` (JS/TS) for stubs.
 
-## 3. Artifacts (`.AGENTS.md`)
+## 3. Path Standards (CRITICAL)
+- **Relative Paths Only:** When linking to internal files in Artifacts (PLAN.md, TASK.md), ALWAYS use relative paths.
+    - ✅ `[Ref](src/main.py)`
+    - ✅ `[.agent/skills/core.md](.agent/skills/core.md)`
+    - ❌ `file:///Users/username/project/src/main.py`
+    - ❌ `/Absolute/System/Path`
+- **Portability:** Absolute paths break portability. Relative paths work everywhere.
+
+## 4. Artifacts (`.AGENTS.md`)
 **MANDATORY:** Every directory must have this file.
 
 ### Template
