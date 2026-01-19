@@ -208,12 +208,14 @@ tools: ["generate_task_archive_filename"]
 
 ## 📋 Обновлённая дорожная карта
 
-| Версия | Изменения | Приоритет |
-|--------|-----------|-----------|
-| **v3.3** | `skill-archive-task` + рефакторинг дублирования | 🔴 Критический |
-| **v3.4** | VDD multi-adversarial + новые adversarial skills | 🟡 Высокий |
-| **v3.5** | `skill-update-agents-memory`, `skill-reverse-engineering` | 🟢 Средний |
-| **v3.6** | Installer + examples + documentation polish | 🔵 Низкий |
+| Версия | Изменения | Статус |
+|--------|-----------|--------|
+| **v3.3.0** | `skill-archive-task` + `skill-safe-commands` + рефакторинг дублирования | ✅ Released |
+| **v3.3.1** | Portability fixes, VDD Audit, UX improvements | ✅ Released |
+| **v3.3.2** | Auto-tests для протокола архивации (15 тестов, VDD adversarial) | ✅ Released 2026-01-19 |
+| **v3.4** | VDD multi-adversarial + `skill-adversarial-security` + `skill-adversarial-performance` | 🟡 Следующий |
+| **v3.5** | `skill-update-agents-memory`, `skill-reverse-engineering` | 🟢 Планируется |
+| **v3.6** | Installer + examples + documentation polish | 🔵 Низкий приоритет |
 
 ---
 
@@ -620,10 +622,9 @@ archiving-tests:
 
 ### Дорожная карта тестирования
 
-| Фаза | Задачи | Приоритет |
-|------|--------|-----------|
-| **v3.3.1** | Создать `tests/archiving/` structure | 🔴 Высокий |
-| **v3.3.1** | Implement Scenarios 1, 5, 6, 8 | 🔴 Высокий |
-| **v3.3.2** | Implement Scenarios 2, 3, 4 (workflow integration) | 🟡 Средний |
-| **v3.3.2** | Implement Scenario 7 (completion stage) | 🟡 Средний |
-| **v3.4** | Add CI/CD pipeline | 🟢 Низкий |
+| Фаза | Задачи | Статус |
+|------|--------|--------|
+| **v3.3.2** | Создать `.agent/tools/fixtures/` structure | ✅ Done |
+| **v3.3.2** | Implement Scenarios 1, 5, 6, 8 + VDD Adversarial | ✅ Done (15 tests) |
+| **v3.4** | Сценарии 2, 3, 4, 7 — не требуются (эквивалентны на уровне протокола) | ⏭️ Skipped |
+| **v3.4+** | Add CI/CD pipeline | 🟢 Опционально |
