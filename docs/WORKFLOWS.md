@@ -19,7 +19,57 @@ This document is the **Single Source of Truth** for all automation workflows in 
 
 ---
 
-## �🚀 Workflow Categorization
+## 🗺 Workflow System Map
+
+Visualizing how the workflows connect and call each other.
+
+```mermaid
+graph TD
+    %% Nodes styling
+    classDef pipeline fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef loop fill:#99f,stroke:#333,stroke-width:2px;
+    classDef atomic fill:#fff,stroke:#333,stroke-width:1px;
+
+    %% Meta-Pipelines
+    subgraph Pipelines [Pipelines / Meta-Workflows]
+        Base([base-stub-first]):::pipeline
+        VDDE([vdd-enhanced]):::pipeline
+        Robust([full-robust]):::pipeline
+        VDDMulti([vdd-multi]):::pipeline
+    end
+
+    %% Automation Loops
+    subgraph Loops [Automation Loops]
+        RunAll{{05-run-full-task}}:::loop
+    end
+
+    %% Atomic Actions
+    subgraph Atomic [Atomic Actions]
+        Start[01-start-feature]:::atomic
+        Plan[02-plan-implementation]:::atomic
+        Dev[03-develop-single-task]:::atomic
+        Sec[security-audit]:::atomic
+        Adv[vdd-adversarial]:::atomic
+    end
+
+    %% Relationships
+    Robust -->|1. calls| VDDE
+    Robust -->|2. calls| Sec
+
+    VDDE -->|1. calls| Base
+    VDDE -->|2. calls| Adv
+
+    Base -->|1. Analysis| Start
+    Base -->|2. Planning| Plan
+    Base -->|3. Loop| RunAll
+
+    RunAll -->|Iterates| Dev
+    
+    VDDMulti -->|Seq Critics| Adv
+    VDDMulti -->|Seq Critics| Sec
+```
+
+## 🚀 Workflow Categorization
 
 The workflows are organized into three categories:
 
@@ -244,9 +294,11 @@ graph TD
     F -->|Yes| G[VDD Multi-Step]
     F -->|No| H[TDD Multi-Step]
     
-    E --> I{Production-Critical?}
-    I -->|Yes| J[run full-robust]
-    I -->|No| E
+    E --> I{Criticality?}
+    I -->|Standard| E
+    I -->|High Quality| J[run vdd-enhanced]
+    I -->|Mission Critical| K[run full-robust]
+    I -->|Max QA/Critics| L[run vdd-multi]
 ```
 
 ### Summary Table
