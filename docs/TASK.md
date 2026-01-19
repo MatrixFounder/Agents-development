@@ -278,3 +278,24 @@ tools: ["generate_task_archive_filename"]
 - [x] Update CHANGELOG.md with v3.3.1 release notes (VDD & Portability fixes)
 - [x] Update `.cursorrules` (User Request: Fix phantom tools/safe commands loop)
 - [x] Update README headers to v3.3.1
+
+### Phase 11: Auto-Tests for Archiving Protocol (v3.3.2)
+- [x] Create `archive_protocol.py` — testable 6-step protocol implementation
+- [x] Create `test_archive_protocol.py` — 15 tests (4 core + 4 VDD adversarial)
+- [x] Create `fixtures/` — test TASK.md variants
+- [x] Update `docs/ORCHESTRATOR.md` — module documentation with examples
+- [x] Update CHANGELOG with v3.3.2
+
+### Созданные файлы (v3.3.2)
+| Файл | Описание |
+|------|----------|
+| `.agent/tools/archive_protocol.py` | Тестируемая реализация протокола архивации |
+| `.agent/tools/test_archive_protocol.py` | 15 автотестов для сценариев 1, 5, 6, 8 + VDD |
+| `.agent/tools/fixtures/task_with_meta.md` | Fixture: TASK с Meta Information |
+| `.agent/tools/fixtures/task_without_meta.md` | Fixture: TASK без Meta (edge case) |
+| `.agent/tools/fixtures/task_malformed_id.md` | Fixture: TASK с некорректным ID |
+
+### Запуск тестов
+```bash
+cd .agent/tools && python -m pytest test_archive_protocol.py -v
+```
