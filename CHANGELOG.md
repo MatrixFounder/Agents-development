@@ -24,7 +24,27 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.5.1 — Protocol Conflict Resolution & IDE-Agnostic Fixes** (Framework Bugfix)
+
+#### **Fixed**
+* **`skill-archive-task`**: Removed strict dependency on `generate_task_archive_filename` tool. Added manual fallback for filename generation using shell commands.
+* **`skill-archive-task`**: Replaced hardcoded example IDs (`032`, `033`) with generic placeholders (`{OLD_ID}`, `{NEW_ID}`) to prevent agent confusion.
+* **`artifact-management`**: Removed hardcoded absolute path in skill reference. Fixed outdated tool reference.
+* **`artifact-management`**: Added "Dual State Tracking" section to resolve conflict between Agentic Mode internal `task.md` and project `docs/TASK.md`.
+* **`core-principles`**: Added IDE-agnostic "Bootstrap Protocol" (Section 0) instructing agents that `<user_rules>` injected by IDE **override** internal defaults.
+
+#### **Root Causes Addressed**
+| Issue | Solution |
+|-------|----------|
+| Context Blindness | Bootstrap Protocol now clarifies priority |
+| Internal vs Project `task.md` | Dual State Tracking section added |
+| Missing Tool Blocker | Manual fallback in skill-archive-task |
+| Hardcoded Examples | Replaced with `{PLACEHOLDER}` syntax |
+
+---
+
 ### **v3.5.0 — Memory Automation** (Task 035)
+
 
 #### **Added**
 * **New Skill: `skill-update-memory`**: Auto-update `.AGENTS.md` files based on code changes.
@@ -421,7 +441,27 @@ To upgrade from v3.0.x to v3.1.0:
 
 ## 🇷🇺 Русская версия
 
+### **v3.5.1 — Исправление конфликтов протоколов и IDE-агностичные фиксы** (Framework Bugfix)
+
+#### **Исправлено**
+* **`skill-archive-task`**: Удалена жёсткая зависимость от инструмента `generate_task_archive_filename`. Добавлен ручной fallback для генерации имени файла.
+* **`skill-archive-task`**: Заменены хардкод-примеры ID (`032`, `033`) на универсальные плейсхолдеры (`{OLD_ID}`, `{NEW_ID}`).
+* **`artifact-management`**: Удалён хардкод абсолютного пути. Исправлена устаревшая ссылка на инструмент.
+* **`artifact-management`**: Добавлена секция "Dual State Tracking" для разрешения конфликта между внутренним `task.md` Agentic Mode и проектным `docs/TASK.md`.
+* **`core-principles`**: Добавлен IDE-агностичный "Bootstrap Protocol" (Секция 0), объясняющий агентам, что `<user_rules>`, инжектируемые IDE, **переопределяют** внутренние настройки.
+
+#### **Устранённые первопричины**
+| Проблема | Решение |
+|----------|---------|
+| Контекстная слепота | Bootstrap Protocol разъясняет приоритеты |
+| Внутренний vs проектный `task.md` | Добавлена секция Dual State Tracking |
+| Блокировка из-за инструмента | Ручной fallback в skill-archive-task |
+| Хардкод в примерах | Заменены на `{PLACEHOLDER}` |
+
+---
+
 ### **v3.5.0 — Автоматизация памяти** (Task 035)
+
 
 #### **Добавлено**
 * **Новый навык: `skill-update-memory`**: Автообновление `.AGENTS.md` на основе изменений кода.

@@ -1,8 +1,7 @@
 ---
 name: skill-archive-task
 description: "Complete protocol for archiving TASK.md with ID generation. Single source of truth for archiving."
-version: 1.0
-tools: ["generate_task_archive_filename"]
+version: 1.1
 ---
 # Task Archiving Protocol
 
@@ -52,25 +51,26 @@ Read from current `docs/TASK.md`:
 
 **If Meta Information is missing or malformed:**
 - Use slug from task title (H1 header)
-- Generate ID via tool with `proposed_id=None`
+- Generate ID via tool if available, otherwise use `000` or increment last known ID manually.
 
 ### Step 3: Generate Filename
-Call tool:
+
+**Option A: Use Tool (Preferred)**
+If `generate_task_archive_filename` tool is available:
 ```python
 result = generate_task_archive_filename(slug="task-slug")
+filename = result["filename"]
 ```
 
-Handle response:
-| Status | Action |
-|--------|--------|
-| `generated` | Use `result["filename"]` |
-| `corrected` | Use `result["filename"]`, log warning |
-| `conflict` | Notify user, STOP |
-| `error` | Handle error, STOP |
+**Option B: Manual Generation (Fallback)**
+If tool is NOT available:
+1. Construct filename: `task-[ID]-[slug].md` (e.g. `task-033-login-flow.md`)
+2. Ensure no conflict in `docs/tasks/` (check via `ls`).
+
 
 ### Step 4: Update Task ID
 **BEFORE** moving file, update `docs/TASK.md`:
-- Set Task ID to `result["used_id"]`
+- Set Task ID to the ID used in filename
 - Ensure ID in file matches ID in filename
 
 ### Step 5: Archive (Move File)
@@ -97,8 +97,8 @@ Verify:
 
 Key commands for this skill:
 - `mv docs/TASK.md docs/tasks/...` — archiving
-- `generate_task_archive_filename` — tool call
 - `ls`, `cat` — validation
+
 
 ## Integration
 
@@ -106,22 +106,20 @@ Key commands for this skill:
 - **Analyst** (`02_analyst_prompt.md`): Before creating new TASK.md
 - **Orchestrator** (`01_orchestrator.md`): At Completion stage
 
-### Required Tools
-- `generate_task_archive_filename` — Call via native tool mechanism
-
 ## Example Flow
 
 ```
 User: "Create new task for implementing login feature"
 
 1. Agent loads skill-archive-task
-2. Agent checks: docs/TASK.md exists? → YES (contains "Task 032: Archive Tool")
+2. Agent checks: docs/TASK.md exists? → YES (contains "Task {OLD_ID}: {Old Feature}")
 3. Decision: This is NEW task (different feature) → Archive
-4. Extract: Task ID = 032, Slug = "task-archive-id-tool"
-5. Call: generate_task_archive_filename(slug="task-archive-id-tool")
-   → Returns: {filename: "task-032-task-archive-id-tool.md", used_id: "032"}
-6. Verify Task ID in file = "032" (matches)
-7. Execute: mv docs/TASK.md docs/tasks/task-032-task-archive-id-tool.md
-8. Validate: docs/TASK.md does NOT exist ✓
-9. Create new TASK.md for login feature with ID 033
+4. Extract: Task ID = {OLD_ID}, Slug = "{old-slug}"
+5. Generate Filename:
+   - Try tool → If tool not found, use manual fallback
+   - Fallback: Construct filename "task-{OLD_ID}-{old-slug}.md"
+6. Execute: mv docs/TASK.md docs/tasks/task-{OLD_ID}-{old-slug}.md
+7. Validate: docs/TASK.md does NOT exist ✓
+8. Create new TASK.md for login feature with ID {NEW_ID}
 ```
+
