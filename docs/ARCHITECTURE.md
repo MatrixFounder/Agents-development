@@ -19,10 +19,12 @@ project-root/
 │   │   ├── 00_agent_development.md
 │   │   ├── 01_orchestrator.md
 │   │   └── ...
-│   └── Docs/                    # Framework Documentation & Guides
-│       ├── SKILLS.md            # Skills Catalog
-│       ├── ORCHESTRATOR.md      # Tools Guide
-│       └── ...
+│   ├── Docs/                    # Framework Documentation & Guides
+│   │   ├── SKILLS.md            # Skills Catalog
+│   │   ├── ORCHESTRATOR.md      # Tools Guide
+│   │   └── ...
+│   └── scripts/                 # [NEW] Framework Utilities (Tool Dispatcher)
+│       └── tool_runner.py
 ├── Translations/                # Localizations (RU)
 ├── src/                         # Project Code
 │   ├── services/
@@ -60,7 +62,7 @@ project-root/
 The orchestration layer now supports **Structured Tool Calling**:
 - **Definition**: Tools are defined in `.agent/tools/schemas.py` as `TOOLS_SCHEMAS`.
 - **Execution**: The Orchestrator loads these schemas and passes them to the LLM.
-- **Dispatch**: When the LLM requests a tool call, the Orchestrator intercepts it, executes the corresponding Python function (via `execute_tool` dispatcher), and returns the result as a `tool` role message.
+- **Dispatch**: When the LLM requests a tool call, the Orchestrator intercepts it, executes the corresponding Python function (via `System/scripts/tool_runner.py`), and returns the result as a `tool` role message.
 - **Security Check**: All tool arguments are validated; file operations are restricted to the project root (Anti-Path-Traversal).
 
 ### Available Tools
