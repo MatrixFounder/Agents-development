@@ -36,7 +36,7 @@ project-root/
 │   └── ...
 ├── tests/                       # Tests & Test Reports
 │   ├── tests-{ID}/              # Test Reports per Task (e.g. tests-016/)
-│   └── ...
+│   └── reports/                 # Validation Reports (e.g. o1-o3-validation.md)
 └── archives/
 ```
 

@@ -658,6 +658,11 @@ Enterprise Project Context (500 tokens summary)
 | Extended tokens | ~3,500 | ~2,361 |
 | Token savings (minor update) | 60% | **60%** ✅ |
 
+> [!TIP]
+> **Independent Validation (Task 036):** PASSED ✅
+> Verified correct conditional loading of `core` vs `extended` formats during live execution.
+
+
 #### Lessons Learned (O3)
 
 > [!WARNING]
@@ -718,6 +723,11 @@ Enterprise Project Context (500 tokens summary)
 | Token savings (phases not loaded) | -79% | **-79%** ✅ |
 | Automation preserved | Yes | **Yes** ✅ |
 
+> [!TIP]
+> **Independent Validation (Task 036):** PASSED ✅
+> Verified TIER 1 lazy loading and TIER 0 stability (`safe-commands` auto-run working).
+
+
 ---
 
 ### Phase 3: O2 — Orchestrator Compression (6-8 hours) ✅ COMPLETED
@@ -757,6 +767,11 @@ Enterprise Project Context (500 tokens summary)
 | File size | <6,000 bytes | 4,522 bytes |
 | Lines | — | 170 (from 492) |
 | Token savings | ~1,500-2,000 | **~1,670 (~60%)** ✅ |
+
+> [!TIP]
+> **Independent Validation (Task 036):** PASSED ✅
+> Verified Stage Cycle consistency and Orchestrator role simulation.
+
 
 ---
 
@@ -986,7 +1001,7 @@ CRITICAL: safe-commands MUST remain always-loaded for automation.
 - Update CHANGELOG.md with version bump
 ```
 
-### Prompt 3: O2 — Orchestrator Compression
+### Prompt 3: O2 — Orchestrator Compression ✅ COMPLETED (v3.5.5)
 
 ```
 TASK: Implement O2 from Backlog/agentic_development_optimisations.md
@@ -1008,12 +1023,14 @@ DELIVERABLES:
 CRITICAL: Backup first. Test all 14 scenarios after compression.
 
 ⚠️ LESSONS FROM O3 — MANDATORY CHECKLIST:
-- [ ] After changes, run: `grep -r "01_orchestrator" .` to find all references
-- [ ] Update Translations/RU/Agents/01_orchestrator.md with same logic
-- [ ] Verify .gemini/GEMINI.md and .cursorrules don't have outdated refs
-- [ ] Update System/Docs/SKILLS.md with new skill entry
-- [ ] Update CHANGELOG.md with version bump
-- [ ] Cross-check: original 14 scenarios ALL still work
+- [x] After changes, run: `grep -r "01_orchestrator" .` to find all references
+- [x] Update Translations/RU/Agents/01_orchestrator.md with same logic
+- [x] Verify .gemini/GEMINI.md and .cursorrules don't have outdated refs
+- [x] Update System/Docs/SKILLS.md with new skill entry
+- [x] Update CHANGELOG.md with version bump
+- [x] Cross-check: original 14 scenarios ALL still work
+
+RESULT: 11,195 → 4,522 bytes (-60%), commit e5f7312
 ```
 
 ### Prompt 4: O4 — Conversation Checkpointing
@@ -1042,7 +1059,7 @@ DELIVERABLES:
 - [ ] Cross-check: verify checkpoint files are human-readable
 ```
 
-### Prompt 5: Full Validation
+### Prompt 5: Full Validation ✅ PARTIALLY COMPLETED (v3.5.5)
 
 ```
 TASK: Validate O1-O4 implementation
@@ -1050,10 +1067,10 @@ TASK: Validate O1-O4 implementation
 TEST PLAN:
 1. Run standard development task through full pipeline
 2. Verify:
-   - [ ] All phases execute correctly
-   - [ ] safe-commands auto-run works (mv, git, tests)
-   - [ ] All 14 orchestrator scenarios work
-   - [ ] architecture-format loads correctly
+   - [x] All phases execute correctly
+   - [x] safe-commands auto-run works (mv, git, tests)
+   - [x] All 14 orchestrator scenarios work
+   - [x] architecture-format loads correctly
    - [ ] Checkpoints are created and readable
 3. Compare token usage to baseline
 
