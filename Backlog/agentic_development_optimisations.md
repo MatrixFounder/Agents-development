@@ -720,33 +720,43 @@ Enterprise Project Context (500 tokens summary)
 
 ---
 
-### Phase 3: O2 — Orchestrator Compression (6-8 hours)
+### Phase 3: O2 — Orchestrator Compression (6-8 hours) ✅ COMPLETED
+
+> [!NOTE]
+> **Completed: 2026-01-21** | Version: v3.5.5
 
 **Prerequisite: Document current state**
-- [ ] Export all 14 scenarios from `01_orchestrator.md`
-- [ ] Document unique logic per scenario (edge cases, exceptions)
-- [ ] Identify pattern-compatible vs exception scenarios
+- [x] Export all 14 scenarios from `01_orchestrator.md`
+- [x] Document unique logic per scenario (edge cases, exceptions)
+- [x] Identify pattern-compatible vs exception scenarios
 
 **Tasks:**
-1. [ ] Create `skill-orchestrator-patterns/SKILL.md` with:
+1. [x] Create `skill-orchestrator-patterns/SKILL.md` with:
    - Stage Cycle pattern with applicability conditions
    - Explicit exceptions documented
-2. [ ] Refactor `01_orchestrator.md` to use patterns + dispatch table
-3. [ ] **CROSS-CHECK:** Verify all 14 scenarios are still executable:
-   - [ ] Scenario 1-3: Analysis (init, review, revision)
-   - [ ] Scenario 4-6: Architecture (init, review, revision)
-   - [ ] Scenario 7-9: Planning (init, review, revision)
-   - [ ] Scenario 10-12: Execution (init, review, fix) — NOTE: different iteration limit
-   - [ ] Scenario 13: Completion — NOTE: no reviewer
-   - [ ] Scenario 14: Blocking questions — NOTE: different handling
-4. [ ] VDD-verify: Run edge case scenarios (blocking questions, iteration=2, etc.)
-5. [ ] Measure token reduction
+2. [x] Refactor `01_orchestrator.md` to use patterns + dispatch table
+3. [x] **CROSS-CHECK:** Verify all 14 scenarios are still executable:
+   - [x] Scenario 1-3: Analysis (init, review, revision)
+   - [x] Scenario 4-6: Architecture (init, review, revision)
+   - [x] Scenario 7-9: Planning (init, review, revision)
+   - [x] Scenario 10-12: Execution (init, review, fix) — different iteration limit preserved
+   - [x] Scenario 13: Completion — no reviewer, archive required
+   - [x] Scenario 14: Blocking questions — pause handling
+4. [x] VDD-verify: Run edge case scenarios (blocking questions, iteration=2, etc.)
+5. [x] Measure token reduction
 
 **DoD:**
-- [ ] Orchestrator < 6,000 bytes (from 11,195)
-- [ ] All 14 scenarios still executable (verified by test)
-- [ ] No regression in pipeline flow
-- [ ] Backup: `01_orchestrator_full.md.bak` preserved
+- [x] Orchestrator <6,000 bytes (from 11,195) — **Actual: 4,522 bytes**
+- [x] All 14 scenarios still executable (verified by test)
+- [x] No regression in pipeline flow
+- [x] Backup: `01_orchestrator_full.md.bak` preserved
+
+**Actual Results:**
+| Metric | Target | Actual |
+|--------|--------|--------|
+| File size | <6,000 bytes | 4,522 bytes |
+| Lines | — | 170 (from 492) |
+| Token savings | ~1,500-2,000 | **~1,670 (~60%)** ✅ |
 
 ---
 
@@ -950,7 +960,7 @@ CRITICAL: Do NOT lose any content. Cross-check after split.
 ```
 </details>
 
-### Prompt 2: O1 — Phase-Specific Skill Loading
+### Prompt 2: O1 — Phase-Specific Skill Loading ✅ COMPLETED
 
 ```
 TASK: Implement O1 from Backlog/agentic_development_optimisations.md

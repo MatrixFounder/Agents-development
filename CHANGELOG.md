@@ -24,6 +24,32 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.5.5 — O2: Orchestrator Compression (Optimization)** (Token Savings)
+
+#### **Added**
+* **New Skill: `skill-orchestrator-patterns`**: Stage Cycle pattern and dispatch table for Orchestrator.
+    * Reusable Init → Review → Revision flow pattern.
+    * Stage Dispatch Table with agents, reviewers, and iteration limits.
+    * Decision logic tables for common branching.
+    * Expected result schemas for all agent types.
+    * Exception documentation (Completion, Blocking).
+
+#### **Changed**
+* **`01_orchestrator.md`**: Compressed from 492 lines to 170 lines using patterns + dispatch table.
+* **`Translations/RU/Agents/01_orchestrator.md`**: Updated with same compression logic.
+* **`System/Docs/SKILLS.md`**: Added `skill-orchestrator-patterns` entry.
+
+#### **Optimization Impact**
+| Metric | Before | After | Savings |
+|--------|--------|-------|---------|
+| File size | 11,195 bytes | 4,522 bytes | **-60%** |
+| Lines | 492 | 170 | **-65%** |
+| Tokens (~) | ~2,799 | ~1,130 | **-60%** |
+
+> **Note:** All 14 scenarios preserved. Backup at `01_orchestrator_full.md.bak`.
+
+---
+
 ### **v3.5.4 — O1: Skill Phase Context (Optimization)** (Token Savings)
 
 #### **Added**
@@ -503,6 +529,32 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.5.5 — O2: Сжатие Оркестратора (Оптимизация)** (Token Savings)
+
+#### **Добавлено**
+* **Новый навык: `skill-orchestrator-patterns`**: Паттерн Stage Cycle и dispatch table для Оркестратора.
+    * Переиспользуемый поток Init → Review → Revision.
+    * Таблица диспетчеризации этапов с агентами, ревьюерами и лимитами итераций.
+    * Таблицы логики решений для общих ветвлений.
+    * Схемы ожидаемых результатов для всех типов агентов.
+    * Документация исключений (Завершение, Блокировка).
+
+#### **Изменено**
+* **`01_orchestrator.md`**: Сжат с 492 строк до 170 строк с использованием паттернов + dispatch table.
+* **`Translations/RU/Agents/01_orchestrator.md`**: Обновлён с той же логикой сжатия.
+* **`System/Docs/SKILLS.md`**: Добавлена запись `skill-orchestrator-patterns`.
+
+#### **Результат оптимизации**
+| Метрика | До | После | Экономия |
+|---------|-----|-------|----------|
+| Размер файла | 11,195 байт | 4,522 байт | **-60%** |
+| Строки | 492 | 170 | **-65%** |
+| Токены (~) | ~2,799 | ~1,130 | **-60%** |
+
+> **Примечание:** Все 14 сценариев сохранены. Бекап: `01_orchestrator_full.md.bak`.
+
+---
 
 ### **v3.5.4 — O1: Skill Phase Context (Оптимизация)** (Token Savings)
 
