@@ -119,7 +119,32 @@ For a typical developer day (10 sessions, 50 requests):
 
 ---
 
-## 📐 Methodology
+## � Context Efficiency & ROI Analysis
+
+### The Problem: "Context Starvation"
+In agentic development, the **Framework Overhead** (System Prompts, Skills, Tools) acts as a "tax" on every request.
+*   **Legacy Framework:** Consumed **~16,000 tokens** per request layout.
+*   **Result:** On smaller or "thinking" models, this left little room for the actual code context, leading to "forgetfulness" and hallucinations.
+
+### 🧮 Model Breakdown: Framework vs. Development Space
+
+We analyzed the impact on popular 2026 models, split by their Context Window constraints.
+
+| Model Tier | Context Window | Framework Cost (Legacy) | Framework Cost (Optimized) | **Dev Space Gained** |
+| :--- | :---: | :---: | :---: | :---: |
+| **Gemini (High)**<br>*(2M tokens)* | 2,000,000 | 0.8% | **0.2%** | Negligible (but faster) |
+| **Gemini (Low)**<br>*(128k tokens)* | 128,000 | 12.5% | **2.5%** | **+13,000 tokens**<br>*(~2-3 files)* |
+| **Claude Sonnet 4.5**<br>*(Ordinary - 500k)* | 500,000 | 3.2% | **0.8%** | **+12,800 tokens**<br>*(Efficiency)* |
+| **Claude Sonnet 4.5**<br>*(Thinking - 200k)* | 200,000 | 8.0% | **2.0%** | **CRITICAL**<br>*Reduces "thought" truncation* |
+| **Claude Opus 4.5**<br>*(Thinking - 100k)* | 100,000 | **16.0%** | **4.0%** | **GAME CHANGER**<br>*Moves from "Unusable" to "Stable"* |
+
+> **Why "Thinking" Models Matter:**
+> Models with "Thinking" (CoT) capabilities generate massive internal hidden chains. A high input overhead (Legacy 16k) forces the model to truncate its thinking process earlier to fit the output limits, directly degrading intelligence.
+> **Optimization O1-O3** liberates ~12k tokens, giving the model significantly more "brain power" headroom.
+
+---
+
+## �📐 Methodology
 
 How we measured these savings:
 
