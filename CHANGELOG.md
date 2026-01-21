@@ -24,6 +24,31 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.5.3 — O3: architecture-format Split (Optimization)** (Token Savings)
+
+#### **Added**
+* **New Skill: `architecture-format-core`**: Minimal template for architecture documents (~150 lines, TIER 1).
+    * Core sections: Task Description, Functional Architecture, System Architecture, Data Model (conceptual), Open Questions.
+    * Default skill for most architecture updates.
+    * Loading conditions table for decision-making.
+* **New Skill: `architecture-format-extended`**: Full templates with examples (~400 lines, TIER 2).
+    * Complete sections 3-10 with JSON samples, diagrams, and detailed templates.
+    * Loaded only for: new systems, major refactors, complex requirements.
+    * Cross-reference to core skill.
+
+#### **Changed**
+* **`04_architect_prompt.md`**: Updated with conditional loading table for core/extended skills.
+* **`Translations/RU/Agents/04_architect_prompt.md`**: Updated with same conditional loading logic.
+* **`System/Docs/SKILLS.md`**: Replaced single `architecture-format` entry with two tier-based entries.
+
+#### **Token Savings**
+| Scenario | Before | After | Savings |
+|----------|--------|-------|---------|
+| Minor architecture update | ~2,535 | ~996 | **-60%** |
+| New system / major refactor | ~2,535 | ~3,357 | +32% (more examples) |
+
+---
+
 ### **v3.5.2 — Scripts Consolidation & Installation Simplification** (Refactoring)
 
 #### **Changed**
@@ -454,6 +479,31 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.5.3 — O3: Разделение architecture-format (Оптимизация)** (Token Savings)
+
+#### **Добавлено**
+* **Новый навык: `architecture-format-core`**: Минимальный шаблон для архитектурных документов (~150 строк, TIER 1).
+    * Базовые секции: Описание задачи, Функциональная архитектура, Системная архитектура, Модель данных (концептуальная), Открытые вопросы.
+    * Навык по умолчанию для большинства обновлений архитектуры.
+    * Таблица условий загрузки для принятия решений.
+* **Новый навык: `architecture-format-extended`**: Полные шаблоны с примерами (~400 строк, TIER 2).
+    * Полные секции 3-10 с JSON примерами, диаграммами и детальными шаблонами.
+    * Загружается только для: новых систем, крупного рефакторинга, сложных требований.
+    * Перекрёстная ссылка на core-навык.
+
+#### **Изменено**
+* **`04_architect_prompt.md`**: Обновлён с таблицей условной загрузки для core/extended навыков.
+* **`Translations/RU/Agents/04_architect_prompt.md`**: Обновлён с той же логикой условной загрузки.
+* **`System/Docs/SKILLS.md`**: Заменена единственная запись `architecture-format` на две записи с указанием уровней.
+
+#### **Экономия токенов**
+| Сценарий | До | После | Экономия |
+|----------|-----|-------|----------|
+| Минорное обновление архитектуры | ~2,535 | ~996 | **-60%** |
+| Новая система / крупный рефакторинг | ~2,535 | ~3,357 | +32% (больше примеров) |
+
+---
 
 ### **v3.5.2 — Консолидация скриптов и упрощение установки** (Рефакторинг)
 
