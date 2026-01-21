@@ -543,6 +543,33 @@ Refactor all Agent Prompts (`02`-`09`) to use a standard schema:
 
 **Effort:** 6-8 hours.
 
+**A/B Testing Protocol (Automated):**
+To ensure standardization doesn't degrade performance, the Agent will execute the following protocol autonomously:
+
+1.  **Setup Phase:**
+    - **Control:** Current `System/Agents/02_analyst_prompt.md`.
+    - **Variant:** Create `System/Agents/02_analyst_standardized.md` (Proposed).
+    - **Test Runner:** Create `tests/ab_test_runner.py` (extends `test_skill.py`).
+
+2.  **Execution Phase (Agent-Driven):**
+    - The Agent runs `python tests/ab_test_runner.py`.
+    - **Inputs:** Shared Context + "Implement User Login" Task.
+    - **Process:** The script calls the LLM API (requires `OPENAI_API_KEY`) for both prompts 3 times (to average variance).
+    - **Data Collection:** Script writes to `tests/ab_results/`:
+        - `metrics.json` (Input/Output token counts, latency).
+        - `output_control_run1.md`, `output_variant_run1.md`, etc.
+
+3.  **Evaluation Phase (Agent-as-Evaluator):**
+    - The Agent reads the generated artifacts (`output_*.md`).
+    - **Adherence Check:** The Agent verifies if specific constraints were met (e.g., "Did it list 3 files?", "Did it format as Markdown?").
+    - **Semantic Quality:** The Agent compares the "reasoning depth" using a rubric.
+
+4.  **Decision Gate:**
+    - IF `Variant_Tokens` < `Control_Tokens` (-10%) AND `Adherence` == PASS:
+        - **Promote Variant** to Production.
+    - ELSE:
+        - **Discard Variant** and Analyze failure.
+
 ---
 
 ### O7: Session Context Management (High Impact)
@@ -1186,7 +1213,12 @@ CONTEXT:
 DELIVERABLES:
 1. Create `02_analyst_standardized.md` (new version).
 2. Refactor to use explicit headers and `skill-phase-context`.
-3. A/B Test: Run identical task on both versions. Compare token usage and output quality.
+3. **Execute A/B Test Results:**
+   - **Control Group:** Run `examples/skill-testing/test_skill.py` with current `02_analyst`.
+   - **Variant Group:** Run same test with `02_analyst_standardized`.
+   - **Metrics required:** Input Tokens, Output Tokens, Instruction Compliance (Pass/Fail).
+
+CRITICAL: Do NOT replace the original file until A/B test confirms neutral/positive impact.
 ```
 
 ---
