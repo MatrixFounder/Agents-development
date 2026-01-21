@@ -35,13 +35,13 @@ pie title Token Reduction by Area
 
 ```mermaid
 graph TD
-    subgraph BEFORE [v3.4 (Legacy)]
+    subgraph BEFORE ["v3.4 (Legacy)"]
         style BEFORE fill:#f9f9f9,stroke:#333,stroke-width:2px
         B1[GEMINI.md] --> B2[Load ALL Skills]
         B2 --> B3[Context: 9,772 tokens]
     end
 
-    subgraph AFTER [v3.5 (Optimized)]
+    subgraph AFTER ["v3.5 (Optimized)"]
         style AFTER fill:#e6fffa,stroke:#009688,stroke-width:2px
         A1[GEMINI.md] --> A2[Load TIER 0 Only]
         A2 --> A3[Context: 2,082 tokens]
