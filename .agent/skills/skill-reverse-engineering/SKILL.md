@@ -1,6 +1,7 @@
 ---
 name: skill-reverse-engineering
 description: "Regenerate architecture documentation from codebase analysis."
+tier: 2
 version: 1.0
 ---
 # Reverse Engineering Skill

@@ -1,6 +1,7 @@
 ---
 name: security-audit
 description: "Security vulnerability assessment (OWASP, secrets, dependencies)."
+tier: 2
 version: 1.0
 ---
 # Security Audit

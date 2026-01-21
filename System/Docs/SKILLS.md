@@ -7,6 +7,7 @@ The Agentic System v3.0 relies on a modular **Skills System**. Skills are reusab
 - [How it Works](#️-how-it-works)
 - [Available Skills](#-available-skills)
 - [Dynamic Loading](#-dynamic-loading)
+- [Skill Tiers](#-skill-tiers)
 - [Isolated Testing](#-isolated-testing-skills)
 - [Best Practices](#-best-practices)
 
@@ -113,6 +114,15 @@ When an Agent is initialized:
 
 [Task Description]
 ```
+
+## 🏷️ Skill Tiers
+
+To optimize token usage, skills are classified into three tiers (Lazy Loading Protocol).
+**Authoritative Source:** [System/Docs/SKILL_TIERS.md](SKILL_TIERS.md)
+
+1.  **TIER 0 (System Foundation)**: Always loaded at bootstrap. Mandatory for basic operation (e.g., `skill-safe-commands`).
+2.  **TIER 1 (Phase-Triggered)**: Loaded automatically when entering a specific phase (Analysis, Planning, etc.).
+3.  **TIER 2 (Extended)**: Loaded only on explicit request or for specialized workflows.
 
 ## 🧪 Isolated Testing Skills
 

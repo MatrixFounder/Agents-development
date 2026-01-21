@@ -1,6 +1,7 @@
 ---
 name: skill-update-memory
 description: "Auto-update .AGENTS.md files based on code changes from git diff."
+tier: 2
 version: 1.0
 ---
 # Update Memory Skill

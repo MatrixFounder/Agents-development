@@ -1,6 +1,7 @@
 ---
 name: vdd-sarcastic
 description: Adversarial verification with a sarcastic/provocative tone to enforce thicker looking glass.
+tier: 2
 version: 1.0
 ---
 # VDD Sarcastic (The Sarcasmotron)

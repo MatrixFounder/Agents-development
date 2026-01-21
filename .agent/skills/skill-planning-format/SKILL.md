@@ -1,6 +1,7 @@
 ---
 name: skill-planning-format
 description: Standard structure and templates for Development Plans (docs/PLAN.md) and Tasks.
+tier: 1
 version: 1.0
 ---
 

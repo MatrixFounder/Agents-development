@@ -1,6 +1,7 @@
 ---
 name: skill-adversarial-performance
 description: "Performance critic in adversarial/sarcastic style. Part of VDD Multi-Adversarial pipeline."
+tier: 2
 version: 1.0
 ---
 # Adversarial Performance Critic

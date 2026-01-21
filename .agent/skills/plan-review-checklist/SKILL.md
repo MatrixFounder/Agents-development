@@ -1,6 +1,7 @@
 ---
 name: plan-review-checklist
 description: Detailed checklist for verifying Development Plans.
+tier: 1
 version: 1.0
 ---
 # Plan Review Checklist

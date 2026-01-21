@@ -1,6 +1,7 @@
 ---
 name: requirements-analysis
 description: Process for gathering and refining requirements into a structured TASK.
+tier: 1
 version: 1.3
 ---
 # Requirements Analysis

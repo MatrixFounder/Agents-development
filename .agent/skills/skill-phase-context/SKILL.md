@@ -1,6 +1,7 @@
 ---
 name: skill-phase-context
 description: "Skill loading tiers: TIER 0 (always), TIER 1 (phase-triggered), TIER 2 (extended). Defines when to load which skills."
+tier: 2
 version: 1.0
 ---
 # Phase Context Loading Protocol

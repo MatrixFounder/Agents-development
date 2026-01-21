@@ -1,6 +1,7 @@
 ---
 name: skill-safe-commands
 description: "Centralized list of commands safe for auto-execution without user approval. Single source of truth."
+tier: 0
 version: 1.0
 ---
 # Safe Commands Protocol

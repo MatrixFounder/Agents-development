@@ -1,6 +1,7 @@
 ---
 name: documentation-standards
 description: Standards for code documentation, comments, and artifact updates.
+tier: 1
 version: 1.2
 ---
 # Documentation Standards

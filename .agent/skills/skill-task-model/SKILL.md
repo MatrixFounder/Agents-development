@@ -1,6 +1,7 @@
 ---
 name: skill-task-model
 description: Standard models and examples for Technical Specifications (TASK).
+tier: 1
 version: 1.0
 ---
 

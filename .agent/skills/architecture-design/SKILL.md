@@ -1,6 +1,7 @@
 ---
 name: architecture-design
 description: Guidelines for designing scalable and modular system architecture.
+tier: 1
 version: 1.1
 ---
 # Architecture Design

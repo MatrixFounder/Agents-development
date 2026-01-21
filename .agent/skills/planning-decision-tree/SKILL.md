@@ -1,6 +1,7 @@
 ---
 name: planning-decision-tree
 description: Decision tree for breaking down tasks and prioritizing work.
+tier: 1
 version: 1.1
 ---
 # Planning Decision Tree

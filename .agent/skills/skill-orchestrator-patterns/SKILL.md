@@ -2,7 +2,7 @@
 name: skill-orchestrator-patterns
 description: "Stage Cycle pattern and dispatch table for Orchestrator compression. Defines common Init→Review→Revision flow."
 version: 1.0
-tier: 1
+tier: 2
 ---
 # Orchestrator Patterns
 

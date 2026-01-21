@@ -1,6 +1,7 @@
 ---
 name: tdd-stub-first
 description: Test-Driven Development with Stub-First approach.
+tier: 1
 version: 1.0
 ---
 # TDD & Stub-First Strategy

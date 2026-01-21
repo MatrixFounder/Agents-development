@@ -1,6 +1,7 @@
 ---
 name: code-review-checklist
 description: "Structured checklist for code review: bugs, style, performance, security, docs."
+tier: 1
 version: 1.1
 ---
 # Code Review Checklist

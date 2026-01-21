@@ -24,6 +24,27 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.6.0 — O5: Skill Tiers Formalization (Optimization)** (Stability)
+
+#### **Added**
+* **New Document: `System/Docs/SKILL_TIERS.md`**: Authoritative logic for Skill Loading Tiers.
+    * Defines strict rules for TIER 0 (Bootstrap), TIER 1 (Phase-Triggered), and TIER 2 (Extended).
+    * Serves as single source of truth for loading protocols.
+
+#### **Changed**
+* **Skills Metadata**: Updated **ALL 28** `SKILL.md` files in `.agent/skills/` with explicit `tier: [0|1|2]` property.
+    * **TIER 0** (3 skills): `core-principles`, `skill-safe-commands`, `artifact-management` (Verified).
+    * **TIER 1** (14 skills): Phase-specific skills (e.g. `requirements-analysis`, `architecture-design`).
+    * **TIER 2** (11 skills): Extended skills (e.g. `architecture-format-extended`, `skill-reverse-engineering`).
+* **`System/Docs/SKILLS.md`**: Added dedicated "Skill Tiers" section referencing the authoritative document.
+
+#### **Impact**
+* **Reliability**: Officially "locks in" the Lazy Loading optimization (O1) by strictly enforcing metadata on all skills.
+* **Maintainability**: Future skills must declare their tier explicitly.
+
+---
+
+
 ### **v3.5.5 — O2: Orchestrator Compression (Optimization)** (Token Savings)
 
 #### **Added**
@@ -531,6 +552,27 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.6.0 — O5: Формализация Уровней Навыков** (Стабильность)
+
+#### **Добавлено**
+* **Новый документ: `System/Docs/SKILL_TIERS.md`**: Авторитетное описание логики загрузки навыков.
+    * Определяет строгие правила для TIER 0 (Bootstrap), TIER 1 (По фазе) и TIER 2 (Расширенные).
+    * Служит единым источником истины для протоколов загрузки.
+
+#### **Изменено**
+* **Метаданные Навыков**: Обновлены **ВСЕ 28** файлов `SKILL.md` в `.agent/skills/`, добавлено свойство `tier: [0|1|2]`.
+    * **TIER 0** (3 навыка): `core-principles`, `skill-safe-commands`, `artifact-management` (Верифицировано).
+    * **TIER 1** (14 навыков): Фазовые навыки (напр. `requirements-analysis`, `architecture-design`).
+    * **TIER 2** (11 навыков): Расширенные навыки (напр. `architecture-format-extended`, `skill-reverse-engineering`).
+* **`System/Docs/SKILLS.md`**: Добавлена новая секция "Skill Tiers" со ссылкой на авторитетный документ.
+
+#### **Результат**
+* **Надёжность**: Официально "закрепляет" оптимизацию ленивой загрузки (O1), требуя явные метаданные для всех навыков.
+* **Поддержка**: Будущие навыки обязаны явно декларировать свой уровень (tier).
+
+---
+
 
 ### **v3.5.5 — O2: Сжатие Оркестратора (Оптимизация)** (Token Savings)
 

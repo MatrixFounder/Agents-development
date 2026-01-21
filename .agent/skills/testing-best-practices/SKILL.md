@@ -1,6 +1,7 @@
 ---
 name: testing-best-practices
 description: Best practices for implementing effective and maintainable tests.
+tier: 2
 version: 1.1
 ---
 # Testing Best Practices

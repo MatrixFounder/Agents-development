@@ -1,6 +1,7 @@
 ---
 name: developer-guidelines
 description: "Specific guidelines for the Developer role: strict adherence, no unsolicited refactoring, documentation."
+tier: 1
 version: 1.0
 ---
 # Developers Guidelines

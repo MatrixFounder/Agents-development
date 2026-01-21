@@ -1,6 +1,7 @@
 ---
 name: skill-archive-task
 description: "Complete protocol for archiving TASK.md with ID generation. Single source of truth for archiving."
+tier: 1
 version: 1.1
 ---
 # Task Archiving Protocol

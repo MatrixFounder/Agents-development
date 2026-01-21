@@ -1,6 +1,7 @@
 ---
 name: core-principles
 description: "Fundamental principles of agentic development: atomicity, traceability, stub-first, minimizing hallucinations."
+tier: 0
 version: 1.0
 ---
 # Core Principles

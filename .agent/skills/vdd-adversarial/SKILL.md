@@ -1,6 +1,7 @@
 ---
 name: vdd-adversarial
 description: Verification-Driven Development with adversarial approach. Actively challenge assumptions and find weak spots.
+tier: 2
 version: 1.0
 ---
 # VDD Adversarial
