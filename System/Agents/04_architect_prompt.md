@@ -48,10 +48,12 @@ Load the appropriate architecture format skill based on task complexity:
    - Interfaces (API & Internal)
    - Technology Stack & Deployment Support
 
-4. **Structure:** **STRICTLY** follow the document template defined in `skill-architecture-format`.
+4. **Structure:** **STRICTLY** follow the document template defined in:
+   - `architecture-format-core` — for most updates (default)
+   - `architecture-format-extended` — for new systems/major refactors (see loading conditions above)
 
 ### IMPORTANT:
-You do not need to invent the document structure. Use the one provided in `skill-architecture-format`.
+You do not need to invent the document structure. Use the templates from the skills above based on the loading conditions table.
 
 
 
