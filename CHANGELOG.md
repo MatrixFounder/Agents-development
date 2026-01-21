@@ -24,6 +24,30 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.5.4 — O1: Skill Phase Context (Optimization)** (Token Savings)
+
+#### **Added**
+* **New Skill: `skill-phase-context`**: Skill loading tiers protocol for optimized token consumption.
+    * **TIER 0** (Always Load): `core-principles`, `skill-safe-commands`, `artifact-management` (~2,082 tokens).
+    * **TIER 1** (Phase-Triggered): Phase→Skills mapping table for on-demand loading.
+    * **TIER 2** (Extended): Specialized skills loaded only when explicitly requested.
+    * Loading rules and flow diagram for agent reference.
+
+#### **Changed**
+* **`.gemini/GEMINI.md`**: Added explicit TIER 0 Skills section with bootstrap loading instructions.
+* **`.cursorrules`**: Added explicit TIER 0 Skills section with bootstrap loading instructions.
+* **`System/Docs/SKILLS.md`**: Added `skill-phase-context` entry in Core & Process section.
+
+#### **Optimization Impact**
+| Metric | Before | After | Savings |
+|--------|--------|-------|---------|
+| Baseline session load | ~9,772 tokens | ~2,082 tokens | **-79%** |
+| TIER 1 skills | All loaded upfront | On-demand per phase | -3,000 to -5,000 tokens |
+
+> **Note:** Automation (safe-commands) preserved — `mv`, `git`, tests still auto-run.
+
+---
+
 ### **v3.5.3 — O3: architecture-format Split (Optimization)** (Token Savings)
 
 #### **Added**
@@ -479,6 +503,30 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.5.4 — O1: Skill Phase Context (Оптимизация)** (Token Savings)
+
+#### **Добавлено**
+* **Новый навык: `skill-phase-context`**: Протокол уровней загрузки навыков для оптимизации потребления токенов.
+    * **TIER 0** (Всегда загружать): `core-principles`, `skill-safe-commands`, `artifact-management` (~2,082 токена).
+    * **TIER 1** (По фазе): Таблица соответствия фаза→навыки для загрузки по требованию.
+    * **TIER 2** (Расширенные): Специализированные навыки, загружаемые только по явному запросу.
+    * Правила загрузки и диаграмма потока для агентов.
+
+#### **Изменено**
+* **`.gemini/GEMINI.md`**: Добавлена явная секция TIER 0 Skills с инструкциями bootstrap-загрузки.
+* **`.cursorrules`**: Добавлена явная секция TIER 0 Skills с инструкциями bootstrap-загрузки.
+* **`System/Docs/SKILLS.md`**: Добавлена запись `skill-phase-context` в секцию Core & Process.
+
+#### **Результат оптимизации**
+| Метрика | До | После | Экономия |
+|---------|-----|-------|----------|
+| Базовая загрузка сессии | ~9,772 токена | ~2,082 токена | **-79%** |
+| TIER 1 навыки | Все сразу | По требованию | -3,000 — -5,000 токенов |
+
+> **Примечание:** Автоматизация (safe-commands) сохранена — `mv`, `git`, тесты выполняются автоматически.
+
+---
 
 ### **v3.5.3 — O3: Разделение architecture-format (Оптимизация)** (Token Savings)
 

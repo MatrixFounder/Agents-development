@@ -18,6 +18,12 @@ The Orchestrator natively supports structured tool calling (Function Calling).
 3.  **Priority**: ALWAYS use native tools (`run_tests`, `git_ops`, `file_ops`, `generate_task_archive_filename`) instead of asking the user to run shell commands.
 4.  **Reference**: See `System/Docs/ORCHESTRATOR.md` (if available) for details.
 
+### TIER 0 Skills (Boot at Session Start) — MANDATORY
+> **ALWAYS LOAD at session bootstrap — see `skill-phase-context` for full protocol.**
+> - `core-principles` — Anti-hallucination, Stub-First methodology
+> - `skill-safe-commands` — Automation enablement (auto-run commands)
+> - `artifact-management` — File protocol, archiving
+
 ### Safe Commands (Auto-Run)
 > **MANDATORY**: You MUST read **`skill-safe-commands`** to load the authoritative list of auto-run commands.
 > All commands listed in that skill (including `mv`, `ls`, `git`, tests) are `SafeToAutoRun: true`.
