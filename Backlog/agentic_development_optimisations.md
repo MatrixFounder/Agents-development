@@ -151,12 +151,12 @@
 │  ├── O1: Lazy Loading Protocol                                             │
 │  ├── O2: Orchestrator Compression                                          │
 │  ├── O3: architecture-format Split                                         │
-│  └── O4: Conversation Checkpointing                                        │
+│  └── O4: Conversation Checkpointing (Merged into O7)                       │
 │                                                                             │
 │  v3.6.0 — MEDIUM-TERM (O5-O7)                      Target: -18K tokens     │
-│  ├── O5: Skill Tiers (core vs extended)                                    │
-│  ├── O6: Agent Prompt Compression                                          │
-│  └── O7: Context Checkpointing                                             │
+│  ├── O5: Skill Tiers (Formalization)                                       │
+│  ├── O6: Agent Prompt Standardization                                      │
+│  └── O7: Session Context Management                                        │
 │                                                                             │
 │  v4.0.0 — STRATEGIC (O8-O10)                       Enterprise-ready        │
 │  ├── O8: Domain Isolation                                                  │
@@ -522,41 +522,60 @@ Now that O1 is implemented and verified (v3.5.4), O5 is the necessary follow-up 
 
 ---
 
-### O6: Agent Prompt Compression
+### O6: Agent Prompt Standardization (Optimization)
 
 **Status:** PROTOTYPE REQUIRED
 
 **Analysis:**
-Compressing natural language into a "DSL" (e.g., `TASK: Route -> Analyst`) saves tokens but risks reducing the specific nuance that the LLM uses to make decisions. 3.5 Sonnet is smart, but "over-compression" can lead to instruction following failures.
+The success of O2 (Orchestrator Compression) proved that "Structured Patterns" (Input → Flow → Decision) are more effective than cryptic DSLs.
+Instead of "compressing" prompts to be shorter, we should **standardize** them to use the same structural rigidity as the Orchestrator.
+
+**Proposal:**
+Refactor all Agent Prompts (`02`-`09`) to use a standard schema:
+1. **Identity & Prime Directive** (from `core-principles`)
+2. **Context Loading** (from `skill-phase-context`)
+3. **Task Loop Pattern** (Input → Process → Artifact → Review)
 
 **Recommendation:**
-- **Do NOT implement blindly.**
-- **Action:** Run an A/B test on *one* agent (e.g., `02_analyst`) with a compressed prompt.
-- **Success Metric:** If token usage drops 20% AND quality stays 100%, roll out.
-- **Strategy:** Use "Structured Natural Language" (keywords + bullet points) rather than cryptic DSL.
+- **Action:** Refactor `02_analyst_prompt.md` as the prototype.
+- **Success Metric:** Clear separation of "Boilerplate" vs "Logic".
+- **Risk:** Low (if using verified patterns).
 
-**Effort:** 8-12 hours (including A/B testing).
+**Effort:** 6-8 hours.
 
 ---
 
-### O7: Context Checkpointing (High Impact)
+### O7: Session Context Management (High Impact)
 
 **Status:** STRATEGIC PRIORITY
 
 **Analysis:**
-This is the "Holy Grail" for long-running tasks. O1-O3 reduced the "static" overhead. O7 tackles the "dynamic" accumulation of conversation history.
-Technical challenge: The agent needs to "boot" from a state file (`.agent/state/session.yaml`) rather than relying on the chat log.
+O1-O5 solved "Static Context" (Codebase & Rules). The remaining bottleneck is "Dynamic Context" (Conversation History).
+We need a way to "Reboot" the agent mid-session without losing the thread of the conversation.
 
-**Feasibility:**
-- **High Feasibility:** Writing the state file is easy (via `write_to_file`).
-- **Medium Feasibility:** Getting the agent to *read* and *respect* it requires a robust "Boot-Up Skill" added to TIER 0.
+**Solution: `session_state.md` Artifact**
+Instead of relying on Chat History (which grows linearly), we maintain a compact State File.
+
+```yaml
+# .agent/sessions/current_session.md
+session_id: "..."
+phase: "Execution"
+current_task: "task-012-login"
+active_blockers: []
+decision_log:
+  - "Use JWT"
+  - "Skip Oauth for now"
+recent_events:
+  - "Developer fixed bug in AuthController"
+  - "Reviews passed"
+```
 
 **Recommendation:**
-- **Plan for v3.6.0.**
-- **Action:** Create `skill-session-state` (TIER 0) that checks for `session.yaml` on load.
-- **Risk:** High (hallucination of previous context if not explicitly in file).
+- **Action:** Create `skill-session-state` (TIER 0).
+- **Trigger:** Read on boot, Write after every Phase Boundary.
+- **Payoff:** Allows "Squashing" chat history to zero while keeping context.
 
-**Effort:** 16-24 hours.
+**Effort:** 12-16 hours.
 
 ---
 
@@ -565,23 +584,26 @@ Technical challenge: The agent needs to "boot" from a state file (`.agent/state/
 **Status:** DEFER
 
 **Analysis:**
-Splitting architecture by domain (`docs/domains/trading/ARCHITECTURE.md`) is creating complexity that is presently unnecessary. Current projects are monorepos or single-domain.
+Splitting architecture by domain (`docs/domains/trading/ARCHITECTURE.md`) adds complexity overhead not justified for current project sizes.
+
+**Condition for Activation:**
+1. `docs/ARCHITECTURE.md` exceeds 3,000 lines.
+2. Distinct teams working on isolated modules.
 
 **Recommendation:**
-- **Defer** until a multi-domain project actually exists. Avoid premature optimization.
-- **Trigger:** When `docs/ARCHITECTURE.md` exceeds 5,000 tokens.
+- **Wait.** Premature optimization.
 
 ---
 
 ### O9: Multi-Session Pipeline
 
-**Status:** BLOCKED (Tooling)
+**Status:** BLOCKED (External Tooling)
 
 **Analysis:**
-Requires external tooling (IDE scripts or CLI) to mechanically start/stop sessions. The agent cannot do this itself.
+Requires a CLI wrapper (Python/Bash) to mechanically manage the context window (Task 037). Agent cannot self-terminate effectively without external orchestrator.
 
 **Recommendation:**
-- **Hold** until external CLI wrapper is built.
+- **Hold** until `ag-cli` tool is built.
 
 ---
 
@@ -590,31 +612,33 @@ Requires external tooling (IDE scripts or CLI) to mechanically start/stop sessio
 **Status:** DEFER
 
 **Analysis:**
-Dependent on O8.
+Dependent on O8 (Domains) and O9 (Multi-Session).
 
 **Recommendation:**
-- **Defer.**
+- **Wrap into O7 (Session Context).** Hierarchical context is just a property of a good Session State.
 
 ---
 
-## Feasibility Report (2026-01-21)
+## Feasibility Report (2026-01-21 Post-O5)
 
 ### 1. Executive Summary
-Following the successful implementation of O1 (Lazy Loading), O2 (Orchestrator Compression), and O3 (Architecture Split), the system overhead has been reduced significantly. The next phase should focus on **O5 (Formalization)** and **O7 (Context Checkpointing)**.
+**Milestone Reached:** Foundation Optimizations (O1-O5) are **COMPLETE**.
+- **Static Overhead:** Reduced by ~70% (Lazy Loading + Orchestrator Compression).
+- **Stability:** Locked in via Skill Tiers (O5).
+- **Next Frontier:** Dynamic Context Management (O7) and Agent Precision (O6).
 
-### 2. ROI Analysis
+### 2. ROI Analysis (Updated)
 
-| Optimization | Effort | Token Savings | ROI Strategy |
-|--------------|--------|---------------|--------------|
-| **O5: Tiers** | Low | N/A (Stability) | **MUST DO**. Locks in O1 gains. |
-| **O6: Compression** | Medium | ~2-3k | **PROTOTYPE**. Risky if not tested. |
-| **O7: Checkpoints** | High | ~10-20k | **HIGH PAYOFF**. Critical for long tasks. |
-| **O8: Domains** | High | Variable | **WAIT**. Premature for now. |
+| Optimization | Status | Effort | ROI Strategy |
+|--------------|--------|--------|--------------|
+| **O6: Prompt Std.** | **PROTOTYPE** | Medium | Standardize "DSL" patterns proved in O2. |
+| **O7: Checkpoints** | **HIGH PRIORITY** | High | Vital for sessions > 50 turns. |
+| **O8: Domains** | Defer | High | Wait for mono-repo use cases. |
+| **O9: Multi-Session**| Blocked | High | Needs CLI tooling. |
 
 ### 3. Immediate Next Steps
-1.  **Execute O5:** Formalize Skill Tiers to prevent regression.
-2.  **Prototype O6:** Create `02_analyst_compact.md` and test.
-3.  **Design O7:** Draft the schema for `session.yaml`.
+1.  **Design O7 (Session State):** Create schema for `session_state.md`.
+2.  **Experiment O6:** Apply "Task Pattern" (from O2) to Analyst prompt.
 
 ---
 
@@ -799,6 +823,34 @@ Following the successful implementation of O1 (Lazy Loading), O2 (Orchestrator C
 - [ ] At least one successful long session with checkpointing
 - [ ] Token usage reduced vs baseline (measurable)
 - [ ] No critical decisions lost in summarization
+
+---
+
+### Phase 5: O5 — Skill Tiers Formalization (2-3 hours) ✅ COMPLETED
+
+> [!NOTE]
+> **Completed: 2026-01-21** | Version: v3.6.0
+
+**Prerequisite:** O1 (Completed)
+
+**Tasks:**
+1. [x] Create `System/Docs/SKILL_TIERS.md` (Authoritative Source)
+2. [x] Update ALL 28 `SKILL.md` files with `tier: [0|1|2]` metadata
+3. [x] **CROSS-CHECK:** Verify 100% coverage
+   - [x] Tier 0 skills (`core-principles`, `safe-commands`, `artifact-management`) tagged 0
+   - [x] All 14 Tier 1 skills tagged 1
+   - [x] All 11 Tier 2 skills tagged 2
+4. [x] Update `System/Docs/SKILLS.md` catalog
+
+**DoD:**
+- [x] `SKILL_TIERS.md` exists and is accurate
+- [x] All skills have valid metadata
+- [x] Lazy Loading O1 is now mechanically enforced by metadata
+
+**Actual Results:**
+- 100% Metadata Coverage (Verified by Walkthrough)
+- Documentation Sync: `SKILLS.md` and `CHANGELOG.md` updated
+
 
 ---
 
@@ -1031,7 +1083,7 @@ CRITICAL: Backup first. Test all 14 scenarios after compression.
 RESULT: 11,195 → 4,522 bytes (-60%), commit e5f7312
 ```
 
-### Prompt 4: O4 — Conversation Checkpointing [SKIPPED]
+### Prompt 4: O4 — Conversation Checkpointing [ARCHIVED/REPLACED BY O7]
 
 ```
 TASK: Implement O4 from Backlog/agentic_development_optimisations.md
@@ -1079,7 +1131,7 @@ DELIVERABLES:
 
 ### Prompt 6: O5 — Skill Tiers Formalization
 
-> **Status:** READY FOR IMPLEMENTATION
+> **Status:** ✅ COMPLETED (v3.6.0)
 
 ```markdown
 TASK: Implement O5 from Backlog/agentic_development_optimisations.md
@@ -1100,12 +1152,51 @@ DELIVERABLES:
 CRITICAL: Do not modify the prompt logic (that was O1). This is purely documentation and metadata enforcement.
 ```
 
+### Prompt 7: O7 — Session Context Management
+
+> **Status:** STRATEGIC PRIORITY
+
+```markdown
+TASK: Implement O7 (Session Context) from Backlog/agentic_development_optimisations.md
+
+CONTEXT:
+- Goal: Create `skill-session-state` to manage dynamic context (conversation history replacement).
+- Strategy: Maintain a `current_session.md` state file.
+
+DELIVERABLES:
+1. Create `.agent/skills/skill-session-state/SKILL.md`.
+2. Define YAML schema for session state (Phase, Task, Blockers, Decisions).
+3. "Boot Protocol": Update `core-principles` or `GEMINI.md` to instruct reading this file on boot.
+4. "Update Protocol": Define when to write to this file (Task Boundary).
+
+CRITICAL: This allows us to clear chat history without losing context.
+```
+
+### Prompt 8: O6 — Agent Prompt Standardization
+
+> **Status:** PROTOTYPE
+
+```markdown
+TASK: Prototype O6 (Agent Prompt Standardization)
+
+CONTEXT:
+- Goal: Verify if "Standardized Patterns" (Header -> Context -> Loop) improve stability vs raw text.
+- Target: `02_analyst_prompt.md`.
+
+DELIVERABLES:
+1. Create `02_analyst_standardized.md` (new version).
+2. Refactor to use explicit headers and `skill-phase-context`.
+3. A/B Test: Run identical task on both versions. Compare token usage and output quality.
+```
+
 ---
 
 ## Changelog
 
 | Date | Author | Change |
 |------|--------|--------|
+| 2026-01-21 | Adversarial Architect | **O5 COMPLETED** (Skill Tiers Formalization) |
+| 2026-01-21 | Adversarial Architect | Updated Roadmap O6-O10 (Post-O5 Strategy) |
 | 2026-01-21 | Adversarial Architect | **O3 COMPLETED**: Marked as done, added Lessons Learned, updated prompts with checklists |
 | 2026-01-21 | Adversarial Architect | Final VDD review, implementation prompts |
 | 2026-01-21 | Adversarial Architect | Corrected skill tiers, cross-check requirements |
