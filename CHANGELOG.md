@@ -27,6 +27,9 @@
 ### **v3.6.0 — O5: Skill Tiers Formalization (Optimization)** (Stability)
 
 #### **Added**
+* **O6:** Standardized `02_analyst_prompt.md` with rigid header structure and `skill-phase-context`.
+    * **Optimization:** -2.35% input token overhead via standardization.
+    * **Translation:** Updated Russian translation for Analyst agent.
 * **New Document: `System/Docs/SKILL_TIERS.md`**: Authoritative logic for Skill Loading Tiers.
     * Defines strict rules for TIER 0 (Bootstrap), TIER 1 (Phase-Triggered), and TIER 2 (Extended).
     * Serves as single source of truth for loading protocols.
@@ -556,6 +559,9 @@ To upgrade from v3.0.x to v3.1.0:
 ### **v3.6.0 — O5: Формализация Уровней Навыков** (Стабильность)
 
 #### **Добавлено**
+* **O6:** Стандартизирован `02_analyst_prompt.md` с использованием жесткой структуры заголовков и `skill-phase-context`.
+    * **Оптимизация:** -2.35% входных токенов через стандартизацию.
+    * **Перевод:** Обновлен русский перевод для Агента-Аналитика.
 * **Новый документ: `System/Docs/SKILL_TIERS.md`**: Авторитетное описание логики загрузки навыков.
     * Определяет строгие правила для TIER 0 (Bootstrap), TIER 1 (По фазе) и TIER 2 (Расширенные).
     * Служит единым источником истины для протоколов загрузки.

@@ -1,25 +1,19 @@
-# Development Plan: O1-O3 Validation
+# Implementation Plan - Enrich O6 Prompt
 
-## Task Execution Sequence
+## User Review Required
+None. This is a documentation enrichment task.
 
-### Stage 1: Execution Phase Verification (O1, O2)
-- **Task 036.1** — Verify Safe Commands & Orchestrator Execution
-  - Use Cases: UC-01
-  - Description File: `docs/tasks/task-036-01-execution-verification.md`
-  - Priority: Critical
-  - Dependencies: none
+## Proposed Changes
+### Backlog
+#### [MODIFY] [agentic_development_optimisations.md](file:///Users/sergey/Antigravity/agentic-development/Backlog/agentic_development_optimisations.md)
+- Locate "### Prompt 8: O6 — Agent Prompt Standardization"
+- Insert "⚠️ LESSONS FROM O1-O5 — PROTOTYPE CHECKLIST" section before the "CRITICAL" line or within the prompt block.
+- Checklist checked items:
+  - TIER 0 Compliance (Lesson from O1/O5)
+  - Pattern Validity (Lesson from O2)
+  - A/B Testing rigor (Lesson from O2)
+  - Translation Impact (Lesson from O3)
 
-### Stage 2: Token Analysis (O1, O2, O3)
-- **Task 036.2** — Measure and Compare Token Usage
-  - Use Cases: UC-03
-  - Description File: `docs/tasks/task-036-02-token-analysis.md`
-  - Priority: High
-  - Dependencies: Task 036.1
-
-## Use Case Coverage
-
-| Use Case | Tasks |
-|-----------|--------|
-| UC-01 (Standard Pipeline) | 036.1 |
-| UC-02 (Architecture Split) | Verified in Architecture Phase |
-| UC-03 (Token Usage) | 036.2 |
+## Verification Plan
+### Manual Verification
+- Read the modified file to confirm the checklist is present and correctly formatted.

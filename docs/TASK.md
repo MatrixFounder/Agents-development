@@ -1,35 +1,26 @@
-# Task 039: Formalize Skill Tiers (O5)
+# Task 040: Enrich O6 Prompt with Lessons Learned
 
 > **Status:** ACTIVE
 > **Created:** 2026-01-21
 > **Owner:** Orchestrator
 
 ## 0. Meta Information
-- **Task ID:** 039
-- **Slug:** `skill-tiers-formalization`
+- **Task ID:** 040
+- **Slug:** `enrich-o6-prompt`
 
 ## 1. Goal
-Formalize the "Skill Tiers" mechanism by creating authoritative documentation and enforcing metadata in all `SKILL.md` files. This locks in the gains from Optimization O1 (Lazy Loading).
+Enrich the description for Optimization O6 (Agent Prompt Standardization) in `Backlog/agentic_development_optimisations.md` by adding a "Lessons Learned" checklist derived from previous optimizations (O1-O5).
 
 ## 2. Scope
-- **Source of Truth:** `Backlog/agentic_development_optimisations.md` (Section O5).
-- **New Document:** `System/Docs/SKILL_TIERS.md`.
-- **Modifications:** All `SKILL.md` files in `.agent/skills/`.
+- **Target File:** `Backlog/agentic_development_optimisations.md`.
+- **Target Section:** Prompt 8 (O6).
+- **Source Material:** Lessons from O1, O2, O3, O5 in the same file.
 
 ## 3. Deliverables
-1.  [x] `System/Docs/SKILL_TIERS.md` — Authoritative definition of Tiers 0, 1, 2.
-2.  [x] Updated `SKILL.md` files with `tier: [0|1|2]` in YAML frontmatter.
-    -   [x] Tier 0: `core-principles`, `safe-commands`, `artifact-management`.
-    -   [x] Tier 1: Phase-specific skills (mapped in docs).
-    -   [x] Tier 2: All others (default).
-3.  [x] Verification Report (via Walkthrough).
+1. [ ] Updated `Backlog/agentic_development_optimisations.md` with:
+   - A new "⚠️ LESSONS FROM O1-O5 — PROTOTYPE CHECKLIST" section in Prompt 8.
+   - Specific checks for TIER 0 compliance, Pattern Validation, A/B Testing, and Translation Impact.
 
 ## 4. Implementation Plan
-1.  **Documentation:** Create `System/Docs/SKILL_TIERS.md` based on Backlog table.
-2.  **Updates:** Iterate through all skills:
-    -   Read header.
-    -   Inject `tier: X` property.
-    -   Save.
-3.  **Verification:**
-    -   Grep for `tier:` to ensure coverage.
-    -   Verify Tier 0 specifically.
+1.  **Edit:** Modify `Backlog/agentic_development_optimisations.md`.
+2.  **Verify:** Read the file to ensure formatting matches the user's request and existing style.
