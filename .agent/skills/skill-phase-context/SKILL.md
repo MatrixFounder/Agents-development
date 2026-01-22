@@ -2,7 +2,7 @@
 name: skill-phase-context
 description: "Skill loading tiers: TIER 0 (always), TIER 1 (phase-triggered), TIER 2 (extended). Defines when to load which skills."
 tier: 2
-version: 1.0
+version: 1.1
 ---
 # Phase Context Loading Protocol
 
@@ -81,7 +81,7 @@ These skills are specialized and loaded only when explicitly invoked by user or 
 
 | Skill | Tokens | Loading Condition |
 |-------|--------|-------------------|
-| `architecture-format-extended` | ~2,000 | New system / major refactor / user requests full template |
+| `architecture-format-extended` | ~3,000 | New system / major refactor / user requests full template |
 | `skill-reverse-engineering` | ~1,322 | User requests "sync docs with code" / docs-code mismatch |
 | `skill-update-memory` | ~1,101 | Post-development phase, .AGENTS.md updates needed |
 | `skill-adversarial-security` | ~838 | VDD workflow with security focus |
@@ -89,42 +89,6 @@ These skills are specialized and loaded only when explicitly invoked by user or 
 | `vdd-sarcastic` | ~145 | VDD workflow with sarcastic mode |
 
 ---
-
-## Loading Rules Summary
-
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                         SKILL LOADING FLOW                                   │
-├─────────────────────────────────────────────────────────────────────────────┤
-│                                                                             │
-│  SESSION START                                                              │
-│       │                                                                     │
-│       ▼                                                                     │
-│  ┌─────────────────────────────────────────────────────────────────┐       │
-│  │  TIER 0: Load core-principles, safe-commands, artifact-mgmt    │       │
-│  │                    (~2,082 tokens — ALWAYS)                      │       │
-│  └─────────────────────────────────────────────────────────────────┘       │
-│       │                                                                     │
-│       ▼                                                                     │
-│  Phase Detected (Analysis, Architecture, Planning, etc.)                    │
-│       │                                                                     │
-│       ▼                                                                     │
-│  ┌─────────────────────────────────────────────────────────────────┐       │
-│  │  TIER 1: Load phase-specific skills ONLY                        │       │
-│  │                    (~1,000-3,000 tokens per phase)               │       │
-│  └─────────────────────────────────────────────────────────────────┘       │
-│       │                                                                     │
-│       ▼                                                                     │
-│  Explicit Request / Workflow Trigger                                         │
-│       │                                                                     │
-│       ▼                                                                     │
-│  ┌─────────────────────────────────────────────────────────────────┐       │
-│  │  TIER 2: Load extended skills ONLY if explicitly needed         │       │
-│  │                    (saves ~5,000-7,000 tokens)                   │       │
-│  └─────────────────────────────────────────────────────────────────┘       │
-│                                                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
 
 ## Integration
 

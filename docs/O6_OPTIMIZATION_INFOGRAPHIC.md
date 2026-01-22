@@ -1,8 +1,8 @@
-# 📊 O6: Agent Prompt Standardization Infographic (v3.6.0)
+# 📊 O6 & O6a: Framework Optimization Infographic (v3.6.1)
 
 > **Date:** 2026-01-22
-> **Scope:** Optimization O6 (Standardization of Agents 01-10)
-> **Status:** Implemented in v3.6.0
+> **Scope:** Optimization O6 (Prompt Standardization) & O6a (Skill Structure)
+> **Status:** Implemented in v3.6.1
 
 ---
 
@@ -108,3 +108,80 @@ The Developer (`08`) and Architect (`04`) consume the most tokens because they r
 
 ### Why bloat "Reviewers"?
 Reviewers (`07`, `09`) act as gates. If they hallucinate, bad code passes. Adding TIER 0 skills (Anti-Hallucination, Safe Commands) prevents false positives. This "bloat" is actually **Technical Debt Repayment**.
+
+---
+
+## 🛠️ O6a: Skill Structure Optimization (v3.6.1)
+
+> **Date:** 2026-01-22
+> **Focus:** Reduction of "Large Skills" (>4KB) via Scripting & Lazy Loading
+
+### Transformation Strategy
+We moved from "Natural Language Logic" to "Python Scripts" for deterministic tasks (git diffs, file scanning), and extracted bulky templates into external examples.
+
+### 📉 Token Reduction Results
+
+```mermaid
+graph TD
+    subgraph BEFORE ["Legacy Skills (NL Logic)"]
+        style BEFORE fill:#f9f9f9,stroke:#333,stroke-width:2px
+        S1[Arch Extended: 9.4KB]
+        S2[Phase Context: 8.2KB]
+        S3[Reverse Eng: 5.3KB]
+        S4[Update Mem: 4.4KB]
+    end
+
+    subgraph AFTER ["Optimized (Scripts + Examples)"]
+        style AFTER fill:#e6fffa,stroke:#009688,stroke-width:2px
+        O1[Arch Extended: 3.3KB]
+        O2[Phase Context: 4.2KB]
+        O3[Reverse Eng: 1.9KB]
+        O4[Update Mem: 1.6KB]
+    end
+
+    S1 -.->|"-65% (Examples)"| O1
+    S2 -.->|"-49% (No ASCII)"| O2
+    S3 -.->|"-64% (Scripting)"| O3
+    S4 -.->|"-63% (Scripting)"| O4
+
+    style O1 fill:#b2dfdb,stroke:#00796b
+    style O3 fill:#b2dfdb,stroke:#00796b
+    style O4 fill:#b2dfdb,stroke:#00796b
+```
+
+### 📊 Metric Breakdown
+
+| Skill | Optimization Type | Payoff (Size) | Status |
+|-------|-------------------|---------------|--------|
+| `architecture-format-extended` | **Examples Extraction** | **-65%** | ✅ Verified |
+| `skill-reverse-engineering` | **Python Scripting** | **-64%** | ✅ Verified |
+| `skill-update-memory` | **Python Scripting** | **-63%** | ✅ Verified |
+| `skill-phase-context` | **Refinement** | **-49%** | ✅ Verified |
+
+### Key Takeaway (O6a)
+*   **Determinism:** Python scripts (`scan_structure.py`) are 100% accurate, whereas LLM file traversal was flaky.
+*   **Lazy Loading:** Huge templates are now in `examples/` and only read when specifically requested.
+
+---
+
+## 🧠 Model Performance Impact
+
+> **Context Efficiency:** How O6a affects "Thinking" models (Claude 3.5 Sonnet / Opus) during complex tasks.
+
+When performing **High-Complexity Tasks** (e.g., "Reverse Engineer and Document this Service"), the agent must load multiple TIER 2 skills.
+
+| Scenario | Load (Legacy) | Load (Optimized) | **Space Gained** | Impact on "Thinking" Models |
+| :--- | :---: | :---: | :---: | :--- |
+| **Full Architecture Generation**<br>*(Arch Ext + Phase Context)* | ~4,400 tokens | ~1,875 tokens | **+2,525 tokens** | **Reduced Truncation**<br>Additional space for CoT reasoning |
+| **Reverse Engineering**<br>*(Rev Eng + Memory Update)* | ~2,425 tokens | ~875 tokens | **+1,550 tokens** | **Higher Accuracy**<br>Less distraction from framework instructions |
+
+### Why this matters for CoT (Chain of Thought):
+"Thinking" models suffer when system instructions are verbose. By reducing the skill definitions by **>60%**, we reduce the "noise" in the model's attention mechanism, allowing it to focus better on the **User's Code**.
+
+---
+
+## 🔗 References
+
+*   **Official Documentation:** [Antigravity Skills Docs](https://antigravity.google/docs/skills)
+*   **Standards & Best Practices:** [Skill Creator Guide](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md)
+

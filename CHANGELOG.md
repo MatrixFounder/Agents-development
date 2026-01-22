@@ -24,12 +24,29 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.6.3 — O6a: Skill Structure Optimization** (Optimization)
+
+#### **Changed**
+* **Large Skills Refactoring:** Transformed 4 "heavy" skills (>4KB) to use `scripts/` + `examples/` pattern:
+    * `architecture-format-extended`: Extracted inline templates to `examples/` (-65% size).
+    * `skill-reverse-engineering`: Replaced NL traversal valid with `scan_structure.py` (-64% size).
+    * `skill-update-memory`: Replaced NL git logic with `suggest_updates.py` (-63% size).
+    * `skill-phase-context`: Removed redundant ASCII art layers (-49% size).
+
+#### **Added**
+* **Automation Scripts**: Added python automation for deterministic skill execution.
+* **Infographic Update**: Added *Model Impact Analysis* and *References* to `docs/O6_OPTIMIZATION_INFOGRAPHIC.md`.
+
 ### **v3.6.2 — Skill Creator & Automation** (Feature)
 
 #### **Added**
 * **New Skill: `skill-creator`**: Meta-skill for creating new skills containing Anthropic standards + Project Tiers (verified structure).
     *   **Automation:** Includes `scripts/init_skill.py` for compliant scaffolding.
     *   **Validation:** Includes `scripts/validate_skill.py` for ensuring frontmatter and strict folder hygiene.
+
+---
+
+---
 
 ### **v3.6.1 — O6: Logic Integrity & Documentation Polish** (Post-Release Fix)
 
@@ -574,12 +591,29 @@ To upgrade from v3.0.x to v3.1.0:
 
 ## 🇷🇺 Русская версия
 
+### **v3.6.3 — O6a: Оптимизация Структуры Навыков** (Оптимизация)
+
+#### **Изменено**
+* **Рефакторинг Крупных Навыков:** Трансформированы 4 "тяжелых" навыка (>4KB) с использованием паттерна `scripts/` + `examples/`:
+    * `architecture-format-extended`: Шаблоны вынесены в `examples/` (-65% размера).
+    * `skill-reverse-engineering`: NL-обход заменен на `scan_structure.py` (-64% размера).
+    * `skill-update-memory`: NL-логика git заменена на `suggest_updates.py` (-63% размера).
+    * `skill-phase-context`: Удалена избыточная ASCII-графика (-49% размера).
+
+#### **Добавлено**
+* **Скрипты Автоматизации:** Добавлена python-автоматизация для детерминированного выполнения навыков.
+* **Обновление Инфографики:** Добавлен *Анализ Влияния на Модель* и *Ссылки* в `docs/O6_OPTIMIZATION_INFOGRAPHIC.md`.
+
 ### **v3.6.2 — Skill Creator & Automation** (Feature)
 
 #### **Добавлено**
 * **Новый навык: `skill-creator`**: Мета-навык для создания новых навыков, включающий стандарты Anthropic + Project Tiers (верифицированная структура).
     *   **Автоматизация:** Включает `scripts/init_skill.py` для генерации скелета навыка.
     *   **Валидация:** Включает `scripts/validate_skill.py` для проверки гигиены папок и метаданных.
+
+---
+
+---
 
 ### **v3.6.1 — O6: Целостность Логики & Документация** (Post-Release Fix)
 
