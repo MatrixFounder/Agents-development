@@ -24,6 +24,24 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.6.1 — O6: Logic Integrity & Documentation Polish** (Post-Release Fix)
+
+#### **Optimized**
+* **System Manifesto (O11):** Rewritten `System/Agents/00_agent_development.md` to be the single source of truth for v3.6+ architecture.
+    * Aligned with O1 (Skill Tiers) and O2 (Orchestrator Patterns).
+    * Added section on **Agentic Mode** and `task_boundary` usage.
+    * Included `10. Security Auditor` role.
+* **O7 Specification:** Refined Session Context Management optimization.
+    * Added alignment with `task_boundary` tool.
+    * Added "Start Prompt" for O7 implementation.
+
+#### **Fixed**
+* **Orchestrator Logic Integrity:** Restored missing stages 11-14 (Review/Fix cycle) and Workflows section in `01_orchestrator.md` to guarantee 100% logic parity with v3.2.
+* **Documentation:** Consolidated `CHANGELOG.md` entry for v3.6.0 logic clarity.
+* **README:** Updated Installation section to explicitly mention `.gemini/` folder copy.
+
+---
+
 ### **v3.6.3 — O6a: Skill Structure Optimization** (Optimization)
 
 #### **Changed**
@@ -49,6 +67,15 @@
 ---
 
 ### **v3.6.1 — O6: Logic Integrity & Documentation Polish** (Post-Release Fix)
+
+#### **Optimized**
+* **System Manifesto (O11):** Rewritten `System/Agents/00_agent_development.md` to be the single source of truth for v3.6+ architecture.
+    * Aligned with O1 (Skill Tiers) and O2 (Orchestrator Patterns).
+    * Added section on **Agentic Mode** and `task_boundary` usage.
+    * Included `10. Security Auditor` role.
+* **O7 Specification:** Refined Session Context Management optimization.
+    * Added alignment with `task_boundary` tool.
+    * Added "Start Prompt" for O7 implementation.
 
 #### **Fixed**
 * **Orchestrator Logic Integrity:** Restored missing stages 11-14 (Review/Fix cycle) and Workflows section in `01_orchestrator.md` to guarantee 100% logic parity with v3.2.
@@ -591,6 +618,24 @@ To upgrade from v3.0.x to v3.1.0:
 
 ## 🇷🇺 Русская версия
 
+### **v3.6.1 — O6: Целостность Логики & Документация** (Post-Release Fix)
+
+#### **Оптимизировано**
+* **Системный Манифест (O11):** Полностью переписан `System/Agents/00_agent_development.md` как единый источник правды для v3.6+.
+    * Синхронизирован с O1 (Skill Tiers) и O2 (Orchestrator Patterns).
+    * Добавлена секция про **Agentic Mode** и `task_boundary`.
+    * Включена роль `10. Security Auditor`.
+* **Спецификация O7:** Уточнена оптимизация Session Context Management.
+    * Добавлена интеграция с инструментом `task_boundary`.
+    * Добавлен "Стартовый Промпт" для реализации O7.
+
+#### **Исправлено**
+* **Целостность Оркестратора:** Восстановлены пропущенные этапы 11-14 (Review/Fix цикл) и секция Workflows в `01_orchestrator.md` для гарантии 100% паритета логики с v3.2.
+* **Документация:** Консолидирована запись `CHANGELOG.md` для версии v3.6.0.
+* **README:** Обновлен раздел Установки, добавлено явное упоминание копирования папки `.gemini/`.
+
+---
+
 ### **v3.6.3 — O6a: Оптимизация Структуры Навыков** (Оптимизация)
 
 #### **Изменено**
@@ -616,6 +661,15 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ### **v3.6.1 — O6: Целостность Логики & Документация** (Post-Release Fix)
+
+#### **Оптимизировано**
+* **Системный Манифест (O11):** Полностью переписан `System/Agents/00_agent_development.md` как единый источник правды для v3.6+.
+    * Синхронизирован с O1 (Skill Tiers) и O2 (Orchestrator Patterns).
+    * Добавлена секция про **Agentic Mode** и `task_boundary`.
+    * Включена роль `10. Security Auditor`.
+* **Спецификация O7:** Уточнена оптимизация Session Context Management.
+    * Добавлена интеграция с инструментом `task_boundary`.
+    * Добавлен "Стартовый Промпт" для реализации O7.
 
 #### **Исправлено**
 * **Целостность Оркестратора:** Восстановлены пропущенные этапы 11-14 (Review/Fix цикл) и секция Workflows в `01_orchestrator.md` для гарантии 100% паритета логики с v3.2.

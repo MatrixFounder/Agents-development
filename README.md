@@ -35,9 +35,10 @@ Copy these folders to your project root:
 | `.agent/` | ✅ **Yes** | Skills, Workflows, and Tool definitions |
 
 ```bash
-# Installation (only 2 folders needed!)
+# Installation
 cp -r /path/to/framework/System ./
 cp -r /path/to/framework/.agent ./
+cp -r /path/to/framework/.gemini ./ # (For Antigravity)
 ```
 
 > [!NOTE]

@@ -53,9 +53,10 @@
 | `.agent/` | ✅ **Да** | Навыки, сценарии и определения инструментов |
 
 ```bash
-# Установка (всего 2 папки!)
+# Установка
 cp -r /path/to/framework/System ./
 cp -r /path/to/framework/.agent ./
+cp -r /path/to/framework/.gemini ./ # (Для Antigravity)
 ```
 
 > [!NOTE]
