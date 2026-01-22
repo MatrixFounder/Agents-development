@@ -1,233 +1,117 @@
-# Multi-Agent Software Development System
+# Multi-Agent Software Development System (v3.6+)
 
 ## General Concept
 
-This system orchestrates a team of specialized agents coordinated by an Orchestrator. Each agent performs a specific role in the development process. The Orchestrator manages the workflow, routes deliverables between agents, and halts the process if blocking questions arise.
+This system orchestrates a team of specialized agents coordinated by an Orchestrator. The system operates in **Agentic Mode**, utilizing a structured `task_boundary` protocol for state management and an authoritative **Skill System** for capabilities.
+
+**Source of Truth:**
+- **Roles & Prompts:** `System/Agents/`
+- **Capabilities:** `.agent/skills/` (See `SKILL_TIERS.md`)
+- **Orchestration Logic:** `.agent/skills/skill-orchestrator-patterns/SKILL.md`
 
 ## Agent Roles
 
 ### 1. Orchestrator
 **Function:** Coordination of the entire development process
 - Assigns tasks to other agents
-- Receives and analyzes results
-- Determines next steps
-- Halts the process upon blocking questions
-- Manages review-repair cycles
+- Manages strict Stage Cycles (Init → Review → Revision)
+- **Tooling:** Uses `task_boundary` to track high-level progress.
 
 ### 2. Analyst
 **Function:** Creating the Technical Specification (TASK)
-- accepts high-level task descriptions
-- Creates a TASK (Technical Specification) with a list of use cases
-- Describes scenarios (main and alternative)
-- Identifies actors for each use case
-- Formulates acceptance criteria
-- **Does NOT write code**
+- **Output:** `docs/TASK.md` (See `skill-task-model`)
+- **Key Skill:** `requirements-analysis` (TIER 1)
 
 ### 3. TASK Reviewer
-**Function:** Verifying the quality of the Technical Specification
-- Evaluates the completeness of the task description
-- Checks compliance with the existing project
-- Identifies contradictions and gaps
+**Function:** Verifying the Technical Specification
+- **Checklist:** `task-review-checklist`
 
 ### 4. Architect
-**Function:** Designing the system architecture
-- Develops functional architecture (components and their functions)
-- Designs system architecture (separation into components)
-- Describes interfaces (external and internal)
-- Designs the data model
-- Defines the technology stack
-- Provides deployment recommendations
-- **Does NOT write code**
+**Function:** Designing system architecture
+- **Output:** `docs/ARCHITECTURE.md` (Core or Extended format)
+- **Key Skill:** `architecture-format-core` / `architecture-format-extended` (See O3 optimization)
 
 ### 5. Architecture Reviewer
-**Function:** Verifying the quality of the architecture
-- Evaluates architecture compliance with the TASK and task description
-- Checks compatibility with the existing project architecture
-- Identifies architectural contradictions
+**Function:** Verifying the architecture
+- **Checklist:** `architecture-review-checklist`
 
 ### 6. Tech Lead / Planner
 **Function:** Formulating development tasks
-- Creates a low-level plan with tasks
-- Links tasks to use cases
-- Determines the sequence of task execution
-- Creates detailed task descriptions in separate files
-- Specifies exact locations for code changes
-- Lists test cases for each task
-- Formulates tasks for tests and deployment
-- **Does NOT write code** (only class names, methods, parameters)
+- **Output:** `docs/PLAN.md` and `docs/tasks/*.md`
+- **Key Skill:** `planning-decision-tree`
 
 ### 7. Plan Reviewer
-**Function:** Verifying the quality of the plan
-- Checks coverage of all use cases from the TASK
-- Checks for detailed descriptions for all tasks
-- **Does NOT delve deeply into the content of descriptions** (checks structure/completeness)
+**Function:** Verifying the plan
+- **Checklist:** `plan-review-checklist`
 
 ### 8. Developer
 **Function:** Task implementation and test writing
-- Executes tasks strictly according to the planner's description
-- Writes structured, documented code
-- Follows best development practices
-- Avoids code duplication
-- Writes automated tests (including end-to-end)
-- Runs tests (new and regression)
-- Updates project documentation
-- Creates descriptions (`.AGENTS.md`) for each directory
-- Provides a test report
-- Fixes issues raised by the reviewer
-- **Does NOT refactor code without explicit instruction**
+- **Key Principles:** Stub-First (`tdd-stub-first`), Atomic Commits, Docs-First.
+- **Output:** Code, Tests, Updated `.AGENTS.md`.
 
 ### 9. Code Reviewer
 **Function:** Verifying code quality
-- Checks code compliance with the task description
-- Monitors consistency with existing functionality
-- Checks passing of end-to-end tests
-- Checks replacement of stubs with real code
-- Analyzes the test report
+- **Checklist:** `code-review-checklist`
+
+### 10. Security Auditor
+**Function:** Vulnerability assessment
+- **Trigger:** Post-development or via `security-audit` workflow.
+- **Key Skill:** `security-audit` / `adversarial-security`.
+
+---
 
 ## System Operating Principles
 
-### 1. Core Principles
-All agents must adhere to the fundamental principles defined in `skill-core-principles`:
-- Atomicity & Traceability
-- Stub-First Methodology
-- Minimizing Hallucinations
+### 1. Skill Tiers (Authoritative Source: `System/Docs/SKILL_TIERS.md`)
+The system uses a **Phase-Specific Loading Protocol** (Optimization O1) to minimize token overhead:
+- **TIER 0 (System Foundation):** ALWAYS LOADED. Includes `core-principles`, `safe-commands`, `artifact-management`.
+- **TIER 1 (Phase-Triggered):** Loaded only when entering a specific phase (e.g., Analysis, Architecture).
+- **TIER 2 (Extended):** Loaded on demand (e.g., `reverse-engineering`).
 
-### 2. Stub-First & E2E (Skill: tdd-stub-first)
-The development process strictly follows two stages for each component:
-1. **Stubbing:** Create full structure and stubs + write an E2E test.
-2. **Implementation:** Replace stubs with real logic + update tests.
-*See `skill-tdd-stub-first` for detailed instructions.*
+### 2. Agentic Mode & Task Boundaries
+The system operates within strict boundaries defined by the **`task_boundary`** tool:
+- **State Tracking:** Every major step updates `TaskName`, `TaskStatus`, and `Mode`.
+- **Session Persistence:** (Optimization O7) Context is saved to `session_state.md` to survive session clears.
 
-### 3. Safe Development (Skill: developer-guidelines)
-- **Anti-Loop:** If tests fail 2 times with the same error — STOP.
-- **Strict Adherence:** No unsolicited refactoring.
+### 3. Core Methodologies
+- **Stub-First Development:** Structure → Stubs → Tests → Implementation.
+- **Documentation First:** No code without updated artifacts.
+- **Verification Driven (VDD):** "Trust but Verify" using adversarial reviewers.
 
-### 4. Documentation First (Skill: artifact-management)
-- **Protocol:** Mandatory creation/update of `.AGENTS.md` in each folder.
-- **Single Writer:** Only Developer updates `.AGENTS.md`.
+---
 
-### 5. Uncertainty Management
-- **Analyst:** Use `skill-requirements-analysis`.
-- **Architect:** Use `skill-architecture-design`.
-- **General:** If unsure, ask questions (see `skill-core-principles`).
+## Development Process (Orchestrator Patterns)
 
-### 6. Handling Open Questions
-Any agent, upon encountering difficulties:
-1. Adds questions to the `open_questions.md` file
-2. Returns a list of questions to the Orchestrator
-3. Orchestrator stops work
-4. Awaits user response
+The strict logic of the development lifecycle is defined in **`skill-orchestrator-patterns/SKILL.md`**.
+The system follows a standard **Stage Cycle**:
 
-## WORKFLOWS (Dynamic Dispatch)
-The system supports multiple development "variants" via workspace workflows.
-- **Source of Truth**: `.agent/workflows/`
-- **Dynamic Dispatch**: If a user request matches a workflow file (e.g., `vdd-03-develop.md`), the Orchestrator MUST execute that workflow instead of the standard process described below.
+1. **Initialization:** Agent (Analyst/Architect/etc.) creates artifact.
+2. **Review:** Reviewer checks artifact against checklist.
+3. **Revision:** (If needed) Agent fixes issues. Max 2 iterations.
 
-## Development Process
+### Workflows (Dynamic Dispatch)
+Standard flows can be overridden by Workflows (`.agent/workflows/`):
+- `/vdd-adversarial`: High-integrity mode with stricter reviews.
+- `/security-audit`: Focused security pass.
 
-### Stage 1: Analysis
-```
-User  →  Orchestrator (Task formulation + Project description)
-                                ↓
-        [DECISION: New Task? → Archive docs/TASK.md]
-                                ↓
-                            Analyst → TASK
-                                ↓
-                         TASK Reviewer → Comments
-                                ↓
-                          Analyst (Revision)
-                                ↓
-                         TASK Reviewer (Repeat)
-```
-**Cycles:** Maximum 2 review iterations
+---
 
-**Block:** Upon critical issues after 2nd review
+## Global Artifact Rules
 
-### Stage 2: Architecture Design
-```
-TASK + Project Description → Architect → Architecture
-                            ↓
-                     Architecture Reviewer → Comments
-                            ↓
-                     Architect (Revision)
-                            ↓
-                     Architecture Reviewer (Repeat)
-```
-**Cycles:** Maximum 2 review iterations
+### TASK.md Lifecycle
+- **Active Task:** `docs/TASK.md` always describes the CURRENT active work.
+- **Archiving:** (Skill: `skill-archive-task`) Old tasks are moved to `docs/tasks/task-XXX-slug.md`.
+- **Never Delete:** History is preserved in `docs/tasks/`.
 
-**Block:** Upon critical issues after 2nd review
+### ARCHITECTURE.md
+- **Modular Format:** Uses `architecture-format-core` for updates and `architecture-format-extended` for new systems.
 
-### Stage 3: Planning
-```
-TASK + Architecture + Project Description + Code → Planner → Plan + Task Descriptions
-                                                ↓
-                                          Plan Reviewer → Comments
-                                                ↓
-                                          Planner (Revision)
-                                                ↓
-                                          Plan Reviewer (Repeat)
-```
-**Cycles:** 1 revision iteration (total 2 reviews)
+---
 
-**Block:** Upon critical issues after 2nd review
+## Key Rules (The "Anti-Patterns")
 
-### Stage 4: Task Execution
-```
-For each task in the plan:
-    Task Description → Developer → Code + Tests + Report
-                           ↓
-                     Code Reviewer → Comments
-                           ↓
-                     Developer (Fix)
-                           ↓
-                     Code Reviewer (Repeat)
-```
-**Cycles:** 1 fix iteration (total 2 reviews)
-
-## Project Documentation
-
-### Documentation Structure
-1. **General Project Description** (Separate for humans and agents)
-2. **Directory Descriptions (`.AGENTS.md`):**
-   - List of files
-   - List of functions
-   - Brief functionality description
-3. **Specific Detailed Documents** (For large volumes, linked in the general description)
-
-### Updating
-The Developer is obliged to update documentation with every code change.
-
-## Key Rules
-
-### For All Agents
-- ❌ Do not go beyond your role
-- ❌ Do not refactor without explicit instruction
-- ✅ Ask questions when unclear
-- ✅ Document your work
-
-### For Orchestrator
-- Strictly follow the number of review cycles
-- Stop the process upon blocking questions
-- Pass full context between agents
-
-### For Developer
-- Follow the task description exactly
-- Run all tests (new + regression)
-- Provide a test report
-- Fix only specified issues
-
-### GLOBAL ARTEFACT HANDLING RULES
-ARTEFACT HANDLING: TECHNICAL SPECIFICATION (TASK.md)
-
-> See **`skill-archive-task`** for the complete archiving protocol.
-
-**Key Rules:**
-- `docs/TASK.md` contains ONLY the specification for the SINGLE CURRENT active task.
-- **Clarification/refinement** = Overwrite TASK.md, do NOT archive.
-- **New task** = Apply `skill-archive-task` protocol, then overwrite.
-- **Archiving triggers**: Only on task completion OR before starting NEW task.
-- Do NOT archive during early stages (analysis, review, clarifications).
-
-**Tool Usage:**
-- Call `generate_task_archive_filename(slug="...")` to get unique filename.
-- Move: `mv docs/TASK.md docs/tasks/{filename}`
+❌ **NO** writing code without tests (Stub-First violation).
+❌ **NO** refactoring without a task (Scope creep).
+❌ **NO** ignoring TIER 0 skills (breaking automation).
+✅ **ALWAYS** use `task_boundary` to report status.
+✅ **ALWAYS** update `.AGENTS.md` when structure changes (Memory update).
