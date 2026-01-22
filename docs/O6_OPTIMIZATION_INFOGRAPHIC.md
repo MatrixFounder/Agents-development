@@ -64,17 +64,17 @@ graph TD
 ```mermaid
 classDiagram
     class Orchestrator_v3_5 {
-        ~1,120 Tokens
+        ~1,130 Tokens
         O2 Logic
         Legacy Headers
     }
     class Orchestrator_v3_6 {
-        ~714 Tokens
-        O2 Logic + Workflows
+        ~900 Tokens
+        O2 Logic + Review/Fix Stages
         Standard O6 Headers
     }
     
-    Orchestrator_v3_5 --|> Orchestrator_v3_6 : -36.24% Reduction
+    Orchestrator_v3_5 --|> Orchestrator_v3_6 : -20% Reduction (Safer)
 ```
 
 ---
@@ -83,7 +83,7 @@ classDiagram
 
 | Agent | Role | Delta (Tokens) | Delta (%) | Status | Check |
 |-------|------|----------------|-----------|--------|-------|
-| `01` | Orch | -406 | **-36.24%** | ✅ Logic Preserved | [x] |
+| `01` | Orch | -230 | **-20.35%** | ✅ Logic Restored | [x] |
 | `02` | Analyst | -24 | **-2.35%** | ✅ Optimization | [x] |
 | `03` | Task Rev | -79 | **-9.88%** | ✅ Optimization | [x] |
 | `04` | Architect | -342 | **-28.86%** | ✅ Major Opt. | [x] |

@@ -70,6 +70,22 @@ Follow the **Stage Cycle Pattern** defined in `skill-orchestrator-patterns`.
 **Action:** Execute `08_developer_prompt`.
 **Goal:** Implementation + Tests.
 
+### 11. Code Review
+**Input:** {modified_files}, {test_report}
+**Action:** Execute `09_code_reviewer_prompt`.
+**Expected:** `{ comments, has_critical_issues, e2e_tests_pass, stubs_replaced }`
+
+### 12. Code Fix (Revision)
+**Input:** {review_comments}
+**Action:** Execute `08_developer_prompt` (Fix Mode).
+**Instruction:** "Fix comments: {review_comments}. Do NOT refactor. Run tests."
+
 ## 7. EXCEPTION HANDLING
--   **Blocking Questions:** If `blocking_questions` is not empty -> PAUSE -> Ask User.
--   **Completion:** If all tasks done -> Archive Task (`skill-archive-task`) -> Report Success.
+
+### 13. Completion
+**Context:** All tasks completed.
+**Action:** Archive Task (`skill-archive-task`) -> Report Success.
+
+### 14. Blocking Questions
+**Context:** Blocking questions received.
+**Action:** PAUSE -> Ask User -> Resume at current stage.

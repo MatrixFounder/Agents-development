@@ -1,8 +1,8 @@
-# 📊 Token Optimization Infographic (v3.5.x)
+# 📊 Token Optimization Infographic (v3.6.0)
 
-> **Date:** 2026-01-21
-> **Scope:** Optimizations O1, O2, O3
-> **Status:** Implemented in v3.5.3 - v3.5.5
+> **Date:** 2026-01-22
+> **Scope:** Optimizations O1, O2, O3, O6
+> **Status:** Implemented in v3.6.0
 
 ---
 
@@ -20,17 +20,17 @@ The **Pie Chart** below illustrates "Tokens Saved" vs "Remaining Overhead". The 
 %%{init: {'theme': 'base', 'themeVariables': { 'primaryColor': '#4CAF50', 'edgeLabelBackground':'#ffffff', 'tertiaryColor': '#fff'}}}%%
 pie title Token Reduction by Area
     "Session Overhead (Saved)" : 2400
-    "Orchestrator (Saved)" : 1600
+    "Orchestrator (Saved)" : 1900
     "Architecture (Saved)" : 1500
-    "Remaining Overhead" : 12000
+    "Remaining Overhead" : 11700
 ```
 
-| Metric | Before | After | Savings | Impact |
+| Metric | Before | After (v3.6) | Savings | Impact |
 |--------|--------|-------|---------|--------|
 | **Session Bootstrap** | ~6,900 | ~4,500 | **-35%** | Faster startup, cheaper sessions |
-| **Orchestrator** | ~2,800 | ~1,130 | **-60%** | More context for user tasks |
+| **Orchestrator** | ~2,800 | ~900 | **-68%** | More context for user tasks |
 | **Initial Skills** | ~9,772 | ~2,082 | **-79%** | Massive reduction in noise |
-| **Standard Pipeline** | ~50,000 | ~42,000 | **-16%** | Cheaper end-to-end features |
+| **Standard Pipeline** | ~50,000 | ~41,500 | **-17%** | Cheaper end-to-end features |
 
 ---
 
@@ -47,7 +47,7 @@ graph TD
         B2 --> B3[Context: 9,772 tokens]
     end
 
-    subgraph AFTER ["v3.5 (Optimized)"]
+    subgraph AFTER ["v3.6 (Optimized)"]
         style AFTER fill:#e6fffa,stroke:#009688,stroke-width:2px
         A1[GEMINI.md] --> A2[Load TIER 0 Only]
         A2 --> A3[Context: 2,082 tokens]
@@ -60,7 +60,7 @@ graph TD
 > **User Impact:** Sessions start faster and cost significantly less. Previously, every new session loaded ~10k tokens of instructions. Now, it loads only ~2k, allowing you to fit ~7,000 more tokens of *your code* in the initial context window.
 
 ### 2. Orchestrator Efficiency
-*Optimization O2 (Pattern Compression)*
+*Optimization O2 + O6 (Pattern Compression)*
 
 ```mermaid
 classDiagram
@@ -69,16 +69,16 @@ classDiagram
         ~2,800 Tokens
         14 Verbose Scenarios
     }
-    class Orchestrator_v3_5 {
-        170 Lines
-        ~1,130 Tokens
-        Dispatch Table + Patterns
+    class Orchestrator_v3_6 {
+        91 Lines
+        ~900 Tokens
+        Dispatch Table + O6 Safety
     }
     
-    Orchestrator_Legacy --|> Orchestrator_v3_5 : Compressed by 60%
+    Orchestrator_Legacy --|> Orchestrator_v3_6 : Compressed by 68%
 ```
 
-> **User Impact:** The Orchestrator is the "brain" present in every single turn of conversation. By compressing it, we free up ~1,600 tokens *per message*. Over a long conversation (e.g., 50 turns), this accumulates to massive savings and prevents the model from "forgetting" earlier instructions due to context sliding.
+> **User Impact:** The Orchestrator is the "brain" present in every single turn of conversation. By compressing it, we free up ~1,900 tokens *per message*. Over a long conversation (e.g., 50 turns), this accumulates to massive savings and prevents the model from "forgetting" earlier instructions due to context sliding.
 
 ---
 
