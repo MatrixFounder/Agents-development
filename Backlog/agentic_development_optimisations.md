@@ -1264,32 +1264,41 @@ CONTEXT:
 O1-O6 are complete. The framework now has efficient static context (TIERs) and standardized prompts.
 The alignment with `task_boundary` tool is critical. We need a persistent file that tracks the `task_boundary` state so we can recover it after a context clear.
 
+**REFERENCE FILE:** `Backlog/agentic_development_optimisations.md` (See section O7 for detailed analysis).
+
 GOAL:
 Create a "Session State" mechanism that persists the current Mode, TaskName, and Summary to a file, allowing the agent to "reboot" seamlessly.
 
 DELIVERABLES:
 
-1. **Create Skill**: `.agent/skills/skill-session-state/SKILL.md` (TIER 0)
-   - Must define the schema for `.agent/sessions/latest.yaml`.
-   - Must provide instructions on *when* to read (Boot) and *when* to write (Task Boundary).
-   - **TIER 0 Status**: This skill MUST be added to TIER 0 in `SKILL_TIERS.md` and `GEMINI.md`.
+1. **Design & Create Skill**: `.agent/skills/skill-session-state/SKILL.md` (TIER 0)
+   - **Schema Design**: Must map 1:1 to `task_boundary` arguments (Mode, TaskName, TaskStatus).
+   - **Protocol**: Define specific triggers for READ (Boot) and WRITE (Task Boundary).
+   - **TIER 0 Status**: Add to `SKILL_TIERS.md` and `GEMINI.md`.
 
-2. **Create Script**: `.agent/skills/skill-session-state/scripts/update_state.py`
-   - A robust script to update the YAML file.
-   - Arguments: `--mode`, `--task`, `--status`, `--summary`.
-   - Why script? To prevent YAML syntax errors by the LLM.
+2. **Develop Robust Script**: `.agent/skills/skill-session-state/scripts/update_state.py`
+   - **Robustness**: Handle missing files, partial updates, and concurrent writes safely.
+   - **CLI Interface**: `python update_state.py --mode "..." --task "..." --status "..." --summary "..."`
+   - **Validation**: Ensure it does not crash on malformed YAML (backup & restore logic).
 
-3. **Update Bootstrap Protocol (`GEMINI.md`)**:
+3. **Update Bootstrap Protocol (`GEMINI.md` & `.cursorrules`)**:
    - Add explicit instruction: "ON SESSION START: Check for `.agent/sessions/latest.yaml`. If exists, READ IT to restore context."
+   - **Cursor Integration**: Ensure `.cursorrules` has the equivalent instruction for the Cursor environment.
 
 4. **Integration Plan**:
-   - Describe how this integrates with `task_boundary`. (e.g., "After calling task_boundary, run update_state.py").
+   - Document how this integrates with `task_boundary`. (e.g., "After calling task_boundary, run update_state.py").
+
+TESTING & VALIDATION (CRITICAL):
+- **Test 1 (Script):** Run the python script manually to verify YAML generation.
+- **Test 2 (Recovery):** Simulate a session crash. Start a NEW session and verify the agent reads the file and knows "where it left off".
+- **Test 3 (Cursor):** Verify `.cursorrules` instructions work in a simulated Cursor chat environment.
 
 CONSTRAINTS:
-- The schema MUST map 1:1 to the arguments of the `task_boundary` tool where possible.
-- Do not overcomplicate. Keep it to <20 lines of YAML.
+- The schema MUST be extensible but start simple (<20 lines).
+- **Environment Agnostic**: Must work in Antigravity (native tools) and Cursor (terminal commands).
 
 STARTING STEP:
+- Read `Backlog/agentic_development_optimisations.md` (Section O7) to understand the full context.
 - Analyze `skill-creator/SKILL.md` to ensure the new skill follows the "Script-First" pattern (O6a).
 ```
 
