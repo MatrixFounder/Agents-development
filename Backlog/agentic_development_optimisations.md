@@ -527,7 +527,7 @@ Now that O1 is implemented and verified (v3.5.4), O5 is the necessary follow-up 
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
-
+```
 **Recommendation:**
 - **Proceed immediately.** This is low-risk and high-value for maintainability.
 - **Action:** Add `tier: [0|1|2]` to YAML frontmatter of all skills.
@@ -646,18 +646,28 @@ Significant reduction in token overhead for extended skills, verifying the "Scri
 
 ### O7: Session Context Management (High Impact)
 
-**Status:** STRATEGIC PRIORITY
+**Status:** ✅ READY FOR IMPLEMENTATION
+**Prerequisites:** O1-O6 ✅ COMPLETED (v3.7.1)
 **Blocking:** O9 (Multi-Session), O10 (Hierarchical Context)
+
+> [!NOTE]
+> **2026-01-23 Update:** All prerequisite optimizations (O1-O6) are now complete.
+> This optimization is unblocked and ready for implementation.
+> See **Prompt 7** in the Implementation Prompts section for the Start Prompt.
+
+> [!IMPORTANT]
+> **O4 (Conversation Checkpointing) has been merged into O7.**
+> The original O4 concept of checkpointing is now implemented as part of the Session State mechanism.
 
 **Analysis:**
 With O1-O6 completed, we have minimized "Static Context" (Codebase & Rules). The remaining bottleneck is "Dynamic Context" (Conversation History).
 Currently, the agent relies on the chat window logic. When the window fills up, we lose "where we were".
 We need a **Persistent State Mechanism** that survives session resets and aligns with the `task_boundary` tool mechanics.
 
-**Solution: `session_state.md` + `task_boundary` resonance**
+**Solution: `session_state.yaml` + `task_boundary` resonance**
 Instead of relying on Chat History (which grows linearly), we maintain a compact State File that mirrors the `task_boundary` parameters.
 
-**Proposed Schema (`.agent/sessions/current_session.md`):**
+**Proposed Schema (`.agent/sessions/latest.yaml`):**
 ```yaml
 session_id: "uuid-v4"
 last_updated: "ISO-8601"
@@ -678,13 +688,13 @@ recent_decisions:
 ```
 
 **Integration Strategy:**
-1.  **Read (Boot):** The `core-principles` or `GEMINI.md` (TIER 0) must instruct the agent to read `current_session.md` immediately after booting.
-2.  **Write (Boundary):** Every time the agent calls `task_boundary`, it should also (or via a helper) update `current_session.md`.
+1.  **Read (Boot):** The `core-principles` or `GEMINI.md` (TIER 0) must instruct the agent to read `latest.yaml` immediately after booting.
+2.  **Write (Boundary):** Every time the agent calls `task_boundary`, it should also (or via a helper) update `latest.yaml`.
     *   *Optimization:* Create a script `update_state.py` in the skill to handle the YAML safely.
 
 **Recommendation:**
 - **Action:** Create `skill-session-state` (TIER 0).
-- **Tooling:** Include `scripts/update_session.py` to robustly dump YAML.
+- **Tooling:** Include `scripts/update_state.py` to robustly dump YAML.
 - **Payoff:** Allows "Squashing" chat history to zero while keeping the exact Task/Mode state restoration.
 
 **Effort:** 8-12 hours.
@@ -693,7 +703,7 @@ recent_decisions:
 
 ### O8: Domain Isolation (Enterprise)
 
-**Status:** DEFER
+**Status:** DEFER (No changes — 2026-01-23)
 
 **Analysis:**
 Splitting architecture by domain (`docs/domains/trading/ARCHITECTURE.md`) adds complexity overhead not justified for current project sizes.
@@ -702,6 +712,8 @@ Splitting architecture by domain (`docs/domains/trading/ARCHITECTURE.md`) adds c
 1. `docs/ARCHITECTURE.md` exceeds 3,000 lines.
 2. Distinct teams working on isolated modules.
 
+**Current State (2026-01-23):** Architecture files remain under 1,000 lines. Defer.
+
 **Recommendation:**
 - **Wait.** Premature optimization.
 
@@ -709,25 +721,33 @@ Splitting architecture by domain (`docs/domains/trading/ARCHITECTURE.md`) adds c
 
 ### O9: Multi-Session Pipeline
 
-**Status:** BLOCKED (External Tooling)
+**Status:** BLOCKED (External Tooling — No changes 2026-01-23)
 
 **Analysis:**
 Requires a CLI wrapper (Python/Bash) to mechanically manage the context window (Task 037). Agent cannot self-terminate effectively without external orchestrator.
 
+**Dependencies:**
+- O7 (Session State) — Must be implemented first to enable state handoff between sessions.
+- `ag-cli` external tool — Not yet built.
+
 **Recommendation:**
-- **Hold** until `ag-cli` tool is built.
+- **Hold** until `ag-cli` tool is built AND O7 is implemented.
 
 ---
 
 ### O10: Hierarchical Context
 
-**Status:** DEFER
+**Status:** MERGED INTO O7 (2026-01-23)
 
 **Analysis:**
-Dependent on O8 (Domains) and O9 (Multi-Session).
+Hierarchical context management is being absorbed into O7 (Session Context Management).
+The original idea of "hierarchical context" is now expressed as:
+1. **Session State File** — Top-level context (Mode, TaskName, Summary)
+2. **Recent Decisions** — Mid-level context (key choices)
+3. **Active Blockers** — Immediate blockers for context restoration
 
 **Recommendation:**
-- **Wrap into O7 (Session Context).** Hierarchical context is just a property of a good Session State.
+- ~~Wrap into O7 (Session Context).~~ **DONE** — See O7 schema.
 
 ---
 
@@ -1282,31 +1302,37 @@ CRITICAL: Do not modify the prompt logic (that was O1). This is purely documenta
 
 ### Prompt 7: O7 — Session Context Management (START PROMPT)
 
-> **Status:** READY FOR IMPLEMENTATION
+> **Status:** ✅ READY FOR IMPLEMENTATION
+> **Prerequisites:** O1-O6 ✅ COMPLETED (v3.7.1)
+> **Last Updated:** 2026-01-23
 
 ```markdown
 TASK: Implement Optimization O7 (Session Context)
 
 CONTEXT:
-O1-O6 are complete. The framework now has efficient static context (TIERs) and standardized prompts.
-The alignment with `task_boundary` tool is critical. We need a persistent file that tracks the `task_boundary` state so we can recover it after a context clear.
+- **Framework Version:** v3.7.1+
+- O1-O6 are **COMPLETE**. Static context is optimized (TIERs), prompts are standardized.
+- The alignment with `task_boundary` tool is critical. We need a persistent file that tracks the `task_boundary` state so we can recover it after a context clear.
+- **O4 (Checkpointing) and O10 (Hierarchical Context) are MERGED into O7.**
 
 **REFERENCE FILE:** `Backlog/agentic_development_optimisations.md` (See section O7 for detailed analysis).
 
 GOAL:
-Create a "Session State" mechanism that persists the current Mode, TaskName, and Summary to a file, allowing the agent to "reboot" seamlessly.
+Create a "Session State" mechanism that persists the current Mode, TaskName, and Summary to a file, allowing the agent to "reboot" seamlessly after context window resets.
 
 DELIVERABLES:
 
 1. **Design & Create Skill**: `.agent/skills/skill-session-state/SKILL.md` (TIER 0)
-   - **Schema Design**: Must map 1:1 to `task_boundary` arguments (Mode, TaskName, TaskStatus).
+   - **Schema Design**: Must map 1:1 to `task_boundary` arguments (Mode, TaskName, TaskStatus, TaskSummary).
    - **Protocol**: Define specific triggers for READ (Boot) and WRITE (Task Boundary).
-   - **TIER 0 Status**: Add to `SKILL_TIERS.md` and `GEMINI.md`.
+   - **TIER 0 Status**: Add to `System/Docs/SKILL_TIERS.md` and `GEMINI.md`.
+   - **File Location**: `.agent/sessions/latest.yaml`
 
 2. **Develop Robust Script**: `.agent/skills/skill-session-state/scripts/update_state.py`
    - **Robustness**: Handle missing files, partial updates, and concurrent writes safely.
    - **CLI Interface**: `python update_state.py --mode "..." --task "..." --status "..." --summary "..."`
    - **Validation**: Ensure it does not crash on malformed YAML (backup & restore logic).
+   - **Pattern**: Follow "Script-First" pattern from O6a (see `skill-creator/SKILL.md`).
 
 3. **Update Bootstrap Protocol (`GEMINI.md` & `AGENTS.md`)**:
    - Add explicit instruction: "ON SESSION START: Check for `.agent/sessions/latest.yaml`. If exists, READ IT to restore context."
@@ -1314,48 +1340,65 @@ DELIVERABLES:
 
 4. **Integration Plan**:
    - Document how this integrates with `task_boundary`. (e.g., "After calling task_boundary, run update_state.py").
+   - Update `System/Docs/ORCHESTRATOR.md` if applicable.
 
 TESTING & VALIDATION (CRITICAL):
 - **Test 1 (Script):** Run the python script manually to verify YAML generation.
 - **Test 2 (Recovery):** Simulate a session crash. Start a NEW session and verify the agent reads the file and knows "where it left off".
 - **Test 3 (Cursor):** Verify `AGENTS.md` instructions work in a simulated Cursor chat environment.
 
+⚠️ LESSONS FROM O1-O6 — MANDATORY CHECKLIST:
+- [ ] **Tier 0 Compliance (O1/O5):** Skill MUST be TIER 0 (bootstrap load).
+- [ ] **Script-First (O6a):** Use Python script for state updates, not inline NL instructions.
+- [ ] **Translation Impact (O3):** Update Russian translations if needed.
+- [ ] **SKILL_TIERS.md:** Add entry for new skill.
+- [ ] **CHANGELOG.md:** Update with version bump.
+- [ ] **Cross-check:** Verify both Antigravity and Cursor environments work.
+
 CONSTRAINTS:
 - The schema MUST be extensible but start simple (<20 lines).
 - **Environment Agnostic**: Must work in Antigravity (native tools) and Cursor (terminal commands).
 
 STARTING STEP:
-- Read `Backlog/agentic_development_optimisations.md` (Section O7) to understand the full context.
-- Analyze `skill-creator/SKILL.md` to ensure the new skill follows the "Script-First" pattern (O6a).
+1. Read `Backlog/agentic_development_optimisations.md` (Section O7) to understand the full context.
+2. Analyze `skill-creator/SKILL.md` to ensure the new skill follows the "Script-First" pattern (O6a).
+3. Create `.agent/sessions/` directory structure.
 ```
+
+---
 
 ### Prompt 8: O6 — Agent Prompt Standardization
 
-> **Status:** PROTOTYPE
+> **Status:** ✅ COMPLETED (v3.6.0 — v3.7.0)
+> **Completed:** 2026-01-22
+
+**Summary of Implementation:**
+- All 10 Agent Prompts (`01`–`10`) standardized with 4-section schema.
+- TIER 0 skills enforced in all agents.
+- Token savings: -29% (Architect), -33% (Planner), -31% (Developer).
+- Safety improvements: Reviewers now enforce TIER 0 (+43% size for zero hallucinations).
+- See section **O6: Agent Prompt Standardization** for full A/B test results.
 
 ```markdown
+# ARCHIVED — This prompt has been executed and completed.
+
 TASK: Prototype O6 (Agent Prompt Standardization)
 
 CONTEXT:
 - Goal: Verify if "Standardized Patterns" (Header -> Context -> Loop) improve stability vs raw text.
 - Target: `02_analyst_prompt.md`.
 
-DELIVERABLES:
-1. Create `02_analyst_standardized.md` (new version).
-2. Refactor to use explicit headers and `skill-phase-context`.
-3. **Execute A/B Test Results:**
-   - **Control Group:** Run `examples/skill-testing/test_skill.py` with current `02_analyst`.
-   - **Variant Group:** Run same test with `02_analyst_standardized`.
-   - **Metrics required:** Input Tokens, Output Tokens, Instruction Compliance (Pass/Fail).
+RESULT: ✅ PASSED
+- All agents (01-10) standardized.
+- A/B tests confirmed neutral/positive impact.
+- Russian translations synchronized.
 
-### ⚠️ LESSONS FROM O1-O5 — PROTOTYPE CHECKLIST:
-- [ ] **Tier 0 Compliance (O1/O5):** Ensure `core-principles`, `safe-commands`, and `artifact-management` remain non-negotiable (ALWAYS LOADED).
-- [ ] **Pattern Validity (O2):** Any new standard must handle edge cases (e.g., stopping on blocking questions).
-- [ ] **A/B Testing (O2):** Do not replace the original until the variant is demonstrably better (neutral/positive metrics).
-- [ ] **Translation Impact (O3):** Update `Translations/RU/Agents/02_analyst_prompt.md` if the English version changes.
-- [ ] **Clean Cleanup (O3):** `grep` for old filenames/references after refactoring.
-
-CRITICAL: Do NOT replace the original file until A/B test confirms neutral/positive impact.
+### ✅ LESSONS FROM O1-O5 — PROTOTYPE CHECKLIST (ALL PASSED):
+- [x] **Tier 0 Compliance (O1/O5):** All agents enforce `core-principles`, `safe-commands`, `artifact-management`.
+- [x] **Pattern Validity (O2):** Stage Cycle pattern handles edge cases correctly.
+- [x] **A/B Testing (O2):** Variant demonstrated -20% to -33% token savings.
+- [x] **Translation Impact (O3):** All `Translations/RU/Agents/*.md` updated.
+- [x] **Clean Cleanup (O3):** `grep` confirmed no orphan references.
 ```
 
 ---
@@ -1364,6 +1407,7 @@ CRITICAL: Do NOT replace the original file until A/B test confirms neutral/posit
 
 | Date | Author | Change |
 |------|--------|--------|
+| 2026-01-23 | Analyst Agent | **O7-O10 Status Review:** O7 → READY FOR IMPLEMENTATION, O10 → MERGED INTO O7, O8/O9 unchanged |
 | 2026-01-21 | Adversarial Architect | **O5 COMPLETED** (Skill Tiers Formalization) |
 | 2026-01-21 | Adversarial Architect | Updated Roadmap O6-O10 (Post-O5 Strategy) |
 | 2026-01-21 | Adversarial Architect | **O3 COMPLETED**: Marked as done, added Lessons Learned, updated prompts with checklists |
