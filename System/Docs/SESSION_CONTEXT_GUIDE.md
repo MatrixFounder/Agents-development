@@ -35,7 +35,28 @@ This document explains the mechanism, rationale, and configuration of the Sessio
 
 **Conclusion:** `.AGENTS.md` tells the agent *what the project is*. `latest.yaml` tells the agent *what it is doing right now*.
 
-## 3. Degradation & Risk Analysis
+## 3. Conceptual Examples & Analogies
+
+### The "Map vs GPS" Analogy
+*   **`docs/TASK.md` is the Map**: It spans the entire region and shows where we want to go eventually.
+*   **`latest.yaml` is the GPS Coordinates**: It tracks exactly where we are standing *right now* (e.g., "Lat/Long: 42.123, -71.456, Speed: 0").
+
+### The "Bookmark" Analogy
+Without O7, clearing the chat window is like closing a book and losing your page. You have to start reading from the Chapter 1 Index (`TASK.md`).
+With O7, `latest.yaml` acts as a physical bookmark. You open the book and immediately know: *"I'm on Page 42, paragraph 3."*
+
+### What Accumulates vs. What Updates
+In long-running complex sessions, data behaves differently:
+
+1.  **Accumulating History**:
+    *   `completed_tasks`: "I already finished the DB, the API, and the Tests." (Prevents loops).
+    *   `recent_decisions`: "We decided to use Postgres." (Prevents flip-flopping).
+    *   `active_blockers`: "Still waiting for API key." (Persistent memory).
+
+2.  **Snapshot State (Overwritten)**:
+    *   `TaskStatus`: Always reflects the *current* moment. "Debugging login" overwrites "Writing login".
+
+## 4. Degradation & Risk Analysis
 
 I have adversarialy analyzed potential downsides:
 
@@ -54,7 +75,7 @@ I have adversarialy analyzed potential downsides:
 **Cost:** Running `update_state.py` adds ~200ms to every `task_boundary` call.
 **Verdict:** Negligible compared to LLM generation time (seconds).
 
-## 4. Manual Override (Troubleshooting)
+## 5. Manual Override (Troubleshooting)
 
 The session file is standard YAML. If the agent gets stuck or confused, you can edit it manually:
 
@@ -65,7 +86,7 @@ The session file is standard YAML. If the agent gets stuck or confused, you can 
 
 **Tip:** You can also simply delete the file to force a "fresh start".
 
-## 5. Deactivation Guide (How to Disable)
+## 6. Deactivation Guide (How to Disable)
 
 If you find this system conflicts with your workflow or IDE tools, you can disable it by downgrading the skill from **TIER 0** (Mandatory) to **TIER 2** (Optional).
 

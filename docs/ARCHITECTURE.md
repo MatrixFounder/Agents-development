@@ -77,14 +77,16 @@ The orchestration layer now supports **Structured Tool Calling**:
 
 
 ## 5. Key Principles
+## 6. Key Principles
 - **Modular Skills**: Logic is decoupled from Personas. Agents load `skills` to perform specific tasks.
 - **Local Artifacts**: `.AGENTS.md` provide distributed long-term memory per directory.
+- **Session State**: `latest.yaml` provides volatile short-term memory (GPS coordinates).
 - **Single Writer**: Only the Developer agent writes code and updates `.AGENTS.md` to prevent conflicts.
 - **Stub-First**: Always create stubs/interfaces before implementation.
 - **One Giant Column**: Keep context constraints in mind.
-- **Source of Truth**: Documentation (`docs/`), `System/Agents`, and local `.AGENTS.md`.
+- **Source of Truth**: Documentation (`docs/`), `System/Agents`, `.agent/skills`, and `latest.yaml`.
 
-## 6. Localization Strategy
+## 7. Localization Strategy
 - **Default**: English (`System/Agents`).
-- **Alternative**: Russian (`System/Agents_ru`).
-- Switching is done by pointing the Agent Construction mechanism to the appropriate folder.
+- **Alternative**: Russian (`System/Agents_ru` -> `Translations/RU`).
+- Switching is done by swapping the source directory in the orchestrator config.
