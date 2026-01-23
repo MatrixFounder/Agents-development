@@ -105,8 +105,8 @@
 
 | Component | Tokens |
 |-----------|--------|
-| `.gemini/GEMINI.md` | ~1,394 |
-| `.cursorrules` | ~867 |
+| `GEMINI.md` | ~1,394 |
+| `AGENTS.md` | ~867 |
 | Workflows (14 files) | ~3,144 |
 | **TOTAL** | **~5,405** |
 
@@ -824,7 +824,7 @@ Dependent on O8 (Domains) and O9 (Multi-Session).
 > **Completed: 2026-01-21** | Version: v3.5.4
 
 **Prerequisite: Document current state**
-- [x] List all skills currently loaded in GEMINI.md/.cursorrules
+- [x] List all skills currently loaded in GEMINI.md/AGENTS.md
 - [x] Verify TIER 0 skills are explicitly required
 
 **Tasks:**
@@ -832,7 +832,7 @@ Dependent on O8 (Domains) and O9 (Multi-Session).
    - TIER 0 definition (ALWAYS LOAD)
    - TIER 1 phase→skills mapping
    - TIER 2 precise loading conditions
-2. [x] **VERIFY TIER 0 IS PRESERVED:** Ensure `GEMINI.md` and `.cursorrules` explicitly load:
+2. [x] **VERIFY TIER 0 IS PRESERVED:** Ensure `GEMINI.md` and `AGENTS.md` explicitly load:
    - `core-principles` (Anti-hallucination)
    - `safe-commands` (Automation enablement — CRITICAL)
    - `artifact-management` (File protocol)
@@ -1167,7 +1167,7 @@ PREREQUISITE: O3 is implemented and tested ✅
 
 DELIVERABLES:
 1. Create .agent/skills/skill-phase-context/SKILL.md
-2. Verify GEMINI.md and .cursorrules explicitly reference TIER 0
+2. Verify GEMINI.md and AGENTS.md explicitly reference TIER 0
 3. Test: automation still works (mv, git, tests auto-run)
 
 CRITICAL: safe-commands MUST remain always-loaded for automation.
@@ -1203,7 +1203,7 @@ CRITICAL: Backup first. Test all 14 scenarios after compression.
 ⚠️ LESSONS FROM O3 — MANDATORY CHECKLIST:
 - [x] After changes, run: `grep -r "01_orchestrator" .` to find all references
 - [x] Update Translations/RU/Agents/01_orchestrator.md with same logic
-- [x] Verify .gemini/GEMINI.md and .cursorrules don't have outdated refs
+- [x] Verify GEMINI.md and AGENTS.md don't have outdated refs
 - [x] Update System/Docs/SKILLS.md with new skill entry
 - [x] Update CHANGELOG.md with version bump
 - [x] Cross-check: original 14 scenarios ALL still work
@@ -1308,9 +1308,9 @@ DELIVERABLES:
    - **CLI Interface**: `python update_state.py --mode "..." --task "..." --status "..." --summary "..."`
    - **Validation**: Ensure it does not crash on malformed YAML (backup & restore logic).
 
-3. **Update Bootstrap Protocol (`GEMINI.md` & `.cursorrules`)**:
+3. **Update Bootstrap Protocol (`GEMINI.md` & `AGENTS.md`)**:
    - Add explicit instruction: "ON SESSION START: Check for `.agent/sessions/latest.yaml`. If exists, READ IT to restore context."
-   - **Cursor Integration**: Ensure `.cursorrules` has the equivalent instruction for the Cursor environment.
+   - **Cursor Integration**: Ensure `AGENTS.md` has the equivalent instruction for the Cursor environment.
 
 4. **Integration Plan**:
    - Document how this integrates with `task_boundary`. (e.g., "After calling task_boundary, run update_state.py").
@@ -1318,7 +1318,7 @@ DELIVERABLES:
 TESTING & VALIDATION (CRITICAL):
 - **Test 1 (Script):** Run the python script manually to verify YAML generation.
 - **Test 2 (Recovery):** Simulate a session crash. Start a NEW session and verify the agent reads the file and knows "where it left off".
-- **Test 3 (Cursor):** Verify `.cursorrules` instructions work in a simulated Cursor chat environment.
+- **Test 3 (Cursor):** Verify `AGENTS.md` instructions work in a simulated Cursor chat environment.
 
 CONSTRAINTS:
 - The schema MUST be extensible but start simple (<20 lines).

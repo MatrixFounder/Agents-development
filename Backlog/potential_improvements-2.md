@@ -193,8 +193,8 @@ cd .agent/tools && python -m pytest test_archive_protocol.py -v
 
 | Файл | Строки | Что содержит |
 |------|--------|--------------|
-| `.gemini/GEMINI.md` | 56-58 | Полное описание протокола + вызов tool |
-| `.cursorrules` | 36-38 | Сокращённое описание + вызов tool |
+| `GEMINI.md` | 56-58 | Полное описание протокола + вызов tool |
+| `AGENTS.md` | 36-38 | Сокращённое описание + вызов tool |
 | `artifact-management/SKILL.md` | 33-55 | Полный протокол (источник истины) |
 | `02_analyst_prompt.md` | 24-35 | CRITICAL PRE-FLIGHT CHECKLIST |
 | `01_orchestrator.md` | 57-69 | DECISION LOGIC для нового vs refinement |
@@ -204,7 +204,7 @@ cd .agent/tools && python -m pytest test_archive_protocol.py -v
 
 ```mermaid
 graph TD
-    A[User Request] --> B[.gemini/GEMINI.md<br/>OR .cursorrules]
+    A[User Request] --> B[GEMINI.md<br/>OR AGENTS.md]
     B --> C[01_orchestrator.md]
     C --> D[02_analyst_prompt.md]
     D --> E[skill-artifact-management]
@@ -221,8 +221,8 @@ graph TD
 
 | Файл | Строки |
 |------|--------|
-| `.gemini/GEMINI.md` | 21-26 |
-| `.cursorrules` | 24-28 |
+| `GEMINI.md` | 21-26 |
+| `AGENTS.md` | 24-28 |
 | `artifact-management/SKILL.md` | 57-69 |
 | `01_orchestrator.md` | 35-40 |
 

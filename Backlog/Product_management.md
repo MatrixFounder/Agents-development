@@ -50,7 +50,7 @@
 **Расчёт:**
 | Компонент | Токены (приблизительно) |
 |-----------|-------------------------|
-| GEMINI.md/cursorrules | 3-5K |
+| GEMINI.md/AGENTS.md | 3-5K |
 | 00_product_owner.md | 3-5K (прогноз) |
 | 01_orchestrator.md | 2-3K |
 | 01_module_coordinator.md | 3-4K (прогноз) |
@@ -183,7 +183,7 @@ PO → Orchestrator → Module Coordinator → Analyst → Architect → ...
 
 ```
 project-root/
-├── .gemini/GEMINI.md                    # Orchestrator bootstrap
+├── GEMINI.md                    # Orchestrator bootstrap
 ├── .agent/
 │   ├── skills/
 │   │   ├── skill-product-analysis/       # NEW: Vision → Backlog
@@ -485,8 +485,8 @@ project-root/
 
 | File | Size (bytes) | Est. Tokens | Load Frequency |
 |------|--------------|-------------|----------------|
-| `.gemini/GEMINI.md` | 5,576 | ~1,394 | **Session start** |
-| `.cursorrules` | 3,467 | ~867 | **Session start** |
+| `GEMINI.md` | 5,576 | ~1,394 | **Session start** |
+| `AGENTS.md` | 3,467 | ~867 | **Session start** |
 | **TOTAL Config** | **9,043** | **~2,261** |
 
 #### 1.4 Workflows (.agent/workflows/)
@@ -514,7 +514,7 @@ project-root/
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │  SESSION START                                                              │
-│  ├── GEMINI.md/cursorrules loaded ........................ ~1,400 tokens    │
+│  ├── GEMINI.md/AGENTS.md loaded ........................ ~1,400 tokens    │
 │  ├── IDE system prompt (Antigravity internal) ............ ~5,000 tokens*  │
 │  └── User request + conversation history ................. ~500 tokens     │
 │                                                    SUBTOTAL: ~6,900 tokens  │
