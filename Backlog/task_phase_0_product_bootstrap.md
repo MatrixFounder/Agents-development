@@ -131,27 +131,27 @@
 ## 4. Implementation Steps
 
 1.  **Infrastructure Setup**:
-    - [ ] Create `scripts/` directory if missing.
-    - [ ] Verify `Backlog/product_development_vision.md` prerequisites.
+    - [x] Create `scripts/` directory if missing.
+    - [x] Verify `Backlog/product_development_vision.md` prerequisites.
 
 2.  **Develop Scripts (TDD)**:
     - [x] Implement `init_product.py`. Verify `--help` and interactive fallback.
     - [x] Move to `System/scripts/` (Refactoring).
-    - [ ] Implement `calculate_wsjf.py`. Verify with a mock `backlog.md` containing varied table formats.
-    - [ ] **Test**: Create a standalone test script `tests/test_product_scripts.py` to ensure logic correctness.
+    - [x] Implement `calculate_wsjf.py`. Verify with a mock `backlog.md` containing varied table formats.
+    - [x] **Test**: Create a standalone test script `tests/test_product_scripts.py` to ensure logic correctness.
 
 3.  **Develop Skills**:
-    - [ ] Create `skill-product-analysis/SKILL.md` (Check token count < 1000).
-    - [ ] **Create Resources**: `templates/vision_template.md`, `examples/vision_example_good.md`.
-    - [ ] Create `skill-backlog-prioritization/SKILL.md` (Check token count < 500).
-    - [ ] **Create Resources**: `examples/backlog_table_example.md`.
+    - [x] Create `skill-product-analysis/SKILL.md` (Check token count < 1000).
+    - [x] **Create Resources**: `templates/vision_template.md`, `examples/vision_example_good.md`.
+    - [x] Create `skill-backlog-prioritization/SKILL.md` (Check token count < 500).
+    - [x] **Create Resources**: `examples/backlog_table_example.md`.
 
 4.  **Develop Agents**:
-    - [ ] Author `System/Agents/p01_product_analyst_prompt.md` (O6 schema).
-    - [ ] Author `System/Agents/p02_product_reviewer_prompt.md` (O6 schema).
+    - [x] Author `System/Agents/p01_product_analyst_prompt.md` (O6 schema).
+    - [x] Author `System/Agents/p02_product_reviewer_prompt.md` (O6 schema).
 
 5.  **Documentation**:
-    - [ ] Create/Update `System/Docs/PRODUCT_DEVELOPMENT.md` with usage guide.
+    - [x] Create/Update `System/Docs/PRODUCT_DEVELOPMENT.md` with usage guide.
 
 ---
 
@@ -166,18 +166,18 @@
 - [ ] `System/Docs/PRODUCT_DEVELOPMENT.md` exists.
 
 **Functional Verification**
-- [ ] **Dual Mode Test**: Agent can invoke `init_product.py` without hanging.
-- [ ] **Math Check**: `calculate_wsjf.py` exits with Error Code 1 if JobSize=0 (does NOT overwrite file).
-- [ ] **Manual Verification (P02)**: Verify that `p02_product_reviewer` correctly identifies issues in `vision_example_bad.md` (Adversarial check).
-- [ ] **Regex Robustness**: `calculate_wsjf.py` handles malformed tables (missing pipes) by exiting with a clear error message, NOT crashing.
-- [ ] **Docs Verification**: `System/Docs/PRODUCT_DEVELOPMENT.md` contains:
+- [x] **Dual Mode Test**: Agent can invoke `init_product.py` without hanging.
+- [x] **Math Check**: `calculate_wsjf.py` exits with Error Code 1 if JobSize=0 (does NOT overwrite file).
+- [x] **Manual Verification (P02)**: Verify that `p02_product_reviewer` correctly identifies issues in `vision_example_bad.md` (Adversarial check).
+- [x] **Regex Robustness**: `calculate_wsjf.py` handles malformed tables (missing pipes) by exiting with a clear error message, NOT crashing.
+- [x] **Docs Verification**: `System/Docs/PRODUCT_DEVELOPMENT.md` contains:
     - Usage Guide (CLI + Agent)
     - Architecture Diagram
     - Troubleshooting (Exit codes explanation)
-- [ ] **Stats**: Calculate and log token consumption for `p01` and `p02` runs to confirm TIER 2 budget compliance.
+- [x] **Stats**: Calculate and log token consumption for `p01` and `p02` runs to confirm TIER 2 budget compliance.
 **Framework Compliance**
-- [ ] **Token Budget**: Skills stay within defined limits (<1000 and <500).
-- [ ] **Linting**: Scripts pass `pylint` (score > 8.0).
+- [x] **Token Budget**: Skills stay within defined limits (<1000 and <500).
+- [x] **Linting**: Scripts pass `pylint` (score > 8.0).
 
 ---
 

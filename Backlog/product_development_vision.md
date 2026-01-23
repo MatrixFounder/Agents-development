@@ -425,9 +425,9 @@ project-root/
 ## Detailed Implementation Plan
 
 ### Prerequisites
-- [ ] **O1-O7 Optimizations Complete**: System must be stable (v3.7+)
-- [ ] **Script-First Infrastructure**: `scripts/` directory must be ready for new Product tools
-- [ ] **Standalone Mode Support**: Ability to run agents without full project scaffolding (for RFPs/Startups)
+- [x] **O1-O7 Optimizations Complete**: System must be stable (v3.7+)
+- [x] **Script-First Infrastructure**: `scripts/` directory must be ready for new Product tools
+- [x] **Standalone Mode Support**: Ability to run agents without full project scaffolding (for RFPs/Startups)
 
 ### Phase 0: Product Bootstrap & Tools (Week 1)
 **Goal**: Create infrastructure for generating `PRODUCT_VISION.md` and `PRODUCT_BACKLOG.md` from zero.
