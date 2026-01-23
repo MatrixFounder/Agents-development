@@ -5,7 +5,7 @@
 
 # Multi-Agent Software Development System v3.7.0
 
-This framework orchestrates a multi-agent system for structured software development. It transforms vague requirements into high-quality code through a strict pipeline of specialized agents (Analyst, Architect, Planner, Developer, Reviewer).
+This framework orchestrates a multi-agent system for structured software development. It transforms vague requirements into high-quality code through a strict pipeline of specialized agents (Analyst, Architect, Planner, Developer, Reviewer, Security Auditor).
 
 The methodology combines two key approaches (see [Comparison](System/Docs/TDD_VS_VDD.md)):
 - **TDD (Test-Driven Development)**: The "Stub-First" strategy ensures that tests are written and verified against stubs before actual implementation begins. [Read more](System/Docs/TDD.md).
@@ -13,11 +13,17 @@ The methodology combines two key approaches (see [Comparison](System/Docs/TDD_VS
 
 ![Framework architecture](/Attachments/Framework_architecture_v2.png)
 
-##  Table of Contents
+## 📋 Table of Contents
 - [Installation & Setup](#-installation--setup)
-- [Directory Structure](#-directory-structure)
+  - [Copy Folders](#1-copy-framework-folders)
+  - [Choose AI Assistant](#2-choose-your-ai-assistant)
+- [System Overview](#-system-overview)
+  - [Directory Structure](#directory-structure)
+  - [Agents & Roles](#-the-agent-team-roles)
+  - [Skills System](#-skills-system)
 - [Workspace Workflows](#-workspace-workflows)
 - [How to Start Development](#-how-to-start-development-step-by-step-plan)
+  - [Stages 1-5](#stage-1-pre-flight-check)
 - [Artifact Management](#-artifact-management)
 - [Migration Guide](#-migration-from-older-versions)
 - [Starter Prompts](#-starter-prompt-templates)
@@ -67,39 +73,7 @@ Antigravity supports this architecture out-of-the-box:
     ls,cat,head,tail,find,grep,tree,wc,stat,file,du,df,git status,git log,git diff,git show,git branch,git remote,git tag,mv docs/TASK.md,mv docs/PLAN.md,mkdir -p docs,mkdir -p .agent,mkdir -p tests,python -m pytest,python3 -m pytest,npm test,npx jest,cargo test
     ```
 
-### 📚 Skills System
-Version 3.0 introduces a modular **Skills System** that separates "Who" (Agent) from "What" (Capabilities).
-- **Reduces Prompt Size**: Agents only load what they need.
-- **Shared Logic**: Improvements in a skill benefit all agents.
-
-### 3. Executable Skills (Tools)
-New in v3.2: The system supports **Native Tools** executed by the Orchestrator (Schema-based).
-
-**Architecture:**
-```text
-.agent/tools/              ← Tool definitions & business logic
-├── schemas.py             ← OpenAI-compatible JSON schemas
-├── task_id_tool.py        ← Example: ID generation tool
-└── archive_protocol.py    ← Example: Archiving logic
-
-System/scripts/            ← Dispatcher (execution entry point)
-└── tool_runner.py         ← execute_tool() function
-```
-
-**Why this structure?**
-- `.agent/tools/` — groups all "agentic" components (skills, tools, workflows) together
-- `System/scripts/` — framework utilities, separate from project code
-
-**Capabilities**: Run tests, Git operations, File I/O.
-
-**[>> View Full Skills Catalog <<](System/Docs/SKILLS.md)**
-**[>> Orchestrator & Tools Guide <<](System/Docs/ORCHESTRATOR.md)** (Configuration, New Tools & Troubleshooting)
-
-By default, the system uses English prompts. To use **Russian** context:
-1.  Copy content from `Translations/RU/Agents` to `System/Agents`.
-2.  Copy content from `Translations/RU/Skills` to `.agent/skills`.
-
-### 4. Installation Requirements (Python)
+### 3. Installation Requirements (Python)
 If you plan to use the **Tool Execution Subsystem** (native tools), you need Python 3.9+ with the following packages:
 
 ```bash
@@ -122,7 +96,9 @@ pip install python-dotenv  # Environment variables
 
 ---
 
-## 🏗 Directory Structure
+## 🏗 System Overview
+
+### Directory Structure
 ```text
 project-root/
 ├── AGENTS.md                    # [Cursor] Context & Rules
@@ -166,6 +142,24 @@ It **MUST** be added to the context for all other agents (01-10).
 | **Antigravity** | `GEMINI.md` (includes global principles) | **Automatically (Native)**. Manual concatenation of `00` is not required. |
 
 
+### 📚 Skills System
+Version 3.0 introduces a modular **Skills System** that separates "Who" (Agent) from "What" (Capabilities).
+- **Reduces Prompt Size**: Agents only load what they need.
+- **Shared Logic**: Improvements in a skill benefit all agents.
+
+**Structure:**
+- `.agent/skills/` — Markdown instructions and templates.
+- `.agent/tools/` — Native tool definitions and schemas.
+- `System/scripts/` — Execution engine for tools.
+
+**Capabilities**: Run tests, Git operations, File I/O, Archiving.
+
+**[>> View Full Skills Catalog <<](System/Docs/SKILLS.md)**
+**[>> Orchestrator & Tools Guide <<](System/Docs/ORCHESTRATOR.md)**
+
+By default, the system uses English prompts. To use **Russian** context:
+1.  Copy content from `Translations/RU/Agents` to `System/Agents`.
+2.  Copy content from `Translations/RU/Skills` to `.agent/skills`.
 
 ---
 
@@ -344,45 +338,53 @@ Copy this text to activate the Orchestrator via `AGENTS.md`.
 ### Template 1: Developing a New Feature (Feature)
 ```text
 You are an Orchestrator.
-Context: Our project - [Online Store on Django].
-TASK: Organize development of a new "Loyalty System" module.
+Context: Our project - [PROJECT_NAME/DESCRIPTION].
+TASK: Develop "[FEATURE_NAME]" module.
 INPUT:
-- Users should receive 1 point for every 100 rubles.
-- It should be possible to pay with points up to 30% of the order.
-ACTIVE SKILLS:
-- skill-core-principles
-- skill-planning-decision-tree
-ACTIONS:
-- Run the full pipeline (Analysis -> Architecture -> Plan -> Code).
-- Ensure Stub-First strategy (skill-tdd-stub-first).
+- [REQUIREMENT_1]
+- [REQUIREMENT_2]
+ACTION:
+- Execute workflow `/base-stub-first` (Standard Pipeline).
 ```
 
 ### Template 2: Refactoring
 ```text
 You are an Orchestrator.
-TASK: Organize refactoring of the "Notification Sending" module.
+TASK: Refactor "[MODULE_NAME]" module.
 CONTEXT:
-- Current code: `src/notifications`.
-- Problem: Synchronous sending.
-- Goal: Move to Celery.
-ACTIVE SKILLS:
-- skill-architecture-design
-ACTIONS:
-- Guide through all stages (Analyst -> Architect -> Plan...).
+- Current code: `[PATH/TO/CODE]`.
+- Problem: [DESCRIPTION_OF_PROBLEM].
+- Goal: [DESCRIPTION_OF_GOAL].
+ACTION:
+- Execute workflow `/base-stub-first` (Analysis -> Arch -> Plan -> Refactor).
 ```
 
 ### Template 3: Complex Bugfix
 ```text
 You are an Orchestrator.
-TASK: Fix the "Double Charigng" error.
+TASK: Fix the "[ERROR_DESCRIPTION]" bug.
 INPUT:
-- Log file: error_logs.txt.
-ACTIVE SKILLS:
-- skill-tdd-stub-first
-- skill-vdd-adversarial
-ACTIONS:
-- Analyst must create a scenario (E2E test) to reproduce.
-- Fix via Stub-First (test first, then fix).
+- Log file: [PATH_TO_LOGS].
+ACTION:
+- Execute workflow `/vdd-adversarial` to reproduce and fix.
+```
+
+### Template 4: Documentation Restore (Reverse Engineering)
+```text
+You are an Orchestrator.
+TASK: Restore outdated documentation.
+CONTEXT:
+- Active development finished, but `docs/` are stale.
+ACTION:
+- Execute workflow `/04-update-docs` to reverse-engineer architecture and update memory.
+```
+
+### Template 5: Security Audit
+```text
+You are an Orchestrator.
+TASK: Audit the "[MODULE_OR_SERVICE_NAME]" for vulnerabilities.
+ACTION:
+- Execute workflow `/security-audit`.
 ```
 
 ---
