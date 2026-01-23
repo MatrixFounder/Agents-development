@@ -254,9 +254,9 @@ You are the **Product Analyst**, a specialized agent focused on transforming vag
 1. **Bootstrap**: Restore Session State (`update_state.py`).
 2. **Analyze**: Read User interactions and `PRODUCT_VISION.md`.
 3. **Execute**:
-   - IF New Project: Call `scripts/init_product.py --name "..." --problem "..."` (Headless Mode).
+   - IF New Project: Call `init_product` tool (or `System/scripts/init_product.py`).
    - IF Refinement: Update markdown content using file_ops.
-   - IF Prioritization Needed: Call `scripts/calculate_wsjf.py`.
+   - IF Prioritization Needed: Call `calculate_wsjf` tool.
 4. **Verify**: Check if artifacts meet `skill-product-analysis` standards.
 5. **Update State**: Save session context.
 
@@ -322,14 +322,14 @@ You are the **Product Reviewer**, a specialized VDD critic designed to safeguard
 .agent/skills/skill-product-analysis/
 ├── SKILL.md                 # Defining INVEST and Vision templates
 ├── scripts/
-│   └── init_product.py      # DUAL-MODE script (CLI + Interactive)
+│   └── init_product.py      # (MOVED) Now in System/scripts/
 └── resources/
     └── templates/           # Markdown templates
 ```
 
 **Content:**
 - **Tier**: 2
-- **Tooling**: Mandates use of `scripts/init_product.py --name "X" --problem "Y"` for atomic creation.
+- **Tooling**: Mandates use of `System/scripts/init_product.py` or native tool.
 - **Rules**:
   - Business Goals must be SMART.
   - User Stories must follow INVEST.
@@ -341,13 +341,13 @@ You are the **Product Reviewer**, a specialized VDD critic designed to safeguard
 .agent/skills/skill-backlog-prioritization/
 ├── SKILL.md                 # Prioritization rules
 └── scripts/
-    └── calculate_wsjf.py    # Robust table parsing & calculation
+    └── calculate_wsjf.py    # (MOVED) Now in System/scripts/
 ```
 
 **Content:**
 - **Tier**: 2
-- **Adversarial Rule**: "You are FORBIDDEN from calculating WSJF scores yourself. You MUST run the script."
-- **Logic**: Defines WSJF components (User Value, Time Criticality, Risk Reduction) but delegates math to `calculate_wsjf.py`.
+- **Adversarial Rule**: "You are FORBIDDEN from calculating WSJF scores yourself. You MUST run the tool."
+- **Logic**: Defines WSJF components (User Value, Time Criticality, Risk Reduction) but delegates math to `calculate_wsjf`.
 
 ### New Workflows
 
@@ -363,7 +363,7 @@ description: Create or update Product Vision and Backlog
 4. Create/Update docs/PRODUCT_VISION.md
 5. Load skill: skill-backlog-prioritization
 6. Create docs/PRODUCT_BACKLOG.md
-7. Tool: `calculate_wsjf.py` (Auto-prioritize)
+7. Tool: `calculate_wsjf` (Auto-prioritize)
 8. Notify user: "Vision and Backlog ready for review"
 ```
 
@@ -433,10 +433,10 @@ project-root/
 **Goal**: Create infrastructure for generating `PRODUCT_VISION.md` and `PRODUCT_BACKLOG.md` from zero.
 
 1.  **Bootstrap Tools (Script-First / Dual-Mode)**:
-    -   **`scripts/init_product.py`**:
+    -   **`System/scripts/init_product.py`**:
         -   **Headless Mode** (`--name`, `--problem`, ...): For Agents to use atomically.
         -   **Interactive Mode** (No args): For Humans to use via CLI wizards.
-    -   **`scripts/calculate_wsjf.py`**:
+    -   **`System/scripts/calculate_wsjf.py`**:
         -   **Robust Parsing**: Handles markdown table variations gracefully.
         -   **Atomic Updates**: Reads file, calculates, rewrites validation.
 

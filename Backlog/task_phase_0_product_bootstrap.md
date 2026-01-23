@@ -18,8 +18,8 @@
 ---
 
 ## 2. User Stories
-- **As a User**, I want to run `python3 scripts/init_product.py` interactively to scaffold a new project without remembering template formats.
-- **As an Agent (p01)**, I want to call `python3 scripts/init_product.py --problem "..." --users "..."` to generate files atomically without getting stuck in `input()` loops.
+- **As a User**, I want to run `python3 System/scripts/init_product.py` interactively to scaffold a new project without remembering template formats.
+- **As an Agent (p01)**, I want to call `init_product` via native Tool Runner (or `python3 System/scripts/init_product.py`) to generate files atomically.
 - **As a User**, I want WSJF scores to be mathematically precise (calculated by script), avoiding LLM math hallucinations.
 - **As a System Architect**, I want strict TIER 2 isolation for these new skills so they don't pollute the context of technical development sessions.
 
@@ -31,7 +31,7 @@
 
 > **Constraint:** All scripts must use standard library `argparse`. No heavy external dependencies (e.g., `pandas`) unless absolutely necessary.
 
-**A. `scripts/init_product.py`**
+**A. `System/scripts/init_product.py`**
 **Type:** Dual-Mode CLI (Interactive + Headless)
 **Purpose:** Scaffolds `docs/PRODUCT_VISION.md`.
 **Requirements:**
@@ -42,7 +42,7 @@
 3.  **Idempotency:** If `docs/PRODUCT_VISION.md` exists, fail gracefully or ask to overwrite (require `--force` flag for agents).
 4.  **Output:** Valid Markdown file at `docs/PRODUCT_VISION.md` based on `skill-product-analysis` templates.
 
-**B. `scripts/calculate_wsjf.py`**
+**B. `System/scripts/calculate_wsjf.py`**
 **Type:** Data Processing CLI
 **Purpose:** Deterministic prioritization of the Backlog.
 **Requirements:**
@@ -65,6 +65,14 @@
         -   **DO NOT** overwrite the file.
     - Sort: Descending by `WSJF`.
 4.  **Output:** Overwrite file with updated values (formatting preserved).
+
+**C. Tool Runner Integration (New)**
+**Type:** Native System Architecture
+**Purpose:** Enable Agents to call these scripts as native tools, not just shell commands.
+**Requirements:**
+1.  **UPDATE** `System/scripts/tool_runner.py`: Add dispatch logic for `init_product` and `calculate_wsjf`.
+2.  **UPDATE** `.agent/tools/schemas.py`: Add JSON schemas for these tools.
+3.  **Mechanism:** `tool_runner` should spawn a subprocess to call the python scripts in `System/scripts/`, ensuring isolation.
 
 ### 3.2. Skills (TIER 2)
 
@@ -127,7 +135,8 @@
     - [ ] Verify `Backlog/product_development_vision.md` prerequisites.
 
 2.  **Develop Scripts (TDD)**:
-    - [ ] Implement `init_product.py` with `argparse`. Verify `--help` and interactive fallback.
+    - [x] Implement `init_product.py`. Verify `--help` and interactive fallback.
+    - [x] Move to `System/scripts/` (Refactoring).
     - [ ] Implement `calculate_wsjf.py`. Verify with a mock `backlog.md` containing varied table formats.
     - [ ] **Test**: Create a standalone test script `tests/test_product_scripts.py` to ensure logic correctness.
 
@@ -149,8 +158,9 @@
 ## 5. Definition of Done (DoD)
 
 **Artifact Verification**
-- [ ] `scripts/init_product.py` exists and supports both `--name "Test"` and interactive mode.
-- [ ] `scripts/calculate_wsjf.py` exists and correctly sorts a markdown table.
+- [x] `System/scripts/init_product.py` exists and supports both `--name "Test"` and interactive mode.
+- [x] `System/scripts/calculate_wsjf.py` exists and correctly sorts a markdown table.
+- [x] **Tool Integration:** Tools registered in `schemas.py` and executable via `tool_runner`.
 - [ ] `.agent/skills/skill-product-analysis/SKILL.md` has `tier: 2` metadata.
 - [ ] `System/Agents/p01_product_analyst_prompt.md` follows O6 Standard (Standardized Header).
 - [ ] `System/Docs/PRODUCT_DEVELOPMENT.md` exists.

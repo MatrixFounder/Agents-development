@@ -71,5 +71,10 @@
 - [x] Update `System/Docs/ORCHESTRATOR.md`.
 - [x] Update `System/Docs/SKILLS.md`.
 - [x] Update `System/Docs/SKILL_TIERS.md`.
+### Documentation Update (User Request)
+- [x] Update `System/Docs/ORCHESTRATOR.md`.
+- [x] Update `System/Docs/SKILLS.md`.
+- [x] Update `System/Docs/SKILL_TIERS.md`.
 - [x] Add Agent Examples to `System/Docs/PRODUCT_DEVELOPMENT.md`.
+- [x] Update `CHANGELOG.md` (v3.8).
 
