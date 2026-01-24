@@ -7,6 +7,42 @@
 
 ---
 
+## Table of Contents
+- [Executive Summary](#executive-summary)
+- [Visual Architecture](#visual-architecture)
+  - [The "Product Discovery" Pipeline](#the-product-discovery-pipeline)
+- [Evolution to v3](#evolution-to-v3)
+- [Core Architecture](#core-architecture)
+  - [The Pipeline Agents](#the-pipeline-agents)
+  - [File Structure & Isolation](#file-structure--isolation)
+- [Detailed Agent Definitions (The "Lean Five")](#detailed-agent-definitions-the-lean-five)
+  - [p00_product_orchestrator](#p00_product_orchestrator)
+  - [p01_strategic_analyst](#p01_strategic_analyst)
+  - [p02_product_analyst](#p02_product_analyst)
+  - [p03_product_director (The Gatekeeper)](#p03_product_director-the-gatekeeper)
+  - [p04_solution_architect](#p04_solution_architect)
+- [Flexibility: Workflows](#flexibility-workflows)
+  - [1. /product-full-discovery (Default for Enterprise)](#1-product-full-discovery-default-for-enterprise)
+  - [2. /product-quick-vision (Internal Tools / Hackathons)](#2-product-quick-vision-internal-tools--hackathons)
+  - [3. /product-market-only (Idea Validation)](#3-product-market-only-idea-validation)
+- [Handoff Mechanism (The Bridge & BRD Compiler)](#handoff-mechanism-the-bridge--brd-compiler)
+- [Risks, Mitigations & VDD](#risks-mitigations--vdd)
+- [Implementation Plan](#implementation-plan)
+  - [Prerequisite: Strict Skill Creation](#prerequisite-strict-skill-creation)
+  - [Phase 1: Migration & Foundation (Week 1)](#phase-1-migration--foundation-week-1)
+  - [Phase 2: Skill Upgrades (Week 1-2)](#phase-2-skill-upgrades-week-1-2)
+  - [Phase 3: The Handoff (Week 2)](#phase-3-the-handoff-week-2)
+- [How to Start (User Experience)](#how-to-start-user-experience)
+- [Appendix: Example Artifact Run (FlexArb Bots)](#appendix-example-artifact-run-flexarb-bots)
+  - [docs/product/MARKET_STRATEGY.md](#docsproductmarket_strategymd)
+  - [docs/product/PRODUCT_VISION.md](#docsproductproduct_visionmd)
+  - [docs/product/SOLUTION_BLUEPRINT.md (Snippet)](#docsproductsolution_blueprintmd-snippet)
+  - [docs/product/APPROVED_BACKLOG.md (Footer)](#docsproductapproved_backlogmd-footer)
+- [Conclusion & Success Metrics](#conclusion--success-metrics)
+- [Appendix: BRD Structure (Generated)](#appendix-brd-structure-generated)
+
+---
+
 ## Executive Summary
 
 We are expanding Agentic Development from a "Code Generator" to a **"Full-Cycle Venture Builder"**. This expansion adds a dedicated **Product Discovery Phase** that operates strict *Air Gaps* and *Quality Gates* before any technical planning occurs.
