@@ -5,6 +5,17 @@ We have expanded Agentic Development from a "Code Generator" to a **"Full-Cycle 
 
 **The Goal:** Ensure we are building the *right* product (High ROI, Defensible Moat) before we build it *right*.
 
+## Table of Contents
+- [1. Executive Summary](#1-executive-summary)
+- [2. Visual Architecture](#2-visual-architecture)
+- [3. Core Architecture](#3-core-architecture)
+- [4. Agent Definitions](#4-agent-definitions-the-lean-five)
+- [5. Handoff Mechanism](#5-handoff-mechanism-the-bridge)
+- [6. Workflows](#6-workflows)
+- [7. How to Start](#7-how-to-start)
+- [8. Artifact Examples](#8-artifact-examples)
+- [9. Working Usage Examples](#9-working-usage-examples)
+
 ---
 
 ## 2. Visual Architecture
@@ -179,3 +190,56 @@ or use the workflow command:
 
 ### `BRD.md` (Compiled)
 A single 16-section document containing all of the above, ready for investors or developers.
+
+---
+
+## 9. Working Usage Examples
+
+### Example 1: Full Venture Build (Startup)
+**Context:** You have a vague idea for a B2C app and want to ensure it's viable.
+**Command:**
+```text
+Run /product-full-discovery
+Input: "I want to build a subscription service for renting high-end Lego sets."
+```
+**Process:**
+1.  **p01** will ask: "What is the TAM? Average Lego set price?" -> generates `MARKET_STRATEGY.md`.
+2.  **p02** will ask: "Who is the user? Parents or AFOLs (Adult Fans of Lego)?" -> generates `PRODUCT_VISION.md`.
+3.  **p03** will challenge: "Shipping costs will kill your margins. Prove me wrong."
+4.  **p04** will calculate: "Shipping = $15/way. Sub = $50/mo. Margin = Thin." -> generates `SOLUTION_BLUEPRINT.md`.
+
+### Example 2: Internal Tool (Quick Vision)
+**Context:** You need a simple admin panel for your team. Market research is irrelevant.
+**Command:**
+```text
+Run /product-quick-vision
+Input: "Build an Admin Panel for our User Database. Needs 'Ban User' button."
+```
+**Process:**
+1.  **p00** skips Strategy phase.
+2.  **p02** drafts Vision: "Goal: Reduce support ticket time by 50%."
+3.  **p03** performs light sanity check (Security focus).
+4.  **Handoff** compiles BRD and triggers valid technical specs.
+
+### Example 3: VDD Audit (Existing Project)
+**Context:** You have existing product docs and want `p03` (Director) to roast them.
+**Command:**
+```text
+@p03_product_director
+Task: Audit my docs/product/PRODUCT_VISION.md.
+Mode: VDD Adversarial
+```
+**Output:**
+> [!CRITIC]
+> **Refusal:** Your "Viral Loop" assumption is mathematically impossible with K < 1.0. Fix metrics before I sign off.
+
+### Example 4: Manual Tool Usage (CLI)
+**Context:** You want to generate a specific artifact without the full agent loop.
+**Command (Terminal):**
+```bash
+# Generate a Market Strategy Skeleton
+python3 .agent/skills/skill-product-strategic-analysis/scripts/init_strategy.py --industry "Fintech"
+
+# Calculate WSJF Score for Backlog
+python3 .agent/skills/skill-product-backlog-prioritization/scripts/calculate_wsjf.py --file docs/product/BACKLOG.md
+```
