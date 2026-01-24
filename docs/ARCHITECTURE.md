@@ -1,5 +1,14 @@
 # Architecture: Agentic Development System
 
+## Table of Contents
+- [1. Core Concept](#1-core-concept)
+- [2. Directory Structure](#2-directory-structure)
+- [3. Workflow Logic (v3.1)](#3-workflow-logic-v31)
+- [4. Tool Execution Subsystem [NEW]](#4-tool-execution-subsystem-new)
+- [5. Key Principles](#5-key-principles)
+- [6. Localization Strategy](#6-localization-strategy)
+- [7. Skill Architecture & Optimization Standards](#7-skill-architecture--optimization-standards)
+
 ## 1. Core Concept
 The system is built on a "Multi-Agent" architecture where different "Agents" (Personas defined by System Prompts) collaborate to solve tasks.
 The Source of Truth for these agents is located in `System/Agents`.
@@ -12,16 +21,21 @@ project-root/
 ├── AGENTS.md                      # References to rules + reading .AGENTS.md
 ├── .agent/
 │   ├── skills/                  # Skills Library (Source of Capabilities)
-│   └── tools/                   # [NEW] Executable Tools Schemas (schemas.py)
+│   │   ├── ...
+│   │   └── skill-product-*      # [NEW] Product Skills (Strategy, Vision, Handoff)
+│   └── tools/                   # Executable Tools Schemas (schemas.py)
 ├── .cursor/skills/                # [Symlink] Mirrors .agent/skills for Cursor
 ├── System/
 │   ├── Agents/                  # Lightweight System Prompts (Personas)
 │   │   ├── 00_agent_development.md
 │   │   ├── 01_orchestrator.md
-│   │   └── ...
+│   │   ├── ...
+│   │   ├── p00_product_orchestrator.md #[NEW] Product Phase Agents
+│   │   └── p04_solution_architect.md
 │   ├── Docs/                    # Framework Documentation & Guides
 │   │   ├── SKILLS.md            # Skills Catalog
 │   │   ├── ORCHESTRATOR.md      # Tools Guide
+│   │   ├── PRODUCT_DEVELOPMENT.md #[NEW] Product Playbook
 │   │   └── ...
 │   └── scripts/                 # [NEW] Framework Utilities (Tool Dispatcher)
 │       └── tool_runner.py
@@ -31,12 +45,13 @@ project-root/
 │   │   └── .AGENTS.md           # Local Context Artifact (Per-directory)
 │   └── ...
 ├── docs/                        # Project Artifacts
-│   ├── TASK.md                  # Current Task
+│   ├── product/                 # [NEW] Product Artifacts (Strategy, Vision, BRD)
+│   ├── TASK.md                  # Current Technical Task
 │   ├── ARCHITECTURE.md          # System Architecture (This file)
 │   └── ...
 ├── tests/                       # Tests & Test Reports
 │   ├── tests-{ID}/              # Test Reports per Task (e.g. tests-016/)
-│   └── reports/                 # Validation Reports (e.g. o1-o3-validation.md)
+│   └── ...
 └── archives/
 ```
 
@@ -77,7 +92,6 @@ The orchestration layer now supports **Structured Tool Calling**:
 
 
 ## 5. Key Principles
-## 6. Key Principles
 - **Modular Skills**: Logic is decoupled from Personas. Agents load `skills` to perform specific tasks.
 - **Local Artifacts**: `.AGENTS.md` provide distributed long-term memory per directory.
 - **Session State**: `latest.yaml` provides volatile short-term memory (GPS coordinates).
@@ -86,7 +100,37 @@ The orchestration layer now supports **Structured Tool Calling**:
 - **One Giant Column**: Keep context constraints in mind.
 - **Source of Truth**: Documentation (`docs/`), `System/Agents`, `.agent/skills`, and `latest.yaml`.
 
-## 7. Localization Strategy
+## 6. Localization Strategy
 - **Default**: English (`System/Agents`).
 - **Alternative**: Russian (`System/Agents_ru` -> `Translations/RU`).
 - Switching is done by swapping the source directory in the orchestrator config.
+
+## 7. Skill Architecture & Optimization Standards
+
+> **Critical Requirement:** All new skills MUST adhere to the **O6/O6a Optimization Standards** defined in [Backlog/agentic_development_optimisations.md](../Backlog/agentic_development_optimisations.md).
+
+The system relies on a modular **Skills System** ([System/Docs/SKILLS.md](../System/Docs/SKILLS.md)) that separates "Who" (Agent) from "What" (Capabilities). To maintain performance and context limits, strict rules apply:
+
+### Rule 1: Script-First Approach (O6a)
+**Do NOT write complex logic in natural language.**
+If a skill requires analyzing project structure, calculating metrics, or validating files:
+- ❌ **Bad:** "Look at the file, count the lines, then if X..." (Bloats prompt, unreliable).
+- ✅ **Good:** "Run `scripts/analyze_metrics.py`." (Zero-hallucination, deterministic).
+
+### Rule 2: Example Separation (O6a)
+**Do NOT inline large templates or examples.**
+- ❌ **Bad:** Embedding 50 lines of JSON example in `SKILL.md`.
+- ✅ **Good:** "Refer to `examples/template.json`."
+*Why?* Skills are loaded into the context window. Static text wastes tokens.
+
+### Rule 3: Tiered Loading Protocol (O5)
+Every skill must be assigned a **TIER** in its YAML frontmatter to support Lazy Loading.
+- **TIER 0 (System):** Always loaded (e.g., `safe-commands`). **Restriction:** Must be <500 tokens.
+- **TIER 1 (Phase):** Loaded on phase entry (e.g., `requirements-analysis`).
+- **TIER 2 (Extended):** Loaded only on demand (e.g., `adversarial-security`).
+
+### Rule 4: Skill Creator Standard
+All new skills must be generated using `skill-creator`.
+- **Reason:** Enforces directory structure (`scripts/`, `examples/`, `tests/`) and runs validation checks (`validate_skill.py`).
+
+**[>> Read Full Skills Documentation <<](../System/Docs/SKILLS.md)**
