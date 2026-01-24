@@ -172,7 +172,7 @@ project-root/
 ### p02_product_analyst
 **Role:** The Visionary.
 - **Focus:** Synthesis. Takes the raw *Strategy* and shapes it into a *Product Vision*.
-- **Tools:** Uses `skill-product-vision-canvas` (Crossing the Chasm, Emotional logic).
+- **Tools:** Uses `skill-product-analysis` (Crossing the Chasm, Emotional logic).
 
 ### p03_product_director (The Gatekeeper)
 **Role:** The Adversarial Critic (VC Proxy).

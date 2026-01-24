@@ -1,80 +1,43 @@
-# Task: Phase 0 - Product Bootstrap & Core Tooling
+# Task: Phase 1 - Migration & Foundation (Week 1)
 
 > **Status:** Done
-> **Parent Initiative:** [Product Development Vision](./product_development_vision.md)
+> **Parent Initiative:** [Product Development Vision v3.2](../Backlog/product_development_vision_v3_2.md)
 
 ---
 
 ## 1. Executive Summary
-**Objective:** Establish the foundational infrastructure ("Bootstrap") required to generate and refine product artifacts (`PRODUCT_VISION.md`, `PRODUCT_BACKLOG.md`) utilizing a **Script-First** methodology.
+**Objective:** Establish the v3 "Venture Builder" architecture by creating the `docs/product/` air-gapped directory and migrating the agent fleet from 2 agents (p01, p02) to the "Lean Five" (p00-p04), strictly following the v3.2 specification.
 
 ---
 
 ## 4. Implementation Steps
 
-1.  **Infrastructure Setup**:
-    - [x] Create `scripts/` directory if missing.
-    - [x] Verify `Backlog/product_development_vision.md` prerequisites.
+1.  **Structure Setup**:
+    - [x] Create `docs/product/` directory (The Air Gap).
 
-2.  **Develop Scripts (TDD)**:
-    - [x] Implement `init_product.py` with `argparse`. Verify `--help` and interactive fallback.
-    - [x] Implement `calculate_wsjf.py`. Verify with a mock `backlog.md` containing varied table formats.
-    - [x] **Test**: Create a standalone test script `tests/test_product_scripts.py` to ensure logic correctness.
+2.  **Agent Migration (Renaming)**:
+    - [x] Rename `System/Agents/p01_product_analyst_prompt.md` -> `p02_product_analyst_prompt.md`.
+    - [x] Rename `System/Agents/p02_product_reviewer_prompt.md` -> `p03_product_director_prompt.md`.
 
-3.  **Develop Skills**:
-    - [x] Create `skill-product-analysis/SKILL.md` (Check token count < 1000).
-    - [x] **Create Resources**: `templates/vision_template.md`, `examples/vision_example_good.md`.
-    - [x] Create `skill-product-backlog-prioritization/SKILL.md` (Check token count < 500).
-    - [x] **Create Resources**: `examples/backlog_table_example.md`.
+3.  **Agent Creation & Updates (The Lean Five)**:
+    - [x] **Create** `p00_product_orchestrator` (New Dispatcher).
+    - [x] **Create** `p01_strategic_analyst` (New Researcher).
+    - [x] **Update** `p02_product_analyst` (Focus: Vision Synthesis only).
+    - [x] **Update** `p03_product_director` (Focus: Adversarial VDD + Approval Hash).
+    - [x] **Create** `p04_solution_architect` (New Solution Designer).
 
-4.  **Develop Agents**:
-    - [x] Author `System/Agents/p01_product_analyst_prompt.md` (O6 schema).
-    - [x] Author `System/Agents/p02_product_reviewer_prompt.md` (O6 schema).
-
-5.  **Documentation**:
-    - [x] Create/Update `System/Docs/PRODUCT_DEVELOPMENT.md` with usage guide.
+4.  **Verification**:
+    - [x] Verify file existence and location.
+    - [x] Verify prompts match v3.2 specs (roles, tools, io).
 
 ---
 
 ## 5. Definition of Done (DoD)
 
 **Artifact Verification**
-- [x] `scripts/init_product.py` exists and supports both `--name "Test"` and interactive mode.
-- [x] `scripts/calculate_wsjf.py` exists and correctly sorts a markdown table.
-- [x] `.agent/skills/skill-product-analysis/SKILL.md` has `tier: 2` metadata.
-- [x] `System/Agents/p01_product_analyst_prompt.md` follows O6 Standard (Standardized Header).
-- [x] `System/Docs/PRODUCT_DEVELOPMENT.md` exists.
+- [x] `docs/product/` exists.
+- [x] System/Agents/ contains exactly: p00, p01, p02, p03, p04 (plus standard agents).
 
 **Functional Verification**
-- [x] **Dual Mode Test**: Agent can invoke `init_product.py` without hanging.
-- [x] **Math Check**: `calculate_wsjf.py` exits with Error Code 1 if JobSize=0 (does NOT overwrite file).
-- [x] **Regex Robustness**: `calculate_wsjf.py` handles malformed tables (missing pipes) by exiting with a clear error message, NOT crashing.
-- [x] **Stats**: Calculate and log token consumption for `p01` and `p02` runs to confirm TIER 2 budget compliance.
-
-**Framework Compliance**
-- [x] **Token Budget**: Skills stay within defined limits.
-- [x] **Linting**: Scripts pass `pylint` (score > 8.0). (Implicitly verified by manual review and strict requirements adherence).
-
-### Refactoring (User Request)
-- [x] Move scripts to `System/scripts/`.
-- [x] Update Skills references.
-- [x] Update Agent prompts.
-- [x] Update Documentation.
-- [x] Update Tests.
-
-### Tool Runner Integration (User Request)
-- [x] Update `schemas.py` with `init_product` and `calculate_wsjf`.
-- [x] Update `tool_runner.py` with dispatch logic.
-- [x] Verify integration.
-
-### Documentation Update (User Request)
-- [x] Update `System/Docs/ORCHESTRATOR.md`.
-- [x] Update `System/Docs/SKILLS.md`.
-- [x] Update `System/Docs/SKILL_TIERS.md`.
-### Documentation Update (User Request)
-- [x] Update `System/Docs/ORCHESTRATOR.md`.
-- [x] Update `System/Docs/SKILLS.md`.
-- [x] Update `System/Docs/SKILL_TIERS.md`.
-- [x] Add Agent Examples to `System/Docs/PRODUCT_DEVELOPMENT.md`.
-- [x] Update `CHANGELOG.md` (v3.8).
-
+- [x] `p00` prompt correctly lists dispatch logic.
+- [x] `p03` prompt includes "Approval Hash" instruction.
