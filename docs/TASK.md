@@ -30,7 +30,7 @@
 
 **Artifact Verification**
 - [x] `skill-product-handoff` exists and passes validation.
-- [x] `scripts/product/` contains `verify_gate.py` and `compile_brd.py`.
+- [x] `skill-product-handoff/scripts/` contains `verify_gate.py` and `compile_brd.py`.
 - [x] 3 Workflow files exist in `.agent/workflows/`.
 
 **Functional Verification**

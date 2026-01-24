@@ -30,8 +30,6 @@ To translate abstract "Vision" into concrete "Requirements" without writing code
 
 ### How to Calculate
 Run the script with your estimated feature counts:
-### How to Calculate
-Run the script with your estimated feature counts:
 ```bash
 # Usage: python3 [skill_path]/scripts/calculate_roi.py --small <N> --medium <N> --large <N> --users <N> --price <N>
 python3 [skill_path]/scripts/calculate_roi.py --small 2 --medium 1 --users 1000 --price 10
@@ -52,3 +50,6 @@ Track top 5 risks using this structure:
 ## 5. Handoff Readiness
 The output must be ready for `handoff_to_technical.py`.
 - **Constraint:** Ensure all NFRs (Non-Functional Requirements) are quantifiable (e.g. "Sub-200ms latency", not "Fast").
+
+## 6. Examples
+- **Blueprint:** `examples/example_solution_blueprint.md` (Includes ROI and Risks).

@@ -8,6 +8,7 @@ This document is the **Single Source of Truth** for all automation workflows in 
 - [1. Pipelines (Meta-Workflows)](#1-pipelines-meta-workflows)
 - [2. Automation Loops](#2-automation-loops)
 - [3. Atomic Actions](#3-atomic-actions)
+- [4. Product Workflows](#4-product-workflows)
 - [❓ FAQ](#-faq)
 - [🛡 Safety & Verification](#-safety--verification)
 - [📋 Getting Started: Workflow Call Sequences](#-getting-started-workflow-call-sequences)
@@ -15,6 +16,7 @@ This document is the **Single Source of Truth** for all automation workflows in 
   - [TDD (Test-Driven Development) Examples](#tdd-test-driven-development-examples)
   - [VDD (Verification-Driven Development) Examples](#vdd-verification-driven-development-examples)
   - [Quick Reference: Choosing Your Approach](#quick-reference-choosing-your-approach)
+  - [Choosing Product Approach (Phase 0)](#choosing-product-approach-phase-0)
   - [Summary Table](#summary-table)
 
 ---
@@ -36,8 +38,18 @@ graph TD
         VDDE([vdd-enhanced]):::pipeline
         Robust([full-robust]):::pipeline
         VDDMulti([vdd-multi]):::pipeline
+        VDDMulti([vdd-multi]):::pipeline
         Light([light]):::pipeline
+        
+        subgraph Product [Product Discovery]
+            ProdFull([product-full-discovery]):::prod
+            ProdQuick([product-quick-vision]):::prod
+            ProdMark([product-market-only]):::prod
+        end
     end
+
+    %% Styles for Product
+    classDef prod fill:#ff9999,stroke:#333,stroke-width:2px;
 
     %% Automation Loops
     subgraph Loops [Automation Loops]
@@ -120,6 +132,17 @@ The workflows are organized into three categories:
 | **Security Audit** | runs the security auditor agent. | `run security-audit` |
 | **Light Start** | Light Mode Analysis Phase only (creates TASK with `[LIGHT]` tag). | `run light-01-start-feature` |
 | **Light Develop** | Light Mode Dev → Review loop (skips Plan). | `run light-02-develop-task` |
+
+---
+
+## 4. Product Workflows
+*Use these to define WHAT to build (Before coding).*
+
+| Workflow Name | Description | Command |
+| :--- | :--- | :--- |
+| **Product Full Discovery** | **Enterprise Mode.** Full chain: Strategy (`p01`) -> Vision (`p02`) -> Director Gate (`p03`) -> Solution (`p04`) -> Handoff. | `run product-full-discovery` |
+| **Product Quick Vision** | **Hackathon Mode.** Skips Market Research. Vision (`p02`) -> Director Gate (`p03`) -> Handoff. | `run product-quick-vision` |
+| **Product Market Only** | **Validation Mode.** Runs Strategy (`p01`) only. No Handoff. Useful for checking idea viability. | `run product-market-only` |
 
 ---
 
@@ -310,6 +333,25 @@ graph TD
     I -->|High Quality| J[run vdd-enhanced]
     I -->|Mission Critical| K[run full-robust]
     I -->|Max QA/Critics| M[run vdd-multi]
+```
+
+### Choosing Product Approach (Phase 0)
+
+```mermaid
+graph TD
+    A[New Idea] --> T{Is the Problem Known?}
+    T -->|No / Risky Idea| V[run product-market-only]
+    T -->|Yes| S{Project Scale?}
+    
+    S -->|Internal Tool / Hackathon| Q[run product-quick-vision]
+    S -->|Enterprise / Startup| F[run product-full-discovery]
+    
+    V -- Viable? --> F
+    Q -- Proven? --> F
+    
+    style V fill:#ff9999,stroke:#333
+    style Q fill:#ffcc99,stroke:#333
+    style F fill:#99ff99,stroke:#333
 ```
 
 ### Summary Table

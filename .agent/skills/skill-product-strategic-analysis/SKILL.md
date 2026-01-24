@@ -48,3 +48,6 @@ Use the following Markdown table structure to identify the "Blue Ocean":
 - [ ] Is SOM < SAM? (If SOM = SAM, you are overly optimistic).
 - [ ] Is the "Gap" defensible? (Technology vs Marketing)
 - [ ] Are all numbers cited or estimated with disclaimers?
+
+## 5. Examples
+- **Strategy:** `examples/example_market_strategy.md` (Includes TAM/SAM/SOM and Competitive Matrix).

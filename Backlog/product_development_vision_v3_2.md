@@ -302,8 +302,8 @@ We will migrate the Phase 0 (Bootstrap) assets to the v3 Architecture.
     -   *Use skill-creator:* Create new skill to govern the handoff process.
     -   *Owner:* Shared (System / p00).
     -   *Deliverables (tied to skill):*
-        -   `scripts/product/verify_gate.py`: Checks `APPROVED_BACKLOG.md` for valid Hash.
-        -   `scripts/product/compile_brd.py`: Merges `MARKET/VISION/BLUEPRINT` into `docs/BRD.md`.
+        -   `scripts/verify_gate.py`: Checks `APPROVED_BACKLOG.md` for valid Hash.
+        -   `scripts/compile_brd.py`: Merges `MARKET/VISION/BLUEPRINT` into `docs/BRD.md`.
         -   `templates/brd_master_template.md`: The 16-section Enterprise structure.
 
 2.  **Workflow Definition:**
@@ -316,7 +316,7 @@ We will migrate the Phase 0 (Bootstrap) assets to the v3 Architecture.
 **Goal:** Connect the Product Phase to the Technical Phase.
 
 1.  **Technical Trigger:**
-    -   *Script:* `scripts/product/trigger_technical.py`.
+    -   *Script:* `scripts/trigger_technical.py`.
     -   *Logic:* If `verify_gate.py` passes -> Generate `docs/TASK.md` -> Notify User.
     -   *Binding:* Updates `skill-product-handoff`.
 

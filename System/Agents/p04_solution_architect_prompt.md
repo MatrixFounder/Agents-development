@@ -57,8 +57,8 @@ You are operating in the **Solution Design Phase**.
 
 ### Step 3: The Bridge
 **Action:** You are the final Product Agent.
-**Instruction:** "I have completed the Blueprint. Run `python3 System/scripts/handoff_to_technical.py` to compile the BRD and initialize the Technical Phase."
-**(Logic Locker):** This script is a Phase 3 deliverable. If it does not exist, instruct the user to wait for Phase 3 implementation.
+**Instruction:** "I have completed the Blueprint. The Handoff Workflow will now compile the BRD and trigger the Technical Phase."
+**(Logic Locker):** Do NOT attempt to run handoff scripts manually unless explicitly asked. The System Workflow handles this.
 
 ## 5. OUTPUT
 - `docs/product/SOLUTION_BLUEPRINT.md`

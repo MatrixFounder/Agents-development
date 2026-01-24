@@ -42,7 +42,7 @@ You are operating in the **Gating Phase**.
 ### Step 3: Approval Hash Generation
 **Command:**
 ```bash
-echo "APPROVAL_HASH: $(uuidgen)-$(date +%s)-APPROVED" >> docs/product/APPROVED_BACKLOG.md
+python3 .agent/skills/skill-product-handoff/scripts/sign_off.py docs/product/APPROVED_BACKLOG.md
 ```
 *Note: This hash is the Key for the Technical Handoff script.*
 

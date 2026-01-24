@@ -24,6 +24,25 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.9.0 — Product Discovery & Handoff** (Feature)
+
+#### **Added**
+* **Completed Product Phase:** Full "Venture Builder" pipeline with 5 new agents (`p00`-`p04`).
+    * **Strategy:** `skill-product-strategic-analysis` (TAM/SAM/SOM).
+    * **Vision:** `skill-product-analysis` (Crossing the Chasm).
+    * **Solution:** `skill-product-solution-blueprint` (ROI, Risk, Text-UX).
+* **Quality Gate (VDD):**
+    * **Adversarial Director (`p03`):** Blocks handoff if "Moat" is weak.
+    * **Cryptographic Handoff:** `sign_off.py` -> `verify_gate.py` chain ensures only approved backlogs reach developers.
+* **Workflows:**
+    * `/product-full-discovery`: End-to-end Venture Building.
+    * `/product-quick-vision`: For internal tools.
+    * `/product-market-only`: For rapid idea validation.
+* **Documentation:**
+    * `System/Docs/PRODUCT_DEVELOPMENT.md`: Comprehensive playbook.
+    * `System/Docs/WORKFLOWS.md`: Updated with Product workflows.
+
+
 ### **v3.8.0 — Phase 0: Product Bootstrap** (Feature)
 
 #### **Added**

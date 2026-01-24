@@ -22,6 +22,11 @@ python3 [skill_path]/scripts/verify_gate.py docs/product/APPROVED_BACKLOG.md
 - **Exit Code 0:** GATE OPEN. Proceed.
 - **Exit Code 1:** GATE CLOSED. Stop immediately.
 
+### Signing Command (For p03)
+```bash
+python3 [skill_path]/scripts/sign_off.py docs/product/APPROVED_BACKLOG.md
+```
+
 ## 3. BRD Compilation
 Once the gate is open, you MUST compile the scattered artifacts into a single `BRD.md`.
 

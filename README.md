@@ -3,7 +3,7 @@
 > [!NOTE]
 > This is the primary version. Translations may lag behind.
 
-# Multi-Agent Software Development System v3.7.2
+# Multi-Agent Software Development System v3.9.0
 
 This framework orchestrates a multi-agent system for structured software development. It transforms vague requirements into high-quality code through a strict pipeline of specialized agents (Analyst, Architect, Planner, Developer, Reviewer, Security Auditor).
 
@@ -23,6 +23,7 @@ The methodology combines two key approaches (see [Comparison](System/Docs/TDD_VS
   - [Skills System](#-skills-system)
 - [Workspace Workflows](#-workspace-workflows)
 - [How to Start Development](#-how-to-start-development-step-by-step-plan)
+  - [Phase 0: Product Discovery](#phase-0-product-discovery-optional)
   - [Stages 1-5](#stage-1-pre-flight-check)
 - [Artifact Management](#-artifact-management)
 - [Migration Guide](#-migration-from-older-versions)
@@ -193,6 +194,16 @@ You can run a workflow simply by asking the agent:
 ## 🚀 How to Start Development (Step-by-Step Plan)
 
 This process will take you from an idea to finished code in the repository.
+
+### Phase 0: Product Discovery (Optional)
+**Agents `p00`-`p04`** ensure you are building the *right* product before you build it *right*.
+
+1. **Orchestrator (p00):** Decides if you need "Market Research" or just a "Quick Vision".
+2. **Strategy (p01):** Calculates TAM/SAM/SOM and checks competitors.
+3. **Vision (p02):** Defines the "Soul" of the product and User Stories.
+4. **Director (p03):** **Adversarial Gatekeeper**. Rejects fluff. Signs off with a cryptographic hash.
+5. **Solution (p04):** Converts Vision to `SOLUTION_BLUEPRINT.md` (ROI, UX Flows).
+6. **Handoff:** Compiles `BRD.md` and triggers the Technical Phase.
 
 ### Stage 1: Pre-flight Check
 1. **Initialization:** Ensure you are in the project root.

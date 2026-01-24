@@ -1,92 +1,181 @@
-# Product Development Guide
+# Product Development Guide & Playbook (v3.9)
 
-## Overview
-This document outlines the **Product Bootstrap** process, enabling the rapid creation and prioritization of product artifacts (`PRODUCT_VISION.md`, `PRODUCT_BACKLOG.md`) using strict TIER 2 tooling.
+## 1. Executive Summary
+We have expanded Agentic Development from a "Code Generator" to a **"Full-Cycle Venture Builder"**. This framework now includes a dedicated **Product Discovery Phase** (Agents `p00`-`p04`) that operates strict *Air Gaps* and *Quality Gates* before any technical planning occurs.
 
-## 1. Architecture
-The system uses a **Script-First** approach to prevent Agent hallucinations.
+**The Goal:** Ensure we are building the *right* product (High ROI, Defensible Moat) before we build it *right*.
 
-- **Identity**: Agents (`p01`, `p02`) provide the persona and semantic reasoning.
-- **Logic**: Python scripts (`scripts/`) provide the mathematical and formatting logic.
-- **Skills**: TIER 2 skills bridge the gap, instructing agents on which script to call.
+---
 
-## 2. Tools & Scripts
+## 2. Visual Architecture
 
-### A. `System/scripts/init_product.py`
-Scaffolds the `PRODUCT_VISION.md` file.
-- **Interactive Mode**: Run without arguments to answer questions manually.
-- **Headless Mode**: Use flags (`--name`, etc.) for Agents to generate file atomically.
+### The "Product Discovery" Pipeline
+The flow is sequential, strictly gated, and human-supervised.
 
-### B. `System/scripts/calculate_wsjf.py`
-Calculates and sorts the `PRODUCT_BACKLOG.md` using Weighted Shortest Job First.
-- **Input**: Markdown table with `User Value`, `Time Criticality`, `Risk Reduction`, `Job Size`.
-- **Logic**: `WSJF = (UV + TC + RR) / Job Size`.
-- **Safety**: Exits with error if Job Size is 0 to prevent div-by-zero.
+```mermaid
+graph TD
+    %% Nodes
+    User([User Start])
+    p00{p00 Orchestrator}
+    
+    subgraph Strat[Strategy and Vision]
+        p01[p01 Strategic Analyst]
+        p02[p02 Product Analyst]
+    end
+    
+    subgraph Gate[The Gate]
+        p03{p03 Director}
+        Human([Human Gate])
+    end
+    
+    subgraph Sol[Solution Design]
+        p04[p04 Solution Architect]
+    end
+    
+    subgraph Trans[Transition]
+        Script(Handoff Script)
+        Tech[Technical Phase]
+    end
 
-## 3. Workflow for Agents
+    %% Flow
+    User -->|Launch| p00
+    
+    p00 -->|Full Mode| p01
+    p00 -->|Quick Mode| p02
+    
+    p01 -->|MARKET_STRATEGY| p02
+    p02 -->|PRODUCT_VISION| p03
+    
+    p03 -.->|REJECT - Moat| p01
+    p03 -.->|REJECT - Vision| p02
+    
+    p03 -.->|Notify| Human
+    Human -.->|Override| p03
+    
+    p03 -->|APPROVE| p04
+    
+    p04 -->|SOLUTION_BLUEPRINT| Script
+    Script -->|Verify Hash| Tech
+    
+    linkStyle 5,6 stroke:#f33,stroke-width:2px,stroke-dasharray: 5 5;
+    
+    %% Styles
+    style p03 fill:#ff9999,stroke:#333
+    style Human fill:#ffeeaa,stroke:#333
+    style Script fill:#99ff99,stroke:#333
+```
 
-### Phase 1: Bootstrap (p01)
-1. Agent interviews user to gather Vision data.
-2. Agent calls `init_product.py` to create file.
-3. Agent helps user define initial Backlog items.
-4. Agent calls `calculate_wsjf.py` to sort.
+---
 
-### Phase 2: Review (p02)
-1. Reviewer reads artifacts.
-2. Checks for "Fluff" in Vision using `skill-product-analysis`.
-3. Verifies logic consistency in Backlog.
+## 3. Core Architecture
 
-## 4. Troubleshooting
-- **Job Size 0 Error**: Ensure all Backlog items have a Job Size >= 1.
-- **Table Parsing Error**: Ensure the Markdown table has valid pipe structure. The script is robust but needs a header row.
+### The Pipeline Agents
 
-## 5. Agent Interaction Examples
+| Seq | Agent | Role | Output Artifacts | Check / Gate |
+|-----|-------|------|------------------|--------------|
+| 0 | **p00** | **Product Orchestrator** | *Coordination* | "What mode are we in?" |
+| 1 | **p01** | **Strategic Analyst** | `MARKET_STRATEGY.md` | "Market Size deflated? Comp Moat real?" |
+| 2 | **p02** | **Product Analyst** | `PRODUCT_VISION.md` | "Does Value Prop match Strategy?" |
+| 3 | **p03** | **Product Director** | *Review Comments* | **CRITICAL GATE (Adversarial VDD)** |
+| 4 | **p04** | **Solution Architect** | `SOLUTION_BLUEPRINT.md` | "Is UX/ROI feasible?" |
+| 5 | **Handoff** | *Scripted Gate* | `docs/TASK.md` + `docs/BRD.md` | "Approved by p03?" |
 
-### Scenario A: Starting a New Product (p01)
+### File Structure & Isolation
+We adopt a **Hybrid Isolation** strategy.
+- `docs/product/` -> Owned by `p00`-`p04` (Product Phase).
+- `docs/` -> Owned by Technical Agents (`TASK.md`, `ARCHITECTURE.md`).
+
+---
+
+## 4. Agent Definitions (The "Lean Five")
+
+### p00_product_orchestrator
+**Role:** The Controller. Entry point for the user.
+- **Logic:** Determines the workflow (`Full`, `Quick`, `Market-Only`) based on user intent.
+
+### p01_strategic_analyst
+**Role:** The Researcher.
+- **Tools:** `skill-product-strategic-analysis`.
+- **Output:** `MARKET_STRATEGY.md`.
+- **Focus:** Calculates TAM/SAM/SOM and builds Competitive Matrices.
+
+### p02_product_analyst
+**Role:** The Visionary.
+- **Tools:** `skill-product-analysis`.
+- **Output:** `PRODUCT_VISION.md`.
+- **Focus:** Defines the "Soul" (Crossing the Chasm), User Stories (INVEST), and Metrics.
+
+### p03_product_director (The Gatekeeper)
+**Role:** The Adversarial Critic (VC Proxy).
+- **Behavior:** **VDD Mode**. Challenges every claim. "Your moat is weak."
+- **Powers:** 
+    - Can **REJECT** artifacts (loop back to p01/p02).
+    - Can **APPROVE** by generating a cryptographic `APPROVAL_HASH`.
+- **Tools:** `skill-product-handoff/scripts/sign_off.py`.
+
+### p04_solution_architect
+**Role:** The Pragmatist.
+- **Tools:** `skill-product-solution-blueprint`.
+- **Output:** `SOLUTION_BLUEPRINT.md`.
+- **Focus:** 
+    - **ROI:** Cost vs Benefit analysis.
+    - **UX:** Text-based flow definitions.
+    - **NFRs:** Security and Performance constraints.
+
+---
+
+## 5. Handoff Mechanism (The Bridge)
+
+The handoff is powered by **`skill-product-handoff`** and ensures **Zero Trust** between Product and Tech.
+
+1.  **Strict Gate (`verify_gate.py`):** 
+    - Checks `APPROVED_BACKLOG.md` for `APPROVAL_HASH: <UUID>...`.
+    - Only `p03` can generate this hash.
+2.  **BRD Compilation (`compile_brd.py`):**
+    - Automatically merges Strategy, Vision, and Blueprint into a massively detailed `docs/BRD.md`.
+3.  **Synthesis Trigger (`trigger_technical.py`):** 
+    - Converts the BRD into a technical `docs/TASK.md`.
+    - Notifies the user to switch to Technical Agents.
+
+---
+
+## 6. Workflows
+
+| Command | Name | Use Case | Flow |
+|---------|------|----------|------|
+| `/product-full-discovery` | **Enterprise** | New Products, High Risk | `p00`->`p01`->`p02`->`p03`->`p04` |
+| `/product-quick-vision` | **Internal Tool** | Hackathons, Low Risk | `p00`->`p02`->`p03` |
+| `/product-market-only` | **Validation** | "Should we do this?" | `p00`->`p01` (Stops) |
+
+---
+
+## 7. How to Start
+
+### Launching via Agent
+Simply ask your Orchestrator or Agent:
+> "Launch Product Discovery for [Idea Name]."
+
+or use the workflow command:
+> "Run /product-full-discovery"
+
+### Example Conversation
 **User:** "I want to build a Tinder for Cats."
-**Analyst (p01):**
-1.  **Thought:** I need to scaffold the vision. I check `skill-product-analysis`.
-2.  **Action:** "That sounds interesting. To start, I need to define the Vision.
-    - What is the specific problem for cat owners?
-    - Who is the target audience (owners or cats)?
-    - What are the success metrics?"
-3.  **User:** "Problem: cats are lonely. Audience: Cat owners. Metric: 1000 matches per day."
-4.  **Action (Tool Call):**
-    ```python
-    init_product(
-        name="Tinder for Cats",
-        problem="Cats are lonely and need social interaction.",
-        audience="Cat Owners looking for playdates",
-        metrics="1000 matches/day, 30% retention"
-    )
-    ```
+**Analyst (p01):** "Accessing `skill-product-strategic-analysis`... Let's calculate the TAM for pet social apps."
+**Director (p03):** "REJECT. Your 'Swiping Logic' has no moat. Instagram already does this. Add a 'Veterinary Verification' features to make it defensible."
 
-### Scenario B: Prioritizing Features (p01)
-**User:** "Add 'Swipe Left' and 'Super Like' to backlog. Swipe Left is critical."
-**Analyst (p01):**
-1.  **Action:** "I've added them. Let's score them for WSJF.
-    - For 'Swipe Left': Value is High (10), Time Criticality is High (10)?
-    - For 'Super Like': Maybe Value (5)?"
-2.  **Action (Update File):** Writes to `docs/PRODUCT_BACKLOG.md`:
-    ```markdown
-    | Feature | User Value | Time Criticality | Risk Reduction | Job Size | WSJF |
-    |---|---|---|---|---|---|
-    | Swipe Left | 10 | 10 | 1 | 2 | 0 |
-    | Super Like | 5 | 5 | 1 | 5 | 0 |
-    ```
-3.  **Action (Tool Call):**
-    ```python
-    calculate_wsjf(file="docs/PRODUCT_BACKLOG.md")
-    ```
-4.  **Result:** The file is automatically sorted. 'Swipe Left' (Score 10.5) moves to top.
+---
 
-### Scenario C: VDD Audit (p02)
-**User:** "Please review the vision."
-**Reviewer (p02):**
-1.  **Thought:** I need to check for fluff and valid metrics.
-2.  **Observation:** `PRODUCT_VISION.md` says "World-class synergy for felines."
-3.  **Action:**
-    > [!CRITIC]
-    > **REJECTION:** "World-class synergy" is fluff. Replace with concrete value proposition.
-    > The metric "Make cats happy" is not measurable. Use "Time spent purring" or "Revisit rate".
+## 8. Artifact Examples
 
+### `MARKET_STRATEGY.md`
+> **TAM:** $50B. **SAM:** $500M. **Gap:** "Institutional security for retail."
+
+### `PRODUCT_VISION.md`
+> **Statement:** "For cat owners who fear loneliness, PurrMatch is a social network that..."
+
+### `SOLUTION_BLUEPRINT.md`
+> **ROI:** 3.5x. **Cost:** $24k. **Revenue:** $84k.
+> **Risk:** "User safety (Meeting strangers)." -> Mitigation: "ID Verification API".
+
+### `BRD.md` (Compiled)
+A single 16-section document containing all of the above, ready for investors or developers.
