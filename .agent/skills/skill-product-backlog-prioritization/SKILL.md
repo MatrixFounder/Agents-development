@@ -1,5 +1,5 @@
 ---
-name: skill-backlog-prioritization
+name: skill-product-backlog-prioritization
 description: Guidelines for managing and prioritizing the Product Backlog using WSJF.
 tier: 2
 version: 1.0

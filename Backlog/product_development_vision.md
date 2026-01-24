@@ -141,7 +141,7 @@ User Input ─────┐
 > - `p01_product_analyst.md`: MAX 2,500 tokens (Standardized)
 > - `p02_product_reviewer.md`: MAX 2,000 tokens (Standardized)
 > - `skill-product-analysis`: MAX 1,000 tokens (TIER 2 - Lazy Load)
-> - `skill-backlog-prioritization`: MAX 500 tokens (Script-First approach)
+> - `skill-product-backlog-prioritization`: MAX 500 tokens (Script-First approach)
 >
 > **Total Product Phase overhead: ~6,000 tokens (Optimized)**
 
@@ -243,7 +243,7 @@ You are the **Product Analyst**, a specialized agent focused on transforming vag
 ## CONTEXT
 - **Active Skills**:
   - `skill-product-analysis` (TIER 2)
-  - `skill-backlog-prioritization` (TIER 2)
+  - `skill-product-backlog-prioritization` (TIER 2)
 - **System Skills** (TIER 0):
   - `core-principles`
   - `safe-commands`
@@ -350,10 +350,10 @@ You are the **Product Reviewer**, a specialized VDD critic designed to safeguard
     - **Quality Checks**:
       - Inspiring? Clear? Customer-centric? Timeless? Differentiating? Measurable?
 
-#### skill-backlog-prioritization (TIER 2, MAX 500 tokens)
+#### skill-product-backlog-prioritization (TIER 2, MAX 500 tokens)
 
 ```
-.agent/skills/skill-backlog-prioritization/
+.agent/skills/skill-product-backlog-prioritization/
 ├── SKILL.md                 # Prioritization rules
 └── scripts/
     └── calculate_wsjf.py    # (MOVED) Now in System/scripts/
@@ -382,7 +382,7 @@ description: Create or update Product Vision and Backlog
 2. Load skill: skill-product-analysis
 3. Execute p01_product_analyst
 4. Create/Update docs/PRODUCT_VISION.md
-5. Load skill: skill-backlog-prioritization
+5. Load skill: skill-product-backlog-prioritization
 6. Create docs/PRODUCT_BACKLOG.md
 7. Tool: `calculate_wsjf` (Auto-prioritize)
 8. Notify user: "Vision and Backlog ready for review"
@@ -417,7 +417,7 @@ project-root/
 ├── .agent/
 ├── skills/
 │   ├── skill-product-analysis/       # NEW
-│   ├── skill-backlog-prioritization/ # NEW
+│   ├── skill-product-backlog-prioritization/ # NEW
 │   ├── skill-domain-decomposition/   # NEW
 │   └── ... (existing skills)
 └── workflows/
@@ -463,7 +463,7 @@ project-root/
 
 2.  **Skills Implementation (Skill Creator Compliant)**:
     -   `skill-product-analysis` (TIER 2): Bundles `init_product.py`.
-    -   `skill-backlog-prioritization` (TIER 2): Bundles `calculate_wsjf.py`.
+    -   `skill-product-backlog-prioritization` (TIER 2): Bundles `calculate_wsjf.py`.
 
 3.  **Agent Implementation (O6 Standard)**:
     -   `p01_product_analyst.md`: Loop-based, Script-First, strictly typed.
@@ -476,7 +476,7 @@ project-root/
     -   Update `skill-product-analysis/SKILL.md` with:
         -   Vision Templates (Crossing the Chasm, etc.).
         -   Emotional/Customer-Centric guidelines.
-    -   Update `skill-backlog-prioritization/SKILL.md` with:
+    -   Update `skill-product-backlog-prioritization/SKILL.md` with:
         -   MoSCoW Rules (M/S/C/W definitions).
         -   Pre-WSJF filtering logic.
 
@@ -579,7 +579,7 @@ Product Phase:
   + p01_product_analyst: ~2,500
   + p02_product_reviewer: ~2,000
   + skill-product-analysis: ~1,000 (TIER 2 - Lazy)
-  + skill-backlog-prioritization: ~500 (TIER 2 - Lazy)
+  + skill-product-backlog-prioritization: ~500 (TIER 2 - Lazy)
   = ~6,000 tokens additional
 
 Total with Product: ~44,000 tokens (Well within limits)
@@ -615,7 +615,7 @@ Total with Product: ~44,000 tokens (Well within limits)
 ```
 Week 1: Phase 0
 ├── Create skill-product-analysis
-├── Create skill-backlog-prioritization
+├── Create skill-product-backlog-prioritization
 ├── Create p01_product_analyst
 └── Create p02_product_reviewer
 

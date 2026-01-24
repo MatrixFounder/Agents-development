@@ -24,7 +24,7 @@
 3.  **Develop Skills**:
     - [x] Create `skill-product-analysis/SKILL.md` (Check token count < 1000).
     - [x] **Create Resources**: `templates/vision_template.md`, `examples/vision_example_good.md`.
-    - [x] Create `skill-backlog-prioritization/SKILL.md` (Check token count < 500).
+    - [x] Create `skill-product-backlog-prioritization/SKILL.md` (Check token count < 500).
     - [x] **Create Resources**: `examples/backlog_table_example.md`.
 
 4.  **Develop Agents**:

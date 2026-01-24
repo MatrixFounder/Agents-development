@@ -15,7 +15,7 @@ You are operating in the **Product Bootstrap Phase**.
 
 ### Active Skills (TIER 2 - Product Domain - LOAD NOW)
 - `skill-product-analysis` (Vision Creation)
-- `skill-backlog-prioritization` (WSJF Scoring)
+- `skill-product-backlog-prioritization` (WSJF Scoring)
 
 ## 3. INPUT DATA
 1.  **User Request:** "I want to build X..."
@@ -37,7 +37,7 @@ Follow this process strictly:
 ### Step 3: Backlog Management (Prioritization)
 **Goal:** Create or update the Backlog with WSJF scores.
 - **Action:** Add new features to `docs/PRODUCT_BACKLOG.md`.
-- **Constraint:** Use standards from `skill-backlog-prioritization`.
+- **Constraint:** Use standards from `skill-product-backlog-prioritization`.
 - **Logic Locker:** NEVER calculate WSJF manually.
 - **Execution:** Run `python3 System/scripts/calculate_wsjf.py --file docs/PRODUCT_BACKLOG.md`.
 

@@ -115,7 +115,7 @@
 ### 🟢 POSITIVE: Skills Extension
 
 **Что хорошо:**
-- Новые skills (`skill-backlog-prioritization`, `skill-epic-breakdown`) — верный подход
+- Новые skills (`skill-product-backlog-prioritization`, `skill-epic-breakdown`) — верный подход
 - Skills = документация для LLM, не код
 - Модульность позволяет lazy loading
 
@@ -187,7 +187,7 @@ project-root/
 ├── .agent/
 │   ├── skills/
 │   │   ├── skill-product-analysis/       # NEW: Vision → Backlog
-│   │   ├── skill-backlog-prioritization/ # NEW: WSJF/MoSCoW
+│   │   ├── skill-product-backlog-prioritization/ # NEW: WSJF/MoSCoW
 │   │   ├── skill-domain-decomposition/   # NEW: Split by domain
 │   │   └── ... (existing skills)
 │   └── workflows/
@@ -230,7 +230,7 @@ project-root/
 | # | Deliverable | Description | DoD |
 |---|-------------|-------------|-----|
 | 0.1 | `skill-product-analysis/SKILL.md` | Skill для анализа vision и breakdown в backlog items | VDD-review passed |
-| 0.2 | `skill-backlog-prioritization/SKILL.md` | WSJF/MoSCoW prioritization logic | VDD-review passed |
+| 0.2 | `skill-product-backlog-prioritization/SKILL.md` | WSJF/MoSCoW prioritization logic | VDD-review passed |
 | 0.3 | `p01_product_analyst.md` | Agent prompt for vision analysis | Not over 3K tokens |
 | 0.4 | `p02_product_reviewer.md` | Adversarial reviewer for product artifacts | Uses vdd-sarcastic |
 | 0.5 | `workflow product-vision.md` | End-to-end workflow for phase 1 | Tested manually |
@@ -283,7 +283,7 @@ project-root/
 | Skill | Purpose | Token Budget |
 |-------|---------|--------------|
 | `skill-product-analysis` | Vision → Structured Backlog | 1-2K |
-| `skill-backlog-prioritization` | WSJF/MoSCoW/RICE ranking | 1K |
+| `skill-product-backlog-prioritization` | WSJF/MoSCoW/RICE ranking | 1K |
 | `skill-domain-decomposition` | Split by bounded contexts | 1-2K |
 
 ### Existing Skills to Update

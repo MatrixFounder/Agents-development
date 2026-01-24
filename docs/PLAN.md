@@ -29,7 +29,7 @@ Establish the foundational infrastructure to generate and refine product artifac
   - **Description:** Create `SKILL.md` (Tier 2), `resources/templates/vision_template.md` (Gold Standard structure), and examples.
   - **Priority:** High
 
-- **Task 0.5** — Implement `skill-backlog-prioritization`
+- **Task 0.5** — Implement `skill-product-backlog-prioritization`
   - **Use Cases:** p01/p02 Agent logic for backlog management.
   - **Description:** Create `SKILL.md` (Tier 2) with "Logic Locker" (forbidden math) and `examples/backlog_table_example.md`.
   - **Priority:** High

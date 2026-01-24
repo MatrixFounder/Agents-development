@@ -87,8 +87,8 @@
   - **Tool Usage:** "To create vision, use `init_product.py` with flags. DO NOT write markdown manually."
   - **INVEST Criteria:** Reference for User Stories.
 
-**B. `skill-backlog-prioritization`**
-- **Location:** `.agent/skills/skill-backlog-prioritization/SKILL.md`
+**B. `skill-product-backlog-prioritization`**
+- **Location:** `.agent/skills/skill-product-backlog-prioritization/SKILL.md`
 - **Tier:** `2` (Lazy Loaded)
 - **Token Budget:** < 500 tokens
 - **Content:**
@@ -133,7 +133,7 @@
 
 3.  **Develop Skills**:
     - [ ] Create `skill-product-analysis/SKILL.md` (Check token count < 1000).
-    - [ ] Create `skill-backlog-prioritization/SKILL.md` (Check token count < 500).
+    - [ ] Create `skill-product-backlog-prioritization/SKILL.md` (Check token count < 500).
 
 4.  **Develop Agents**:
     - [ ] Author `System/Agents/p01_product_analyst_prompt.md` (O6 schema).

@@ -28,7 +28,7 @@
 
 #### **Added**
 * **Product Management Module:**
-    * **New Skills:** `skill-product-analysis` (Vision) and `skill-backlog-prioritization` (WSJF).
+    * **New Skills:** `skill-product-analysis` (Vision) and `skill-product-backlog-prioritization` (WSJF).
     * **New Agents:** `p01_product_analyst` (Creator) and `p02_product_reviewer` (VDD Critic).
     * **New Documentation:** [`System/Docs/PRODUCT_DEVELOPMENT.md`](System/Docs/PRODUCT_DEVELOPMENT.md) with usage scenarios.
 * **Native Tool Integration:**
@@ -683,7 +683,7 @@ To upgrade from v3.0.x to v3.1.0:
 
 #### **Добавлено**
 * **Модуль Управления Продуктом:**
-    * **Новые Навыки:** `skill-product-analysis` (Видение) и `skill-backlog-prioritization` (WSJF).
+    * **Новые Навыки:** `skill-product-analysis` (Видение) и `skill-product-backlog-prioritization` (WSJF).
     * **Новые Агенты:** `p01_product_analyst` (Создатель) и `p02_product_reviewer` (VDD Критик).
     * **Новая Документация:** [`System/Docs/PRODUCT_DEVELOPMENT.md`](System/Docs/PRODUCT_DEVELOPMENT.md) со сценариями использования.
 * **Нативная Интеграция Инструментов:**

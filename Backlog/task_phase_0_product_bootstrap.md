@@ -93,8 +93,8 @@
   - `examples/vision_example_good.md`: A "Gold Standard" example of a filled-out vision doc.
   - `examples/vision_example_bad.md`: An example of "Fluff" (Vague metrics, solution-first thinking) to train the critic.
 
-**B. `skill-backlog-prioritization`**
-- **Location:** `.agent/skills/skill-backlog-prioritization/SKILL.md`
+**B. `skill-product-backlog-prioritization`**
+- **Location:** `.agent/skills/skill-product-backlog-prioritization/SKILL.md`
 - **Tier:** `2` (Lazy Loaded)
 - **Token Budget:** < 500 tokens
 - **Content:**
