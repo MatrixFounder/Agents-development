@@ -15,7 +15,7 @@ def load_module_from_path(name, path):
     spec.loader.exec_module(mod)
     return mod
 
-PROJECT_ROOT = Path(__file__).parent.resolve()
+PROJECT_ROOT = Path(__file__).parent.parent.resolve()
 
 # Load Scripts
 roi_script = load_module_from_path("calculate_roi", 
