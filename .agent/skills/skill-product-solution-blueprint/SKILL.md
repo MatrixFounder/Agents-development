@@ -11,11 +11,14 @@ version: 1.0
 To translate abstract "Vision" into concrete "Requirements" without writing code. This skill powers the **Solution Architect (p04)** agent.
 
 ## 2. Text-Based UX Flows (The "Skeleton")
-**Constraint:** Do NOT use Mermaid graphs for flows detailed enough to need steps. Use text lists.
+**Constraint:** Do NOT use Mermaid graphs for detailed logical flows. Use text lists.
 
-### Syntax
+### Template
+> **[Use the Official Template](resources/solution_blueprint_template.md)** for the full structure.
+
+### Syntax Example
 ```markdown
-## Flow 1: [User Story Name]
+### Flow 1: [User Story Name]
 - **Size:** M (60h) | **LLM Friendly:** 0.8
 1. User [Action] on [Page/Component].
    - *System:* [Validates/Checks/Loads].
@@ -32,20 +35,19 @@ To translate abstract "Vision" into concrete "Requirements" without writing code
 
 ### Protocol
 1. **Estimate**: For each user story, assign a Size (XS, S, M, L, XL) and LLM Friendliness (0.0 - 1.0).
-2. **Prepare**: Create a temp JSON/YAML file:
-   ```yaml
-   stories:
-     - name: "Login"
-       size: "S"
-       llm_friendly: 0.9
-     - name: "Complex Dashboard"
-       size: "L"
-       llm_friendly: 0.3
+2. **Prepare**: Create a temp JSON file in `docs/product/` (e.g., `docs/product/stories.json`):
+   ```json
+   {
+     "stories": [
+       { "name": "Login", "size": "S", "llm_friendly": 0.9 },
+       { "name": "Complex Dashboard", "size": "L", "llm_friendly": 0.3 }
+     ]
+   }
    ```
 3. **Execute**:
    ```bash
-   # Usage: python3 [skill_path]/scripts/calculate_roi.py --file stories.yml --users <SOM> --price <PRICE>
-   python3 [skill_path]/scripts/calculate_roi.py --file stories.yml --users 5000 --price 29.99
+   # Usage: python3 [skill_path]/scripts/calculate_roi.py --file docs/product/stories.json --users <SOM> --price <PRICE>
+   python3 [skill_path]/scripts/calculate_roi.py --file docs/product/stories.json --users 5000 --price 29.99
    ```
 
 ### Output Interpretation

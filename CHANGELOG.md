@@ -24,6 +24,18 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.9.3 — Documentation Hygiene & JSON Enforcement** (Maintenance)
+
+#### **Changed**
+* **Documentation Standardization:**
+    * **JSON Enforcement:** Updated `skill-product-solution-blueprint` to strictly enforce `.json` for `calculate_roi.py` inputs (removed ambiguous YAML references).
+    * **Path Hygiene:** Standardized temporary artifact location to `docs/product/` (e.g., `docs/product/stories.json`).
+* **Resource Structure:**
+    * Flattened template structure in `skill-product-solution-blueprint` (moved `resources/templates/` -> `resources/`).
+    * Updated `SKILL.md` to reference the canonical `solution_blueprint_template.md`.
+
+---
+
 ### **v3.9.2 — Product Skills Refactoring & Math Hardening** (Optimization)
 
 #### **Added**
@@ -732,6 +744,18 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.9.3 — Гигиена Документации и JSON Стандарт** (Maintenance)
+
+#### **Изменено**
+* **Стандартизация Документации:**
+    * **JSON Only:** В `skill-product-solution-blueprint` убраны упоминания YAML. Строгий стандарт `.json` для `calculate_roi.py`.
+    * **Гигиена Путей:** Рекомендованная папка для временных артефактов — `docs/product/`.
+* **Структура Ресурсов:**
+    * Упрощена структура шаблонов (удалена подпапка `templates/`, файлы перенесены в корень `resources/`).
+    * Обновлены ссылки в `SKILL.md`.
+
+---
 
 ### **v3.9.2 — Рефакторинг Продуктовых Навыков и Усиление Математики** (Оптимизация)
 
