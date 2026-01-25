@@ -24,6 +24,33 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.9.4 — Product Skills Deepening & Refactoring** (Optimization)
+
+#### **Refactored**
+* **Strategic Analyst (`p01`):**
+    * Refactored Prompt: Removed inline template, added `Execution Loop` with Deconstruct/Timing/Moat steps.
+    * Updated Skill `skill-product-strategic-analysis`:
+        * Added `market_strategy_template.md` (Core Thesis, Moat Score, Risks).
+        * Added Example `01_strong_ai_assistant.md` (Strong Go).
+        * Added Example `02_nogo_vertical_video.md` (No-Go).
+* **Product Analyst (`p02`):**
+    * Refactored Prompt: Added `User Refinements` input, delegated Vision generation to Skill.
+    * Updated Skill `skill-product-analysis`:
+        * Updated `vision_template.md` (Core Pillars, Moat Score, Emotional Logic).
+        * Added rigorous examples: `01_strong_go_devboost`, `02_consider_talentflow`, `03_nogo_quickbites`.
+* **Solution Architect (`p04`):**
+    * Refactored Prompt: Removed duplicated template.
+    * Updated Skill `skill-product-solution-blueprint`:
+        * Updated `solution_blueprint_template.md` (Unit Economics, Verdict).
+        * Updated `calculate_roi.py` to output ARPU, CAC, LTV/CAC.
+        * Added examples: `01_simple_flexarb` and `02_advanced_loyaltyhub`.
+
+#### **Improved**
+* **Consistency:** All Product Agents (`p01`, `p02`, `p04`) now use a unified "Prompt → Skill → External Template" architecture.
+* **Scoring:** Implemented quantitative scoring (10-factor matrix) and "Verdict" logic across all product artifacts.
+
+---
+
 ### **v3.9.3 — Documentation Hygiene & JSON Enforcement** (Maintenance)
 
 #### **Changed**
@@ -744,6 +771,33 @@ To upgrade from v3.0.x to v3.1.0:
 ---
 
 ## 🇷🇺 Русская версия
+
+### **v3.9.4 — Глубокий рефакторинг продуктовых навыков** (Оптимизация)
+
+#### **Рефакторинг**
+* **Strategic Analyst (`p01`):**
+    * Промпт: Удален встроенный шаблон, добавлен `Execution Loop` с шагами Deconstruct/Timing/Moat.
+    * Навык `skill-product-strategic-analysis`:
+        * Добавлен `market_strategy_template.md` (Core Thesis, Moat Score, Risks).
+        * Добавлен пример `01_strong_ai_assistant.md` (Strong Go).
+        * Добавлен пример `02_nogo_vertical_video.md` (No-Go).
+* **Product Analyst (`p02`):**
+    * Промпт: Добавлен вход `User Refinements`, делегирование Vision навыку.
+    * Навык `skill-product-analysis`:
+        * Обновлен `vision_template.md` (Pillars, Moat Score, Emotional Logic).
+        * Добавлены примеры: `01_strong_go_devboost`, `02_consider_talentflow`, `03_nogo_quickbites`.
+* **Solution Architect (`p04`):**
+    * Промпт: Удален дублирующийся шаблон.
+    * Навык `skill-product-solution-blueprint`:
+        * Обновлен `solution_blueprint_template.md` (Unit Economics, Verdict).
+        * Обновлен `calculate_roi.py`: вывод ARPU, CAC, LTV/CAC.
+        * Добавлены примеры: `01_simple_flexarb` и `02_advanced_loyaltyhub`.
+
+#### **Улучшено**
+* **Консистентность:** Все продуктовые агенты (`p01`, `p02`, `p04`) теперь используют единую архитектуру "Промпт → Навык → Внешний Шаблон".
+* **Скоринг:** Внедрен количественный скоринг (10-факторная матрица) и логика "Вердикта" во все продуктовые артефакты.
+
+---
 
 ### **v3.9.3 — Гигиена Документации и JSON Стандарт** (Maintenance)
 

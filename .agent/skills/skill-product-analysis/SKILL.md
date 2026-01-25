@@ -64,10 +64,14 @@ Every feature implementation plan must start with:
 3.  **Reward:** The emotional relief/gain. (e.g. "Safety", "Control")
 
 ## 5. Verification Guidelines
-- **Problem Statement:** Is it specific? (Bad: "Slow app". Good: "Page load > 5s causes 30% drop-off")
-- **Metrics:** Are they SMART? (Specific, Measurable, Achievable, Relevant, Time-bound)
+- **Problem Statement:** Is it specific?
+- **Metrics:** Are they SMART?
 - **Soul Check:** Does the Vision allow for emotional connection?
 
-## 6. Examples
-- **Good:** `examples/vision_example_good.md` (Clear, specific, focused)
-- **Bad:** `examples/vision_example_bad.md` (Vague, buzzwords, solution-first)
+## 6. Output
+> **[Use the Official Template](resources/templates/vision_template.md)** for the full structure.
+
+## 7. Examples
+- **Strong Go:** `examples/01_strong_go_devboost.md`
+- **Consider:** `examples/02_consider_talentflow.md`
+- **No-Go:** `examples/03_nogo_quickbites.md`

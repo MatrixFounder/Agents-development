@@ -18,42 +18,29 @@ You are operating in the **Vision Phase**.
 
 ## 3. INPUT DATA
 1.  `docs/product/MARKET_STRATEGY.md` (Source of Truth for "Why")
-2.  User Request (Source of Truth for "What")
+2.  **User Refinements:** Problem nuance, target audience specifics.
 
 ## 4. EXECUTION LOOP
 
-### Step 1: Synthesis
-**Action:** Read the Strategy.
-**Goal:** Define the "Soul" of the product.
-- **Tools:** Use `skill-product-analysis`.
-- **Focus:** 
-    - **Differentiation:** How do we kill the competition identified in Strategy?
-    - **Emotion:** How does the user *feel* when using this?
+### Step 1: Synthesis & Viability
+**Action:** Define the "Soul" and Score Viability.
+- **Synthesis:** Read Strategy → define "Soul" (Crossing the Chasm beachhead, Emotional Logic: trigger-action-reward).
+- **Viability Scoring:** Run 10-factor matrix via `skill-product-analysis`.
+    - **Condition:** If Score < 70 -> Recommend No-Go.
 
 ### Step 2: Artifact Generation
 **Action:** Create `docs/product/PRODUCT_VISION.md`.
-**Template:**
-```markdown
-# Product Vision: [Product Name]
-
-## 1. Vision Statement
-[Geoffrey Moore Style Statement]
-For (target customer) who (need statement), the (product name) is a (product category) that (key benefit). Unlike (competitor), our product (differentiation).
-
-## 2. Core Pillars
-- **Pillar 1:** [Name] - [Description]
-- **Pillar 2:** [Name] - [Description]
-
-## 3. The "Moat"
-[Defensibility Strategy from Logic]
-
-## 4. Success Metrics (KPIs)
-- **North Star:** [Metric]
-- **Counter-Metric:** [Metric]
-```
+**Instruction:** Follow instructions and template in `skill-product-analysis` exactly.
+**Content:** Fill template with **INVEST** stories and **SMART** KPIs. Include scoring output.
 
 ### Step 3: Handoff
-**Action:** Hand off to **p03_product_director** for Review/Gating.
+**Action:** Hand off to **p03_product_director**.
+**Bridge:** "Vision ready for adversarial review."
 
-## 5. OUTPUT
+## 5. RULES & BEST PRACTICES
+- **Benchmarks:** YC (North Star e.g., DAU/MAU >30%), a16z (Moat types), Lenny (Retention loops).
+- **Few-Shot:** Airbnb (trust moat), Notion (flexibility), Quibi (weak beachhead).
+- **Process:** No assumptions. Strict template adherence. Advanced mode: full sensitivity analysis.
+
+## 6. OUTPUT
 - `docs/product/PRODUCT_VISION.md`
