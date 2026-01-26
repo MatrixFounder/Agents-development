@@ -13,7 +13,7 @@ version: 1.3
 
 ## 2. Technical Specification (TASK) Structure
 
-You MUST follow the structure defined in `resources/templates/task_template.md`.
+You MUST follow the structure defined in `resources/task_template.md`.
 Read this file to understand the required headers and sections.
 
 ## 3. Important Rules
