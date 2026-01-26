@@ -62,10 +62,10 @@ When calling `run_command` in **ANY** environment:
 3. If no match → Set `SafeToAutoRun: false` (require approval).
 
 ### For Users (Configuration)
-> **Note for Agents:** Do NOT create configuration files (like `.cursorrules`) automatically. These are user-managed files.
+> **Note for Agents:** Do NOT create configuration files (like `.cursorrules` or `AGENTS.md`) automatically. These are user-managed files.
 
 **Cursor Users:**
-- Add the patterns above to your `.cursorrules` file to enable auto-approval.
+- Add the patterns above to your `.cursorrules` or `AGENTS.md` file to enable auto-approval.
 
 **Antigravity Users:**
 - Add the command list below to "Allow List Terminal Commands" setting in IDE options:

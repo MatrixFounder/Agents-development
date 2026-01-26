@@ -1,90 +1,40 @@
 ---
 name: skill-task-model
-description: Standard models and examples for Technical Specifications (TASK).
+description: Standards for Technical Specifications (TASK) and Use Cases.
 tier: 1
-version: 1.0
+version: 1.1
 ---
 
 # TASK Model & Examples
 
-## 1. TASK Structure Rules
+**Purpose**: Defines the structure and quality standards for Technical Specifications to ensure unambiguous implementation.
 
+## 1. Red Flags (Anti-Rationalization)
+**STOP if you are thinking:**
+- "I'll figure out the edge cases while coding" -> **WRONG**. define Alternative Scenarios NOW.
+- "Acceptance Criteria: 'It works'" -> **WRONG**. Criteria must be binary (Pass/Fail) and specific.
+- "I don't need actors, it's just a backend job" -> **WRONG**. "System" is an actor. "Cron Job" is an actor.
+
+## 2. TASK Structure Rules
 - **Meta Information:** Section 0 MUST include Task ID and Slug.
 - **Use Cases:** Must be structured with Actors, Preconditions, Main Scenario, Alternative Scenarios, Postconditions, and Acceptance Criteria.
 - **Validation:** Criteria must be verifiable.
 
-## 2. Examples
+## 3. Examples
 
-### ✅ Example of Good Use Case:
+### ✅ Example of Good Use Case
+> [!TIP]
+> See `examples/good_use_case.md` for a complete, structured example.
 
-```markdown
-### UC-01: New User Registration
+### ❌ Example of Bad Use Case
+> [!TIP]
+> See `examples/bad_use_case.md` for what NOT to do.
 
-**Actors:**
-- New User
-- System
-- Email Service (external)
+### Rationalization Table
+| Agent Excuse | Reality / Counter-Argument |
+| :--- | :--- |
+| "Writing scenarios takes too long" | Rewriting code because of missed edge cases takes 3x longer. |
+| "It's obvious what happens" | Obvious to *you* now. Not obvious to the Code Reviewer or you in 2 weeks. |
 
-**Preconditions:**
-- User is not registered in the system
-- User email address is valid and accessible
-
-**Main Scenario:**
-1. User opens registration page
-2. System displays form with fields: email, password, confirm password
-3. User fills form and clicks "Register"
-4. System validates email
-5. System checks passwords match
-6. System checks email is not taken
-7. System creates account with status "unconfirmed"
-8. System sends email with confirmation code
-9. System displays page "Check your email"
-
-**Alternative Scenarios:**
-
-**A1: Invalid email (at step 4)**
-1. System displays error: "Invalid email address"
-2. User corrects email
-3. Return to step 3 of main scenario
-
-**A2: Passwords do not match (at step 5)**
-1. System displays error: "Passwords do not match"
-2. User corrects passwords
-3. Return to step 3 of main scenario
-
-**A3: Email already taken (at step 6)**
-1. System displays error: "User with this email already exists"
-2. System suggests login or password recovery
-3. End of use case
-
-**Postconditions:**
-- Account created with status "unconfirmed"
-- Confirmation email sent
-- User sees page with instruction to check email
-
-**Acceptance Criteria:**
-- ✅ Registration form contains all necessary fields
-- ✅ Email validated according to RFC 5322 standard
-- ✅ Password must be at least 8 characters
-- ✅ System does not allow registering duplicate email
-- ✅ Confirmation email sent within 1 minute
-- ✅ Confirmation code valid for 24 hours
-- ✅ All errors displayed with clear messages
-```
-
-### ❌ Example of Bad Use Case:
-
-```markdown
-### Registration
-
-User registers in the system.
-
-**Acceptance Criteria:**
-- Registration works
-```
-
-**Problems:**
-- No structure
-- No details
-- No alternative scenarios
-- Acceptance criteria not verifiable
+## 4. Resources
+- `examples/`: Reference use cases.
