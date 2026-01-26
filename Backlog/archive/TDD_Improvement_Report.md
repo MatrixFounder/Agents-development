@@ -1,3 +1,8 @@
+---
+Status: Implemented
+Version: 3.9.6
+---
+
 # Отчет по внедрению TDD Improvements
 
 ## 1. Резюме (Executive Summary)
