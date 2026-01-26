@@ -24,6 +24,29 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.9.6 — Evolved TDD & Strict Reliability** (Feature)
+
+#### **Added**
+* **New Skill: `tdd-strict` (Tier 3)**:
+    * **High Assurance Mode**: Enforces "Mechanical Verification" (Failing test MUST match `EXPECTED_FAIL_REASON`).
+    * **Law of Minimalism**: Explicitly bans speculative coding and dead code.
+    * **Self-Contained**: Can be loaded independently of Tier 1 skills.
+* **Bug Fixing Protocol (Universal)**:
+    * Added to `developer-guidelines` (Section 6).
+    * Mandates "Reproduce First" rule for ALL bug fixes (Tier 1).
+
+#### **Improved**
+* **Checklists**:
+    * **`code-review-checklist`**: Added "High Assurance" section for verifying strict TDD compliance.
+    * **`plan-review-checklist`**: Added check for planning Strict Mode usage.
+* **Workflows**:
+    * Updated `/full-robust` pipeline to automatically load `tdd-strict` for maximum reliability.
+* **Documentation**:
+    * Updated `System/Docs/SKILLS.md` with Tier 3 definitions.
+    * Updated `System/Docs/WORKFLOWS.md` to reflect strict integration.
+
+---
+
 ### **v3.9.5 — Skill Hardening & Gold Standard Refactoring** (Optimization)
 
 #### **Refactored (Gold Standard)**

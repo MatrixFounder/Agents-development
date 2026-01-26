@@ -58,6 +58,7 @@ The Skills System separates **"Who"** (Agent Persona) from **"What"** (Capabilit
 | **`architecture-format-core`** | Core template for Architecture documents. For quick updates. (~150 lines, TIER 1) | `01-start-feature`, Most updates | Architect |
 | **`architecture-format-extended`** | Full templates with examples, diagrams, JSON samples. For new systems. (~400 lines, TIER 2) | New systems, Major refactors | Architect |
 | **`tdd-stub-first`** | Test-Driven Development strategy: "Structure & Stubs" first, then "Implementation". | `03-develop-task`, `vdd-enhanced` | Planner, Developer |
+| **`tdd-strict`** | **[High Assurance]** Strict TDD with mechanical verification (Fail Reason, Minimalism). Tier 3. | `/full-robust` | Developer (Strict Mode) |
 | **`developer-guidelines`** | Behavioral rules for Developers: adherence to tasks, "Documentation First", Anti-Loop Protocol. | `03-develop-task`, `/base-stub-first` | Developer |
 | **`documentation-standards`** | Standards for docstrings (Google/JSDoc) and "The Why" comments. | All Development Workflows | Developer, Code Reviewer |
 | **`testing-best-practices`** | Best practices: E2E/Unit hierarchy, no LLM mocking, realism. | `03-develop-task`, `vdd-03-develop` | Developer, Code Reviewer |
@@ -136,6 +137,7 @@ To optimize token usage, skills are classified into three tiers (Lazy Loading Pr
 1.  **TIER 0 (System Foundation)**: Always loaded at bootstrap. Mandatory for basic operation (e.g., `skill-safe-commands`).
 2.  **TIER 1 (Phase-Triggered)**: Loaded automatically when entering a specific phase (Analysis, Planning, etc.).
 3.  **TIER 2 (Extended)**: Loaded only on explicit request or for specialized workflows.
+4.  **TIER 3 (High Assurance)**: Strict, rigorous protocols for critical stability. Replaces or hardens Tier 1 instructions (e.g., `tdd-strict`). Only for critical tasks.
 
 ## 🧪 Isolated Testing Skills
 

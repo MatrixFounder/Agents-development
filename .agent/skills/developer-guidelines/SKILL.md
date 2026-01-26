@@ -29,7 +29,14 @@ version: 1.0
 - **Files:** Use `read_file`, `write_file`, `list_directory`.
 - **Shell:** Use `run_command` only if no native tool exists for the operation.
 
-## 6. Language Specific Guidelines
+## 6. Bug Fixing Protocol (Universal)
+1.  **Reproduce First:** Never fix a bug without a failing test case that reproduces it.
+2.  **Verify Fail:** Run the test to confirm it fails.
+3.  **Fix:** Implement the fix.
+4.  **Verify Pass:** Run the test to confirm it passes.
+5.  **Regression:** Run the full suite to ensure no regressions.
+
+## 7. Language Specific Guidelines
 - **Dynamic Loading:** If you are working in a specific language, you MUST read the corresponding guideline file from `resources/languages/` if it exists.
   - Rust: `resources/languages/rust.md`
   - Solidity: `resources/languages/solidity.md`

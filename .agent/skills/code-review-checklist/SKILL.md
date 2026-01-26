@@ -35,6 +35,12 @@ version: 1.1
 - [ ] **Architecture:** Follows layers (Service -> Repo)?
 - [ ] **Style:** Matches project conventions?
 
+## 6. High Assurance (If Tier 3 Active)
+- [ ] **Fail Reason Verified?** Did the tests fail exactly as predicted?
+- [ ] **Pass Reason Rational?** Does `EXPLAIN_PASS_REASON` match the code?
+- [ ] **Law of Minimalism:** No dead code? No speculation?
+- [ ] **Mutation Check:** If you delete a line, does it fail?
+
 ## Criticality Protocol
 - 🔴 **BLOCKING:** Task not done, Test failure, Broken compat, Stub violation (Logic in stub task).
 - 🟡 **MAJOR:** Documentation missing, Duplication, Poor names.

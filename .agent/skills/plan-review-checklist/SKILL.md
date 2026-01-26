@@ -21,6 +21,8 @@ version: 1.0
 - [ ] **Sections:** Contains Goal, Changes, Test Cases, Acceptance Criteria?
 - [ ] **Depth:** Specific file paths and method signatures? (Without coding).
 
+- [ ] **Strict Mode:** Usage of `skill-tdd-strict` specified for critical components/bugs?
+
 ## Criticality Protocol
 - 🔴 **BLOCKING:** Missing Use Case, Missing Task File, No "Stub-First" approach.
 - 🟡 **MAJOR:** Missing coverage table, Vague dependencies.
