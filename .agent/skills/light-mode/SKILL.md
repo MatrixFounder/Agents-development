@@ -1,10 +1,11 @@
 ---
 name: light-mode
-description: Fast-track guidelines for trivial tasks (typos, UI tweaks, simple bugfixes).
+description: Guidelines for fast-tracking trivial tasks (typos, UI tweaks, simple bugfixes).
 tier: 2
 triggers:
   - /light workflow
-  - [LIGHT] tag in TASK.md
+  - "[LIGHT] tag in TASK.md"
+version: 1.0
 ---
 
 # Skill: Light Mode

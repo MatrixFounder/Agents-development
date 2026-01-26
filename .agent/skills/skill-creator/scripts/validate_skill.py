@@ -6,41 +6,68 @@ import sys
 
 def parse_frontmatter(file_path):
     """
-    Parses the YAML frontmatter from a markdown file using basic string parsing.
-    Returns a dict. Limitation: Only supports simple key: value pairs.
+    Parses YAML frontmatter using a robust manual parser (Vanilla Python).
+    Handles key-value, lists, quoted strings, and comments.
     """
-    with open(file_path, 'r') as f:
-        content = f.read()
+    try:
+        with open(file_path, 'r') as f:
+            content = f.read()
 
-    lines = content.splitlines()
-    if not lines or lines[0].strip() != '---':
-        raise ValueError("Missing YAML frontmatter start (---)")
+        lines = content.splitlines()
+        if not lines or lines[0].strip() != '---':
+            raise ValueError("Missing YAML frontmatter start (---)")
 
-    frontmatter = {}
-    found_end = False
-    
-    for line in lines[1:]:
-        if line.strip() == '---':
-            found_end = True
-            break
+        frontmatter = {}
+        found_end = False
+        current_list_key = None
         
-        if ':' in line:
-            key, value = line.split(':', 1)
-            key = key.strip()
-            value = value.strip().strip('"').strip("'")
+        for line in lines[1:]:
+            # Remove comments and whitespace
+            line_stripped = line.split('#')[0].rstrip()
+            if not line_stripped.strip(): 
+                continue
+
+            if line_stripped.strip() == '---':
+                found_end = True
+                break
             
-            # Simple list parsing for 'tier' if it looks like [1, 2]
-            if value.startswith('[') and value.endswith(']'):
-                # clean up list string
-                inner = value[1:-1]
-                frontmatter[key] = [x.strip() for x in inner.split(',')]
-            else:
-                frontmatter[key] = value
+            # Case 1: List Item (- value)
+            if line_stripped.strip().startswith('-'):
+                if current_list_key and isinstance(frontmatter.get(current_list_key), list):
+                    val = line_stripped.strip()[1:].strip()
+                    # Remove quotes
+                    val = val.strip('"').strip("'")
+                    frontmatter[current_list_key].append(val)
+                continue
 
-    if not found_end:
-        raise ValueError("Missing YAML frontmatter end (---)")
+            # Case 2: Key-Value (key: value)
+            if ':' in line_stripped:
+                key, val = line_stripped.split(':', 1)
+                key = key.strip()
+                val = val.strip()
+                
+                if not val:
+                    # Start of a list
+                    current_list_key = key
+                    frontmatter[key] = []
+                else:
+                    current_list_key = None
+                    val = val.strip('"').strip("'")
+                    
+                    # Basic type conversion (optional, mainly for tier)
+                    if val.startswith('[') and val.endswith(']'):
+                         inner = val[1:-1]
+                         val = [x.strip() for x in inner.split(',')]
+                    
+                    frontmatter[key] = val
 
-    return frontmatter
+        if not found_end:
+            raise ValueError("Missing YAML frontmatter end (---)")
+
+        return frontmatter
+
+    except Exception as e:
+        raise ValueError(f"Parse Error: {str(e)}")
 
 def validate_skill(skill_path):
     """
