@@ -38,7 +38,7 @@ python3 [skill_path]/scripts/score_product.py --problem_intensity 9 --moat_durab
 ## 4. Artifact Standards (`PRODUCT_VISION.md`)
 
 ### Template Structure
-See `resources/templates/vision_template.md` for the authoritative structure.
+See `resources/vision_template.md` for the authoritative structure.
 All sections are mandatory.
 
 ### INVEST Criteria (User Stories)
