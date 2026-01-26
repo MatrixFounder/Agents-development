@@ -16,7 +16,6 @@ You MUST use the provided Python script to scaffold the Vision document.
 **DO NOT** write the `PRODUCT_VISION.md` header/structure manually.
 
 ### How to Initialise
-### How to Initialise
 Run the following command (Headless mode):
 ```bash
 python3 [skill_path]/scripts/init_product.py --name "Product Name" --problem "Problem description" --audience "Users" --metrics "KPI1, KPI2"
