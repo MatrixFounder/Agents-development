@@ -143,6 +143,25 @@ def analyze_skill(skill_path):
             if os.path.getsize(fp) < 10:
                 gaps.append(f"[Richness] Example '{f}' is too small/empty. Real examples required.")
 
+    # 7. Check Token Efficiency (Inline Blocks)
+    lines = body.splitlines()
+    in_block = False
+    block_start = 0
+    
+    for i, line in enumerate(lines):
+        line = line.strip()
+        if line.startswith("```"):
+            if in_block:
+                # End of block
+                block_length = i - block_start - 1
+                if block_length > 12:
+                    gaps.append(f"[Token Efficiency] Inline code block at line {block_start + 1} is too large ({block_length} lines). Max allowed is 12. Extract to examples/ or resources/.")
+                in_block = False
+            else:
+                # Start of block
+                in_block = True
+                block_start = i
+
     # Report
     if gaps:
         print(f"⚠️  Gaps Detected for '{skill_name}':")

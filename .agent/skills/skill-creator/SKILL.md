@@ -59,7 +59,22 @@ version: 1.0
 *   **1 (Phase-Triggered)**: Skills loaded automatically when entering a specific phase (e.g., `requirements-analysis` for Analysis Phase) or working on a specific requirement (e.g., `planning-decision-tree` for Planning Phases).
 *   **2 (Extended)**: Specialized skills loaded only when explicitly needed or requested (e.g., `skill-creator`, `skill-reverse-engineering`). *Default for most new skills.*
 
-## 4. Skills as Code Philosophy (TDD)
+## 4. Token Efficiency (Global Rule)
+
+To prevent context window saturation, we strictly enforce limits on inline content:
+
+### The 12-Line Rule
+*   **PROHIBITED**: Inline code blocks, templates, or examples larger than **12 lines**.
+*   **REQUIRED**: Extract large blocks to `examples/` or `resources/` and reference them.
+    *   *Bad*: A 20-line JSON object inline.
+    *   *Good*: "See `examples/payload.json`."
+
+### Why?
+*   Skills are read frequently.
+*   Large inline examples multiply token costs.
+*   External files are only read when needed.
+
+## 5. Skills as Code Philosophy (TDD)
 
 We treat skills as **executable code for agents**. You must test them.
 We follow a **Red-Green-Refactor** workflow:
@@ -70,7 +85,7 @@ We follow a **Red-Green-Refactor** workflow:
 2.  **GREEN (Pass)**: Write the minimal skill instruction to close that specific loophole.
 3.  **REFACTOR**: Optimize for clarity and "Claude Search Optimization" (CSO).
 
-## 5. Claude Search Optimization (CSO)
+## 6. Claude Search Optimization (CSO)
 
 The `description` frontmatter field is the **single most important line**. It determines if your skill is loaded.
 
@@ -94,7 +109,7 @@ You **MUST** start your description with one of these prefixes:
 
 **Constraint**: Keep descriptions under 50 words. Focus on *symptoms* and *triggers*, not solutions.
 
-## 6. Hardening Skills (Rationalization Management)
+## 7. Hardening Skills (Rationalization Management)
 
 Agents (like humans) will find excuses to skip steps. You must explicitly forbid these "rationalizations".
 
@@ -103,7 +118,7 @@ Every skill MUST include a list of Red Flags - specific excuses the agent might 
 
 *   *Example*: "Stop if you think 'I already tested manually'. Delete code and start over."
 
-## 7. Writing High-Quality Instructions
+## 8. Writing High-Quality Instructions
 
 Use the **Template** found in `resources/SKILL_TEMPLATE.md` as your starting point.
 
@@ -115,7 +130,7 @@ Use the **Template** found in `resources/SKILL_TEMPLATE.md` as your starting poi
 5.  **Examples (Few-Shot)**: Input -> Output pairs.
     *   *Reference*: See `examples/SKILL_EXAMPLE_LEGACY_MIGRATOR.md` for a **Gold Standard** example of a rich skill.
 
-## 8. Creation Process
+## 9. Creation Process
 
 When creating a new skill, you **MUST** strictly follow this sequence:
 
@@ -133,7 +148,7 @@ When creating a new skill, you **MUST** strictly follow this sequence:
     ```
 5.  **Register**: Add to `System/Docs/SKILLS.md`.
 
-## 9. Scripts Reference
+## 10. Scripts Reference
 
 *   **`init_skill.py`**: Generates a compliant skill skeleton (`scripts/`, `examples/`, `resources/`) using the rich template.
 *   **`validate_skill.py`**: Enforces folder structure, frontmatter compliance, and CSO rules (description format).

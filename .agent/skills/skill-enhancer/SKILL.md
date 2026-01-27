@@ -13,9 +13,10 @@ version: 1.0
 - "I'll just add the sections blindly" -> **WRONG**. You must understand *why* the skill fails before fixing it.
 - "The description is close enough" -> **WRONG**. It must start with "Use when".
 - "Examples are optional" -> **WRONG**. "Rich Skills" mandate examples.
+- "It's just a small 20-line example" -> **WRONG**. Inline blocks > 12 lines are prohibited. Extract them.
 
 ## 2. Capabilities
-- **Audit**: Detect gaps (missing Red Flags, poor CSO, passive voice) using `analyze_gaps.py`.
+- **Audit**: Detect gaps (missing Red Flags, inline blocks > 12 lines, poor CSO) using `analyze_gaps.py`.
 - **Plan**: Propose specific content improvements using `resources/refactoring_patterns.md`.
 - **Execute**: Apply refactoring patterns to upgrade the skill.
 
@@ -28,6 +29,7 @@ version: 1.0
 ### Phase 2: Plan
 1.  **Read Target Skill**: Read the content of the target skill.
 2.  **Draft Improvements**:
+    *   *Token Efficiency*: Identify blocks > 12 lines and plan extraction to `examples/`.
     *   *Red Flags*: Identify 2-3 likely agent excuses for *this specific task*.
     *   *Rat. Table*: Create counter-arguments.
     *   *CSO*: Rewrite description to "Use when [TRIGGER]...".

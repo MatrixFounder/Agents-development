@@ -4,6 +4,32 @@ import argparse
 import sys
 # import yaml  <-- Removed dependency
 
+def check_inline_efficiency(content: str) -> list:
+    """
+    Checks for inline code blocks larger than 8 lines.
+    Returns a list of error messages.
+    """
+    errors = []
+    lines = content.splitlines()
+    in_block = False
+    block_start = 0
+    
+    for i, line in enumerate(lines):
+        line = line.strip()
+        if line.startswith("```"):
+            if in_block:
+                # End of block
+                block_length = i - block_start - 1
+                if block_length > 12:
+                    errors.append(f"Inline code block at line {block_start + 1} is too large ({block_length} lines). Max allowed is 12. Extract to examples/ or resources/.")
+                in_block = False
+            else:
+                # Start of block
+                in_block = True
+                block_start = i
+                
+    return errors
+
 def parse_frontmatter(file_path):
     """
     Parses YAML frontmatter using a robust manual parser (Vanilla Python).
@@ -137,6 +163,13 @@ def validate_skill(skill_path):
 
             if 'version' not in meta:
                 errors.append("Frontmatter missing 'version'")
+
+            # 5. Check Token Efficiency
+            with open(skill_md_path, 'r') as f:
+                 raw_content = f.read()
+            
+            efficiency_errors = check_inline_efficiency(raw_content)
+            errors.extend(efficiency_errors)
 
         except Exception as e:
             errors.append(f"YAML Frontmatter Error: {str(e)}")
