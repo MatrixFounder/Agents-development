@@ -24,6 +24,24 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.9.7 — Iterative Design & VDD Robustness** (Feature)
+
+#### **Added**
+* **New Workflow: `/iterative-design`**:
+    * **Concept Loop**: brain storm -> Spec Draft -> VDD Audit -> Human Review -> Refinement.
+    * **Human-in-the-Loop**: Explicit checkpoints for user feedback before coding.
+* **New Skill: `brainstorming` (Tier 2)**:
+    * **Pre-Planning**: Specialized instructions for research and idea generation.
+    * **Anti-Hallucination**: Strict "NO CODING" rules during brainstorming phase.
+
+#### **Fixed**
+* **VDD Artifact Consistency**:
+    * **Logic Gap Closed**: Fixed issue where `iterative-design` requested a report but `vdd-adversarial` had no template.
+    * **Templates**: Added `resources/template_critique.md` to `skill-vdd-adversarial` for standardized auditing.
+    * **Rich Skill**: Refactored `vdd-adversarial` to meet `skill-enhancer` standards (Resources separation).
+
+---
+
 ### **v3.9.6 — Evolved TDD & Strict Reliability** (Feature)
 
 #### **Added**

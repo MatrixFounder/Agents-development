@@ -19,3 +19,12 @@ version: 1.0
 ## 3. Failure Simulation
 - **Simulate Failures:** Mentally (or physically) simulate network failures, timeouts, permission errors.
 - **Check Error Handling:** Ensure graceful degradation.
+
+## 4. Output Artifacts
+
+If the User or Workflow requests a **Report**, **Critique**, or **Artifact**, you **MUST** use this standard template:
+
+If the User or Workflow requests a **Report**, **Critique**, or **Artifact**, you **MUST** use the standard template found in:
+`.agent/skills/vdd-adversarial/resources/template_critique.md`
+
+Read this file using `read_resource` or `view_file` before generating the report.

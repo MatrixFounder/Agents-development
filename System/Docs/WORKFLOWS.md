@@ -46,6 +46,9 @@ graph TD
             ProdQuick([product-quick-vision]):::prod
             ProdMark([product-market-only]):::prod
         end
+
+        %% Iterative Design
+        Iterative([iterative-design]):::pipeline
     end
 
     %% Styles for Product
@@ -85,6 +88,9 @@ graph TD
 
     Light -->|1. Analysis| LightStart
     Light -->|2. Dev Loop| LightDev
+
+    Iterative -->|Output used by| Start
+    Iterative -->|Output used by| Base
 ```
 
 ## 🚀 Workflow Categorization
@@ -106,6 +112,7 @@ The workflows are organized into three categories:
 | **Full Robust** | The Ultimate Pipeline: Runs `VDD Enhanced` strategy (Adversarial) with **Strict TDD** (High Assurance) followed by a Security Audit. | `run full-robust` |
 | **VDD Enhanced** | Combines Stub-First planning with VDD Adversarial execution. | `run vdd-enhanced` |
 | **VDD Multi-Adversarial** | Sequential execution of 3 specialized critics: Logic → Security → Performance. | `run vdd-multi` |
+| **Iterative Design** | **Concept Refinement Loop.** Brainstorm -> Spec Draft -> VDD -> Human Review -> Refine. | `run /iterative-design` |
 | **Light Mode** | **Fast-track for trivial tasks.** Skips Architecture/Planning. Uses Analysis → Dev → Review loop. | `run light` or `/light` |
 
 ---
@@ -322,6 +329,7 @@ graph TD
     T -->|No| B{Task Complexity?}
     B -->|Simple/Well-defined| C{Trust Automation?}
     B -->|Complex/Ambiguous| D[Multi-Step Approach]
+    B -->|Concept/Design| ITER[run /iterative-design]
     C -->|Yes| E[run base-stub-first]
     C -->|No| D
     D --> F{Need Adversarial Review?}
