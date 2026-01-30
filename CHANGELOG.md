@@ -35,8 +35,17 @@
 * **New Manual**: `System/Docs/skill-writing.md` — A portable User Guide for using the meta-skills (Install, Config, Usage).
 * **Resilience**: Scripts now include a **Bundled Default Config** (`skill_standards_default.yaml`) for instant drop-in usage if project config is missing.
 
+#### **Refined**
+* **Hybrid Folder Structure**: Refactored `skill-creator` and `skill-enhancer` to use a semantic folder standard:
+    * `examples/` (Train): Few-shot examples for the agent.
+    * `assets/` (Material): User-facing templates and output files.
+    * `references/` (Knowledge): Heavy context, specs, and guidelines.
+    * `scripts/` (Tools): Python automation.
+    * *Deprecated `resources/` in favor of more specific `assets/` and `references/`.*
+
 #### **Verified**
 * **E2E Testing**: Validated proper functioning of dynamic tiers, parser correctness (including edge cases like inline dicts), and gap analysis on a test skill.
+* **Migration**: Successfully migrated `skill-creator` and `skill-enhancer` to the new structure without data loss.
 
 ---
 
