@@ -101,10 +101,24 @@ def main():
     
     default_root = config.get('project_config', {}).get('skills_root', '.agent/skills')
 
-    parser = argparse.ArgumentParser(description="Initialize a new Agent Skill (Portable Standard).")
+    # Build rich help for tiers
+    tier_help = "Skill Tier choices:\n"
+    if tier_defs:
+        for t in tier_defs:
+            val = t.get('value')
+            name = t.get('name', '')
+            desc = t.get('description', '')
+            tier_help += f"    {val}: {name} - {desc}\n"
+    else:
+        tier_help += "    [0, 1, 2] (Default tiers)"
+
+    parser = argparse.ArgumentParser(
+        description="Initialize a new Agent Skill (Portable Standard).",
+        formatter_class=argparse.RawTextHelpFormatter
+    )
     parser.add_argument("name", help="Name of the skill (e.g., 'pdf-editor')")
     parser.add_argument("--path", default=default_root, help=f"Output directory (default: {default_root})")
-    parser.add_argument("--tier", type=str, default="2", choices=valid_tiers, help=f"Skill Tier choices: {valid_tiers}")
+    parser.add_argument("--tier", type=str, default="2", choices=valid_tiers, help=tier_help)
 
     args = parser.parse_args()
 

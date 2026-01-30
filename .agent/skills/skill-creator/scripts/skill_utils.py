@@ -144,12 +144,34 @@ def load_config(project_root="."):
     Loads configuration by merging:
     1. Bundled Defaults (skill_standards_default.yaml)
     2. Project Overlay (.agent/rules/skill_standards.yaml)
+    
+    Auto-detects project_root if not provided.
     """
     parser = VanillaYamlParser()
     config = {}
     
+    # 0. Resolve Proj Root (Search Upwards)
+    # Treat project_root as "start_dir"
+    search_dir = os.path.abspath(project_root)
+    found_root = None
+    
+    current = search_dir
+    while True:
+        if os.path.exists(os.path.join(current, ".agent")) or \
+           os.path.exists(os.path.join(current, ".git")):
+            found_root = current
+            break
+        parent = os.path.dirname(current)
+        if parent == current: # Reached fs root
+            break
+        current = parent
+        
+    # Use found root if available, else fallback to original input (likely just CWD)
+    final_root = found_root if found_root else project_root
+    
     # 1. Load Defaults
     script_dir = os.path.dirname(os.path.abspath(__file__))
+
     default_path = os.path.join(script_dir, "skill_standards_default.yaml")
     
     if os.path.exists(default_path):
@@ -160,7 +182,7 @@ def load_config(project_root="."):
             print(f"Warning: Failed to load bundled defaults: {e}")
     
     # 2. Load Project Overlay
-    project_config_path = os.path.join(project_root, ".agent", "rules", "skill_standards.yaml")
+    project_config_path = os.path.join(final_root, ".agent", "rules", "skill_standards.yaml")
     if os.path.exists(project_config_path):
         try:
             with open(project_config_path, 'r') as f:

@@ -78,9 +78,9 @@ version: 1.0
 ```
 
 ### Protocol: Tier Definitions
-*   **0 (Bootstrap)**: Critical system skills loaded at session start (e.g., `core-principles`, `safe-commands`). *Rarely used for new skills.*
-*   **1 (Phase-Triggered)**: Skills loaded automatically when entering a specific phase (e.g., `requirements-analysis` for Analysis Phase) or working on a specific requirement (e.g., `planning-decision-tree` for Planning Phases).
-*   **2 (Extended)**: Specialized skills loaded only when explicitly needed or requested (e.g., `skill-creator`, `skill-reverse-engineering`). *Default for most new skills.*
+Run `python3 scripts/init_skill.py --help` to see the available Tiers for your project.
+> [!IMPORTANT]
+> **DO NOT** attempt to guess tiers or read configuration files manually. The script handles complex merging logic (Defaults + Project Overrides). Always trust the script output.
 
 ## 5. Token Efficiency (Global Rule)
 

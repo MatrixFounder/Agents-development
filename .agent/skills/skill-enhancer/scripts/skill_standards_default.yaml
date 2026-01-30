@@ -9,13 +9,13 @@ taxonomy:
   tiers:
     - value: 0
       name: "Bootstrap"
-      description: "Critical system skills."
+      description: "Critical system skills loaded at session start (e.g., `core-principles`, `safe-commands`). Rarely used for new skills."
     - value: 1
-      name: "Standard"
-      description: "Standard capability."
+      name: "Phase-Triggered"
+      description: "Skills loaded automatically when entering a specific phase (e.g., `requirements-analysis` for Analysis Phase) or working on a specific requirement (e.g., `planning-decision-tree` for Planning Phases)."
     - value: 2
       name: "Extended"
-      description: "Specialized usage."
+      description: "Specialized skills loaded only when explicitly needed or requested (e.g., `skill-creator`, `skill-reverse-engineering`). Default for most new skills."
 
 validation:
   allowed_cso_prefixes: 
