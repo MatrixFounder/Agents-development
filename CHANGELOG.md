@@ -24,6 +24,17 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.9.10 — Skill Creator Cleanup** (Optimization)
+
+#### **Improved**
+* **`skill-creator`**:
+    * **Cleanup Protocol**: Added specific instructions to remove unused placeholder directories (`scripts/`, `assets/`, `references/`) after skill initialization.
+    * **Validation**: Verified that `validate_skill.py` supports "lean" skills without empty folders.
+
+---
+
+## 🇺🇸 English Version (Primary)
+
 ### **v3.9.9 — Skill Resources Migration & Validation Hardening** (Optimization)
 
 #### **Refactored**

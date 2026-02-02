@@ -199,11 +199,17 @@ When creating a new skill, you **MUST** strictly follow this sequence:
     *   **MANDATORY**: Fill in the "Red Flags" and "Use when..." description.
     *   **MANDATORY**: If logic > 5 lines, write a `scripts/` tool.
     *   **MANDATORY**: Consult `references/skill_design_patterns.md` and `references/writing_skills_best_practices_anthropic.md` for structural decisions.
-4.  **Validate**:
+4.  **Cleanup**:
+    *   **MANDATORY**: Remove unused placeholder files created by the init script.
+    *   **Scripts**: If no script is required (logic < 5 lines), delete `scripts/.keep` and the `scripts/` directory.
+    *   **Assets**: If no user assets are provided, delete `assets/template.txt` and the `assets/` directory.
+    *   **References**: If no external references are needed, delete `references/guidelines.md` and the `references/` directory.
+    *   **Examples**: You **MUST** have at least one example. Replace `examples/usage_example.md` with a real one, or if you strictly follow the "Simple Skill" path (no external files), you may delete the directory (but Rich Skills *should* have examples).
+5.  **Validate**:
     ```bash
     python3 scripts/validate_skill.py ../my-new-skill
     ```
-5.  **Register**: Add to your **Skill Catalog** (if configured).
+6.  **Register**: Add to your **Skill Catalog** (if configured).
 
 ## 11. Scripts Reference
 
