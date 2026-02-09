@@ -3,7 +3,7 @@
 ## 0. Meta Information
 - **ID:** SPEC-002
 - **Title:** Requirements Hardening & Atomic Planning
-- **Status:** Draft
+- **Status:** Implemented (v3.9.11)
 - **Related:** `Backlog/development-enhancement-20260207.md` (Superseded)
 
 ## 1. The Core Problem
@@ -167,9 +167,9 @@ A Meta-Skill for **Auditing Specifications** before framework changes. It does N
 | **Integration** | New Modes / Files | **Direct Upgrade of `vdd-enhanced`** |
 
 ## 8. Action Items
-1. [ ] Update Analyst Prompt (Standardize RTM).
-2. [ ] Update Planner Prompt (Atomic checklists).
-3. [ ] Create `skill-spec-validator`.
-4. [ ] **Update** `.agent/workflows/vdd-enhanced.md`.
-5. [ ] **Create** `skill-self-improvement-verificator` (Tier 3).
-6. [ ] **Create** `.agent/workflows/framework-upgrade.md`.
+1. [x] Update Analyst Prompt (Standardize RTM).
+2. [x] Update Planner Prompt (Atomic checklists).
+3. [x] Create `skill-spec-validator`.
+4. [x] **Update** `.agent/workflows/vdd-enhanced.md`.
+5. [x] **Create** `skill-self-improvement-verificator` (Tier 3).
+6. [x] **Create** `.agent/workflows/framework-upgrade.md`.

@@ -1,7 +1,7 @@
 # Meta-Skills Independence Proposal
 
 **Date**: 2026-01-30
-**Status**: DRAFT (Rev 6)
+**Status**: Done
 **Context**: `skill-creator` and `skill-enhancer` currently contain hardcoded "Antigravity/Gemini" standards. To make these meta-skills portable (project-agnostic), we need to extract these policies into a configuration file and remove fragile dependencies.
 
 ---
