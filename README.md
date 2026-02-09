@@ -20,7 +20,7 @@ The methodology combines two key approaches (see [Comparison](System/Docs/TDD_VS
   - [3. Installation Requirements (Python)](#3-installation-requirements-python)
 - [System Overview](#-system-overview)
   - [Directory Structure](#directory-structure)
-  - [Meta-System Prompt](#-meta-system-prompt-00_agent_developmentmd)
+  - [Concept Deep Dive: Blueprint vs Driver](#-concept-deep-dive-blueprint-vs-driver)
   - [The Agent Team (Roles)](#-the-agent-team-roles)
   - [The Product Team (Roles)](#-the-product-team-roles)
   - [Skills System](#-skills-system)
@@ -30,6 +30,7 @@ The methodology combines two key approaches (see [Comparison](System/Docs/TDD_VS
 - [How to Start Development](#-how-to-start-development-step-by-step-plan)
   - [Phase 0: Product Discovery](#phase-0-product-discovery-optional)
   - [Stages 1-5](#stage-1-pre-flight-check)
+- [Practical Usage (Claude Code & Gemini)](#-practical-usage-claude-code--gemini)
 - [Artifact Management](#-artifact-management)
 - [What to do with .AGENTS.md files?](#-what-to-do-with-agentsmd-files)
 - [How to prepare for future iterations?](#-how-to-prepare-for-future-iterations)
@@ -82,6 +83,24 @@ Antigravity supports this architecture out-of-the-box:
     ```text
     ls,cat,head,tail,find,grep,tree,wc,stat,file,du,df,git status,git log,git diff,git show,git branch,git remote,git tag,mv docs/TASK.md,mv docs/PLAN.md,mkdir -p docs,mkdir -p .agent,mkdir -p tests,python -m pytest,python3 -m pytest,npm test,npx jest,cargo test
     ```
+
+#### 🟠 Option C: Claude Code (Native)
+To use with Anthropic's `claude` CLI:
+1.  **Configuration**: Create a `CLAUDE.md` alias for the system prompt:
+    ```bash
+    ln -s AGENTS.md CLAUDE.md
+    ```
+2.  **Skills**: Create a `.claude/skills` symlink (optional, for compatibility):
+    ```bash
+    mkdir -p .claude
+    ln -s ../.agent/skills .claude/skills
+    ```
+3.  **Usage**: Run `claude` in the project root. The system prompt will be automatically loaded.
+
+#### 🟢 Option D: Gemini CLI
+To use with Google's `gemini` CLI:
+1.  **Configuration**: Ensure `GEMINI.md` is present in the project root.
+2.  **Usage**: Run `gemini` commands. The tool will look for `GEMINI.md` as the system instruction.
 
 ### 3. Installation Requirements (Python)
 If you plan to use the **Tool Execution Subsystem** (native tools), you need Python 3.9+ installed.
@@ -138,10 +157,51 @@ project-root/
 └── src/                           # Your Source Code
 ```
 
-### 🔑 Meta-System Prompt (00_agent_development.md)
-The file `00_agent_development.md` serves as the **Meta-System Prompt** for Cursor.
-It defines global principles (Skill Tiers, Task Boundaries) and **SHOULD** be included in the context for manual agent calls.
-For Antigravity, this logic is handled natively via `GEMINI.md`.
+### 🔑 Concept Deep Dive: Blueprint vs Driver
+
+To understand how the system works, it is crucial to distinguish between the **Documentation** and the **System Prompt**.
+
+#### 1. The Blueprint (`System/Agents/00_agent_development.md`)
+This file is the **Constitutional Document** of the system.
+- **Role**: Describes "What the system is" and "How it is composed".
+- **Content**: Role definitions (Analyst, Architect, etc.), Skill Tiers, Task Boundary logic, and specific rules for artifacts (TASK.md, ARCHITECTURE.md).
+- **Usage**: Source of Truth for humans and for agents needing to understand the "Theory" of the framework.
+
+#### 2. The Driver (`GEMINI.md` / `AGENTS.md`)
+This file is the **Executable System Instruction** for the AI Agent.
+- **Role**: Tells the agent "What to do RIGHT NOW" and "How to execute the rules".
+- **Content**: Imperative commands (MUST, CRITICAL), the Execution Pipeline (Analysis -> Architecture -> ...), and Protocol definitions.
+- **Usage**: The active prompt that "programs" the agent's behavior.
+
+#### Visualization
+
+```mermaid
+graph TD
+    subgraph "The Blueprint (Theory)"
+        A[00_agent_development.md] -->|Defines| B(Roles)
+        A -->|Defines| C(Processes)
+    end
+
+    subgraph "The Driver (Execution)"
+        D[GEMINI.md / AGENTS.md] -->|Implements| A
+        D -->|Controls| E[AI Agent]
+    end
+
+    E -->|Reads| D
+    E -->|Executes| F[Agentic Pipeline]
+```
+
+#### Comparison
+
+| Feature | `00_agent_development.md` | `GEMINI.md` / `AGENTS.md` |
+| :--- | :--- | :--- |
+| **Type** | Documentation / Specification | Prompt / Instruction |
+| **Style** | Descriptive ("System consists of...") | Imperative ("You MUST do...") |
+| **Goal** | Explain system structure | Control agent behavior |
+| **Target** | Developer & Agents (Context) | AI Model (System Prompt) |
+| **Analogy** | Constitution / Bylaws | Job Description / Algorithm |
+
+> **Relationship**: `GEMINI.md` enforces what is described in `00_agent_development.md`. Without the first, the agent wouldn't know the big picture. Without the second, the agent would know the theory but lack the strict algorithm to execute user tasks.
 
 ### 🤖 The Agent Team (Roles)
 
@@ -299,6 +359,68 @@ For each pair of tasks in the plan (Stub -> Impl):
 
 ---
 
+
+## 🕹️ Practical Usage (Claude Code & Gemini)
+
+### Scenario 1: Standard Development (Full Pipeline)
+
+```bash
+cd my-project
+claude
+# or gemini
+```
+
+**Prompt:**
+```text
+Develop a "Payment Gateway" module.
+Requirements:
+- Stripe API integration
+- Webhook handling
+- Database transaction logging
+```
+
+**Automated Process:**
+1.  **Analysis**: Agent reads `02_analyst_prompt.md`, creates `TASK.md`.
+2.  **Architecture**: Agent reads `04_architect_prompt.md`, updates `ARCHITECTURE.md`.
+3.  **Planning**: Agent reads `06_agent_planner.md`, creates `PLAN.md` (Stub-First).
+4.  **Development**: Agent reads `08_agent_developer.md`, implements Stubs -> Tests -> Code.
+
+**Result**: You get a fully implemented, tested feature with documentation without manual intervention.
+
+---
+
+### Scenario 2: Light Mode (Fast-Track)
+
+For simple tasks (typos, UI tweaks), use the `/light` workflow to skip heavy planning.
+
+**Prompt:**
+```text
+/light
+Fix the typo in the Submit button: "Sumbit" -> "Submit"
+```
+
+**Automated Process:**
+1.  **Recognition**: Agent detects `[LIGHT]` mode.
+2.  **Execution**: Skips Architecture/Planning.
+3.  **Action**: Directly modifies the code and runs a quick verification.
+
+---
+
+### Scenario 3: Session Restoration
+
+If you interrupt the session, you can resume exactly where you left off.
+
+**Prompt:**
+```text
+Resume work on the Email Notifications task.
+```
+
+**Automated Process:**
+1.  **Read State**: Agent reads `.agent/sessions/latest.yaml`.
+2.  **Restore Context**: "AH, we were in Development Phase, Task 2.1 [STUB]".
+3.  **Continue**: Resumes execution without re-analyzing the whole project.
+
+---
 
 ## 🗂 Artifact Management
 

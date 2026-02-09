@@ -27,6 +27,10 @@
 * **New Workflow: `/framework-upgrade`**:
     * Specialized pipeline for upgrading Prompts, Skills, and System Logic.
     * Integrates `skill-self-improvement-verificator` gates at Analysis and Planning stages.
+* **Documentation**:
+    * **Claude Code & Gemini CLI**: Added native integration guides (Options C & D) in READMEs.
+    * **Concept Deep Dive**: Added "Blueprint vs Driver" explanation to clarify `00_agent_development.md` vs `AGENTS.md` roles.
+    * **Usage Scenarios**: Added practical examples for Standard, Light Mode, and Session Restoration workflows.
 
 #### **Improved**
 * **Workflows**:
