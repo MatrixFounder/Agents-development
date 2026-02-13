@@ -16,6 +16,17 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.9.12 — Framework Consistency & Safety Fixes** (Bugfix)
+
+#### **Fixed**
+* **Data Loss Prevention**: Patched `trigger_technical.py` to abort if `docs/TASK.md` already exists, preventing accidental overwrites during product handoff.
+* **Protocol Integrity**: Updated `light-02-develop-task` workflow to enforce mandatory `.AGENTS.md` updates, preventing memory drift in Light Mode.
+* **Standardization**: Updated `vdd-01-start-feature` to use the authoritative `skill-archive-task` protocol instead of hardcoded manual steps.
+
+---
+
+
+
 ### **v3.9.11 — Hardened Pipeline & Self-Improvement System** (Feature)
 
 #### **Added**

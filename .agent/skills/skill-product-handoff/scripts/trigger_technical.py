@@ -9,6 +9,10 @@ def trigger_technical(brd_path, task_output_path):
     if not os.path.exists(brd_path):
         print(f"FAIL: BRD not found at {brd_path}")
         return False
+
+    if os.path.exists(task_output_path):
+        print(f"FAIL: Task file already exists at {task_output_path}. Please archive it first using 'skill-archive-task'.")
+        return False
         
     try:
         # Use relative path for portability

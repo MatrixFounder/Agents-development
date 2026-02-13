@@ -7,9 +7,7 @@ description: Start a new feature development cycle (VDD Mode - High Integrity)
 1. **Standard Analysis**: Read `System/Agents/02_analyst_prompt.md`.
 2. **Context Check**: Read `docs/KNOWN_ISSUES.md`.
 3. **Chainlink Decomposition (Part 1 - The Epics)**:
-    - **Archiving (Important)**:
-        - Check if `docs/TASK.md` exists.
-        - If yes: Archive it to `docs/tasks/task-ID-slug.md`.
+    - **Archiving**: Apply `skill-archive-task` protocol if `docs/TASK.md` exists.
 4. **Update `docs/TASK.md`**:
     - **Constraint**: You MUST structure the requirements into **Epics** and **Issues**.
     - **Constraint**: Do not accept vague requirements. If ambiguous, ask the user.

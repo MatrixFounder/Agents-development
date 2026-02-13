@@ -21,6 +21,7 @@ description: Develop a task using Light Mode (Dev + Review loop)
 3. Implement the fix directly. **Do not overengineer.**
 4. Run tests: `pytest` / `npm test` / relevant test command.
 5. If tests fail: Fix and re-run (loop).
+6. **Memory Update**: Update `.AGENTS.md` to reflect changes.
 
 ### 2. Code Review (Code Reviewer)
 // turbo

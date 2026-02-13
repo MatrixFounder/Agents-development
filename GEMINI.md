@@ -58,7 +58,8 @@ Before starting the standard pipeline, check if the user's request matches a wor
    - If user asks for "TDD", prioritize `tdd-*` workflows.
    - If task is trivial (typo, UI tweak, simple bugfix), **PROPOSE** `/light` workflow.
    - If no variant specified, default to standard `01-04`.
-3. **Execution**: If a matching workflow is found, execute its steps strictly INSTEAD of the hardcoded pipeline below.
+3. **Execution**: If a matching workflow is found, execute its steps strictly.
+   - **CRITICAL**: Global Protocols (like `skill-archive-task` and `skill-update-memory`) **ALWAYS APPLY**, even inside workflows, unless explicitly skipped.
    - Support for **Nested Calls**: Use `Call /workflow-name` syntax to invoke other workflows.
 
 ## THE PIPELINE (EXECUTE SEQUENTIALLY)
