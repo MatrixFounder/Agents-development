@@ -29,6 +29,11 @@
     * **`.gemini/settings.json`**: Hook configuration with `$GEMINI_PROJECT_DIR` fallback for cross-runner compatibility.
     * **Skill Creation Gate**: Added mandatory `init_skill.py` rule to `GEMINI.md` and `AGENTS.md` Development Phase. Manual skill creation is now prohibited.
 
+#### **Improved**
+* **VDD Skills (v1.1)**:
+    * **`vdd-adversarial`**: Added **Red Flags** (Anti-Rationalization), **Rationalization Table**, and explicit `examples/` reference.
+    * **`vdd-sarcastic`**: Added **Red Flags** (Anti-Rationalization), **Rationalization Table**, and explicit `examples/` reference.
+
 #### **Fixed**
 * **Data Loss Prevention**: Patched `trigger_technical.py` to abort if `docs/TASK.md` already exists, preventing accidental overwrites during product handoff.
 * **Protocol Integrity**: Updated `light-02-develop-task` workflow to enforce mandatory `.AGENTS.md` updates, preventing memory drift in Light Mode.
