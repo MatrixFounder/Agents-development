@@ -28,9 +28,9 @@
 - **Floating Promises:** Always await promises or explicitly handle them (`void func()`).
 - **Null Checks:** Use Optional Chaining `?.` and Nullish Coalescing `??` instead of bespoke logic.
 
-## Specific Contexts (n8n / Scripts / Embedded)
-- **Runtime Limits:** In `n8n` or simplified environments, TypeScript and Zod may not be available.
-    - **Validation:** Use `Array.isArray(x)` and `typeof x === 'string'` for defensive coding.
-    - **Imports:** Use platform-specific imports (e.g., `require` or `$input.all()`).
-    - **JSDoc:** Use JSDoc comments `/** @type {string} */` for type safety without a build step.
+## Specific Contexts (Scripts / Low-Code / Embedded)
+- **Runtime Limits:** In environments without a build step (Scripts, FaaS, Low-Code):
+    - **Validation:** Use `Array.isArray(x)` and `typeof x === 'string'` if Zod is unavailable.
+    - **Imports:** Respect platform specifics (e.g., `require` vs ESM, global variables).
+    - **JSDoc:** Use `/** @type {string} */` for type safety instead of `.ts` files.
 

@@ -27,10 +27,10 @@
 - **Generators:** Prefer generator expressions `(x for x in y)` over list comprehensions for large sequences.
 - **Itertools:** Use `itertools` for efficient looping.
 
-## Specific Contexts (n8n / Lambda / Embedded)
-- **Dependency Constraints:** If Pydantic is unavailable:
-    - Use `dataclasses` (StdLib) for structured data.
+## Specific Contexts (Scripts / FaaS / Embedded)
+- **Dependency Constraints:** In restricted environments (no `pip install`):
+    - Use `dataclasses` (StdLib) instead of Pydantic.
     - Use `json` module for manual schema validation with defensive `.get()`.
-- **Event Loop:** in `n8n` or FaaS, the loop might already be running.
-    - Avoid `asyncio.run()`. Use `await` directly if top-level supported, or check loop state.
+- **Event Loop:** If the environment manages the loop (e.g., FaaS wrappers):
+    - Avoid `asyncio.run()`. Use `await` directly if supported, or check loop state.
 

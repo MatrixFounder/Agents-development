@@ -18,6 +18,7 @@
 - **Channels vs Mutex:** "Share memory by communicating". Use channels for data flow, Mutex for state synchronization.
 - **Context:** ALWAYS propagate `context.Context` as the first argument in long-running or I/O functions.
 - **ErrGroup:** Use `golang.org/x/sync/errgroup` for managing multiple goroutines (replaces `WaitGroup` + error channel).
+- **Lifecycle:** NEVER let `main()` exit before goroutines finish. Use `Wait()` or `ErrGroup.Wait()`.
 
 ## Testing
 - **Table-Driven Tests:** Standard pattern for all logic tests.
@@ -31,8 +32,7 @@
 - **Linting:** Use `golangci-lint` with standard presets.
 - **Vulnerabilities:** run `govulncheck ./...`.
 
-## Specific Contexts (Scripts / Single File)
-- **Start Small:** `package main` in a single file is fine for scripts.
-- **No `go.mod`?**: Not recommended, but possible with `GO111MODULE=off` or simple `go run script.go`.
-- **Dependencies:** For scripts with deps, considering using **GoReleaser** or just a Makefile to ensure reproducibility.
-- **Shebang:** Go does not support shebang `#!/usr/bin/env go run` natively across all OSs easily, prefer explicit `go run`.
+## Specific Contexts (Scripts / Automation)
+- **Single File:** `go run script.go` is standard. `go.mod` is optional for stdlib-only scripts.
+- **Execution:** Prefer compiling to binary (`go build -o app`) for speed in tight loops, or `go run` for developer convenience.
+- **Shebang:** Go 1.22+ supports `go run .` easily. Avoid `#!/usr/bin/env go` hacks; use a Makefile or shell wrapper.
