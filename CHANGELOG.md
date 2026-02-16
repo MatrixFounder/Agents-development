@@ -16,6 +16,28 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.9.13 — Security Audit Enhancement (Gold Standard)** (Feature)
+
+#### **Improved**
+* **`security-audit` (v2.1)**:
+    * **Unified Scanner**: Merged `run_audit.py` to combine internal static analysis (Secrets, Dangerous Patterns) with external tool runners (`slither`, `bandit`, `npm audit`).
+    * **Gold Standard Compliance**: Added "Red Flags" (Anti-Rationalization), detailed reporting standards, and mandatory "Think Like a Hacker" checklists.
+    * **OWASP 2025**: Updated checks to match the latest OWASP Top 10:2025 standards (Supply Chain Security, Exceptional Conditions).
+    * **Checklist Restoration**: Explicitly linked and mandated usage of `solana_security.md`, `solidity_security.md`, and `fuzzing_invariants.md`.
+
+#### **Fixed** *(VDD Adversarial Hardening)*
+* **`run_audit.py`**:
+    * Silent `except: pass` → stderr logging + `skipped_files` counter in report.
+    * Self-flagging false positives → self-exclusion via `_is_self_path()`.
+    * Substring-based `SKIP_DIRS` → basename matching (`dirs[:]` pruning).
+    * `run_command` now captures and reports external tool exit codes.
+    * Added 120s timeout on all `subprocess.run` calls.
+    * Extended `SKIP_DIRS` with `.cache`, `.idea`, `.vscode`, `vendor`, `tmp`, `coverage`.
+* **`SKILL.md`**: Fixed OWASP category mappings (Secrets→A02, Deps→A06, Patterns→A03, Config→A05). Added Rationalization Table (Section 6).
+* **`owasp_top_10.md`**: Resolved duplicate A10 (merged SSRF into unified A10). Merged A08 into A03.
+
+---
+
 ### **v3.9.12 — Framework Consistency, Parallel Agents & Safety Fixes** (Feature / Bugfix)
 
 #### **Added**
