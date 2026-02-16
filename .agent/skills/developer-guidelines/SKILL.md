@@ -57,6 +57,7 @@ version: 1.1
   - Vanilla JS/TS (frontend): `references/security/javascript-general.md`
   - Go (net/http, Gin, Chi, Echo, Fiber): `references/security/golang.md`
   - Solidity: `references/security/solidity.md`
+  - Rust: `references/security/rust.md`
 - **Loading Rule:** Load **one** framework-specific ref per file under review. Prefer the most specific match (e.g., Next.js over React, framework-specific over javascript-general).
 - **Application:** Apply the LLM anti-patterns, grep patterns, and edge cases from the loaded reference to avoid common security mistakes during code generation and review.
 - **Source:** Condensed from [OpenAI security-best-practices](https://github.com/openai/skills/tree/main/skills/.curated/security-best-practices) skill.
