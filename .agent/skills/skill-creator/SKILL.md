@@ -68,6 +68,8 @@ If your skill requires logic (loops, conditions, parsing, scanning), you **MUST*
 
 The YAML frontmatter is CRITICAL for the Orchestrator's loading logic.
 
+- **Frontmatter** (YAML): Contains `name` and `description` fields (required), plus optional fields like `tier`, `version`, `license`, `metadata`, and `compatibility` etc.
+
 ```yaml
 ---
 name: skill-my-new-capability
