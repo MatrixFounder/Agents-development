@@ -16,7 +16,7 @@ description: Develop a task using Light Mode (Dev + Review loop)
 
 ### 1. Development (Developer)
 // turbo
-1. Read `System/Agents/08_agent_developer.md`.
+1. Read `System/Agents/08_developer_prompt.md`.
 2. Load skill: `.agent/skills/light-mode/SKILL.md` (if not already loaded).
 3. Implement the fix directly. **Do not overengineer.**
 4. Run tests: `pytest` / `npm test` / relevant test command.
@@ -25,7 +25,7 @@ description: Develop a task using Light Mode (Dev + Review loop)
 
 ### 2. Code Review (Code Reviewer)
 // turbo
-1. Read `System/Agents/09_agent_code_reviewer.md`.
+1. Read `System/Agents/09_code_reviewer_prompt.md`.
 2. Load skill: `.agent/skills/code-review-checklist/SKILL.md`.
 3. **Security Sanity Check**: Verify no credentials leaked, no new dependencies added without approval.
 4. If issues found: Return to Step 1 (Developer).

@@ -1,6 +1,8 @@
 ---
 name: skill-self-improvement-verificator
 description: Meta-skill for verifying Framework Upgrades (Gemini Self-Improvement).
+tier: 3
+version: 1.0
 ---
 
 # Skill: Self-Improvement Verificator

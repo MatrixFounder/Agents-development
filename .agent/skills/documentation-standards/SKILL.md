@@ -12,7 +12,7 @@ version: 1.3
 **STOP if you are thinking:**
 - "I'll add comments later" -> **WRONG**. Undocumented code is technical debt from the moment it is written.
 - "The code is self-documenting" -> **WRONG**. Code explains *how*; comments explain *why*.
-- "Artifacts are optional" -> **WRONG**. Artifacts like `.AGENTS.md` are the agent's long-term memory.
+- "Artifacts are optional, I can skip them entirely" -> **WRONG**. Artifacts are part of delivery quality; `.AGENTS.md` must follow project memory policy.
 
 ## 2. Docstrings & JSDoc
 All classes and functions MUST have documentation.
@@ -39,7 +39,7 @@ Use JSDoc standards.
     - ❌ `/Absolute/System/Path`
 
 ## 5. Artifacts (`.AGENTS.md`)
-**MANDATORY**: Every directory must have this file.
+Policy: keep `.AGENTS.md` for source-code directories under memory tracking. Missing file should not fail execution; bootstrap when needed.
 > [!TIP]
 > Use the template at `assets/templates/agents_md_template.md`.
 

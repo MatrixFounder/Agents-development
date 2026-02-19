@@ -18,9 +18,30 @@ version: 1.1
 
 ## 2. Capabilities
 - **Audit**: Detect gaps (missing Red Flags, inline blocks > 12 lines, poor CSO, weak language) using `analyze_gaps.py`.
+- **Execution Policy Audit**: Detect missing `Execution Mode`, `Script Contract`, `Safety Boundaries`, and `Validation Evidence` sections.
 - **Security Remediation**: Fix vulnerabilities flagged by `skill-validator` (e.g., `curl | bash`, secrets, weak permissions).
 - **Plan**: Propose specific content improvements using `references/refactoring_patterns.md`.
 - **Execute**: Apply refactoring patterns to upgrade the skill.
+
+## 2.5. Execution Mode
+- **Mode**: `hybrid`
+- **Rationale**: gap triage and refactoring decisions are prompt-driven, while gap detection is script-driven.
+
+## 2.6. Script Contract
+- **Primary Command**: `python3 scripts/analyze_gaps.py <target-skill-path> [--json]`
+- **Inputs**: target skill path + optional output mode.
+- **Outputs**: structured gap list and pass/fail status.
+- **Failure Semantics**: non-zero exit when gaps exist (for deterministic gate behavior).
+
+## 2.7. Safety Boundaries
+- **Scope**: apply edits only to explicitly selected target skill.
+- **Default Exclusions**: do not refactor unrelated skills or global docs by default.
+- **Destructive Actions**: full-file overwrite is prohibited unless explicitly requested and reviewed.
+
+## 2.8. Validation Evidence
+- **Primary Evidence**: before/after `analyze_gaps.py` output.
+- **Secondary Evidence**: targeted diffs proving that each reported gap was addressed.
+- **Quality Gate**: no unresolved critical structure gaps after refactor.
 
 ## 3. Instructions
 
@@ -31,11 +52,19 @@ version: 1.1
     *   **Script-First Gap**: Identify if complex logic steps (> 5 lines of text) **MUST** be converted to a `script/`.
 3.  **Review Gaps**: Read the analyzer output and your manual findings.
 
+### Phase 1.5: Execution-Policy Audit
+1.  Verify `Execution Mode` section exists and is explicit (`prompt-first`, `script-first`, or `hybrid`).
+2.  If skill uses `scripts/`, verify `Script Contract` section defines command, inputs, outputs, and exit behavior.
+3.  Verify `Safety Boundaries` section defines scope limits and non-default destructive behavior.
+4.  Verify `Validation Evidence` section defines objective verification outputs.
+5.  Mark missing pieces as migration gaps (warning-first for legacy skills).
+
 ### Phase 2: Plan
 1.  **Read Target Skill**: Read the content of the target skill.
 2.  **Draft Improvements**:
     *   *Token Efficiency*: Identify blocks > 12 lines and plan extraction to `examples/`, `assets/`, or `references/`.
     *   *Script-First*: Identify logic blocks > 5 lines and plan extraction to `scripts/`.
+    *   *Execution Policy*: Add missing policy sections and scope constraints.
     *   *Anti-Laziness*: Replace weak words with strong imperatives.
     *   *Red Flags*: Identify 2-3 likely agent excuses for *this specific task*.
     *   *CSO*: Rewrite description to "Use when [TRIGGER]...".

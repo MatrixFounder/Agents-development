@@ -1,0 +1,94 @@
+name: Framework Gates
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  tooling-tests:
+    name: Tooling tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Run tooling regression tests
+        run: |
+          PYTHONPATH=. pytest -p no:cacheprovider tests/test_tool_runner.py tests/test_tool_runner_security_contract.py tests/test_spec_validator.py -q
+
+  skill-validate:
+    name: Skill validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Validate skills catalog
+        run: python System/scripts/validate_skills.py --root . --quiet
+
+  reference-integrity:
+    name: Reference integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check prompt references
+        run: python System/scripts/check_prompt_references.py --root .
+
+  security-lint:
+    name: Security lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run static security lint
+        run: python System/scripts/security_lint.py --root .
+
+  workflow-smoke:
+    name: Workflow smoke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run workflow smoke checks
+        run: python System/scripts/smoke_workflows.py --root .

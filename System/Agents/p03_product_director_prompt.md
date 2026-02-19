@@ -52,7 +52,7 @@ python3 .agent/skills/skill-product-backlog-prioritization/scripts/calculate_wsj
 **Action:** Sign off on the **Prioritized** Backlog.
 **Command:**
 ```bash
-python3 .agent/skills/skill-product-handoff/scripts/sign_off.py docs/product/APPROVED_BACKLOG.md
+python3 .agent/skills/skill-product-handoff/scripts/sign_off.py --file docs/product/APPROVED_BACKLOG.md
 ```
 *Note: This hash is the Key for the Technical Handoff script.*
 

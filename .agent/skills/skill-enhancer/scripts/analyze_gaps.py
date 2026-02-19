@@ -48,6 +48,43 @@ def extract_frontmatter(file_path):
     except Exception as e:
         return None, "", f"File Error: {str(e)}"
 
+
+def _normalize_section_title(value: str) -> str:
+    lowered = value.lower()
+    lowered = re.sub(r"[^a-z0-9\s]", " ", lowered)
+    return re.sub(r"\s+", " ", lowered).strip()
+
+
+def _collect_markdown_headings(body: str) -> list[str]:
+    headings = []
+    for line in body.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("#"):
+            continue
+        heading = stripped.lstrip("#").strip()
+        if heading:
+            headings.append(heading)
+    return headings
+
+
+def _has_section(headings: list[str], target: str) -> bool:
+    needle = _normalize_section_title(target)
+    for heading in headings:
+        normalized = _normalize_section_title(heading)
+        if needle == normalized or needle in normalized:
+            return True
+    return False
+
+
+def _has_real_files(directory: str) -> bool:
+    if not os.path.isdir(directory):
+        return False
+    for item in os.listdir(directory):
+        if item in [".DS_Store", ".keep"] or item.startswith("."):
+            continue
+        return True
+    return False
+
 def analyze_skill(skill_path, config, json_output=False):
     """
     Analyzes a skill directory for gaps against the Standards.
@@ -105,6 +142,56 @@ def analyze_skill(skill_path, config, json_output=False):
     for sec in req_sections:
         if sec.lower() not in body_lower:
             gaps.append(f"[Resilience] Missing '{sec}' section")
+
+    # 3.5 Execution Policy Checks (warning-first migration path)
+    headings = _collect_markdown_headings(body)
+    execution_sections = validation_config.get(
+        "execution_policy_sections",
+        [
+            "Execution Mode",
+            "Script Contract",
+            "Safety Boundaries",
+            "Validation Evidence",
+        ],
+    )
+    missing_exec_sections = [
+        section for section in execution_sections if not _has_section(headings, section)
+    ]
+    missing_exec_normalized = {
+        _normalize_section_title(section) for section in missing_exec_sections
+    }
+    for section in missing_exec_sections:
+        gaps.append(
+            f"[Execution Policy] Missing '{section}' section (warning-first migration target)."
+        )
+
+    scripts_dir = os.path.join(skill_path, "scripts")
+    if _has_real_files(scripts_dir):
+        if _normalize_section_title("Script Contract") in missing_exec_normalized:
+            gaps.append(
+                "[Execution Policy] 'scripts/' has executable content but 'Script Contract' is missing."
+            )
+
+    mutation_markers = (
+        "delete",
+        "remove",
+        "overwrite",
+        "rename",
+        "migrate",
+        "truncate",
+        "destructive",
+    )
+    if any(marker in body_lower for marker in mutation_markers):
+        if _normalize_section_title("Safety Boundaries") in missing_exec_normalized:
+            gaps.append(
+                "[Execution Policy] Mutation/destructive language found but 'Safety Boundaries' is missing."
+            )
+
+    if ("python3 scripts/" in body_lower or "scripts/" in body_lower):
+        if _normalize_section_title("Validation Evidence") in missing_exec_normalized:
+            gaps.append(
+                "[Execution Policy] Script references found but 'Validation Evidence' is missing."
+            )
 
     # 4. Check Deep Logic (Passive Voice)
     passive_keywords = quality_config.get('banned_words', ["should"])

@@ -20,7 +20,7 @@ version: 1.1
 - [ ] **Code Smells:** No magic numbers, understandable names?
 
 ## 3. Documentation "First"
-- [ ] **Directory Docs:** `.AGENTS.md` updated in *every* touched directory?
+- [ ] **Directory Docs:** `.AGENTS.md` updated for touched source directories under memory tracking policy (or bootstrap step recorded)?
 - [ ] **Docstrings:** Present for new classes/methods? (Google/JSDoc)
 - [ ] **Project Docs:** README updated if architecture changed?
 

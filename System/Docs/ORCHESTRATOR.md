@@ -33,12 +33,15 @@ The Orchestrator v3.2 introduces **Structured Tool Calling**, allowing agents to
 
 ### Path Traversal Protection
 All file operations (`read_file`, `write_file`, `list_directory`) are restricted to the **Project Root**.
-- **Mechanism:** `is_safe_path()` checks if the resolved path starts with `repo_root`.
+- **Mechanism:** Paths are resolved and validated via `Path.resolve()` + `relative_to(repo_root)` containment checks.
 - **Failure:** Returns `{"error": "Path traversal detected", "success": False}`.
 
 ### Command Whitelisting
 The `run_tests` tool prevents arbitrary shell execution.
-- **Allowed commands must start with:** `pytest`, `python -m pytest`, `npm test`.
+- **Execution Mode:** `subprocess.run(..., shell=False)`
+- **Disallowed:** shell metacharacters (`;`, `|`, `&`, backticks, redirections, subshell syntax)
+- **Allowed commands:** `pytest`, `python -m pytest`, `npm test`, `npx jest`, `cargo test`
+- **Timeout:** configurable `timeout_seconds` (default `120`, max `1800`).
 
 ## 📘 User Guide
 
@@ -47,14 +50,15 @@ Tools are enabled automatically if the Orchestrator prompt (`01_orchestrator.md`
 
 ### Configuration
 1. **Adding Allowed Commands:**
-   Edit `System/scripts/tool_runner.py` -> `ALLOWED_TEST_COMMANDS` list.
+   Edit `System/scripts/tool_runner.py` -> `_is_allowed_test_command()` and the guard constants:
    ```python
-   ALLOWED_TEST_COMMANDS = [
-       "pytest",
-       "npm test",
-       "cargo test" # Added
-   ]
+   DISALLOWED_SHELL_CHARS = (";", "|", "&", "`", "<", ">", "$(")
+   DEFAULT_TEST_TIMEOUT_SECONDS = 120
+   MAX_TEST_TIMEOUT_SECONDS = 1800
    ```
+
+2. **Timeout Policy:**
+   `run_tests` accepts `timeout_seconds` in range `1..1800`.
 
 ## 🛠 Developer Guide: Adding a New Tool
 
@@ -436,7 +440,7 @@ cd .agent/tools && python -m pytest --cov=. --cov-report=term-missing
 
 ### Error: "Command not allowed"
 - **Cause:** `run_tests` tried to run a command not in the whitelist (e.g., `rm -rf`, `ls -la`).
-- **Fix:** The `run_tests` tool is ONLY for running tests. Use `list_directory` to see files. To add new commands, update `valid_starts` in `System/scripts/tool_runner.py`.
+- **Fix:** The `run_tests` tool is ONLY for running tests. Use `list_directory` to see files. To add new commands, update `_is_allowed_test_command()` and `DISALLOWED_SHELL_CHARS` in `System/scripts/tool_runner.py`.
 
 ### Tool Loop (Agent keeps calling same tool)
 - **Cause:** The tool returns an error that the agent doesn't understand, so it tries again.

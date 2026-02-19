@@ -25,6 +25,7 @@ taxonomy:
       description: "Strict, rigorous protocols for critical stability."
 
 validation:
+  enforce_cso_prefix: false
   allowed_cso_prefixes: 
     - "Use when"
     - "Guidelines for"

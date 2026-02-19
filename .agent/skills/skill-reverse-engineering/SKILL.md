@@ -69,5 +69,5 @@ Identify:
 **Strategy:** Append new findings, do not delete existing rationale.
 
 ## Integration
-- **With `skill-update-memory`**: Generate missing `.AGENTS.md` files after analysis.
+- **With `skill-update-memory`**: After analysis, run bootstrap mode to create missing `.AGENTS.md` files where needed.
 - **Workflow `04-update-docs`**: Run this skill if docs drift is detected.

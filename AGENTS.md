@@ -53,19 +53,19 @@ The Orchestrator natively supports structured tool calling (Function Calling).
    - (Self-Correction): Check against `System/Agents/05_architecture_reviewer_prompt.md` using `skill-architecture-review-checklist`.
 
 3. **Planning Phase**:
-   - Read `System/Agents/06_agent_planner.md`.
+   - Read `System/Agents/06_planner_prompt.md`.
    - **Load Skills**: `skill-planning-decision-tree`, `skill-tdd-stub-first`.
    - Create `docs/PLAN.md` and `docs/tasks/*.md`.
    - **MUST FOLLOW STUB-FIRST STRATEGY**.
-   - (Verification): Validate plan with `System/Agents/07_agent_plan_reviewer.md` using `skill-plan-review-checklist`.
+   - (Verification): Validate plan with `System/Agents/07_plan_reviewer_prompt.md` using `skill-plan-review-checklist`.
 
 4. **Development Phase** (Loop for each task):
-   - Read `System/Agents/08_agent_developer.md`.
+   - Read `System/Agents/08_developer_prompt.md`.
    - **Load Skills**: `skill-developer-guidelines`, `skill-documentation-standards`.
    - Execute the task in the codebase.
    - **Apply STUBS first**, verify rendering/scrolling, then implement logic.
    - **SKILL CREATION GATE**: Before creating ANY file in `.agent/skills/`, you **MUST** run `python3 .agent/skills/skill-creator/scripts/init_skill.py <name> --tier <N>`. Manual creation is **PROHIBITED**. For modifying existing skills, use `skill-enhancer`.
-   - Verify with `System/Agents/09_agent_code_reviewer.md` using `skill-code-review-checklist`.
+   - Verify with `System/Agents/09_code_reviewer_prompt.md` using `skill-code-review-checklist`.
 
 ## BEHAVIOR RULES
 - **Context Loading**: When moving to a new phase, explicitly read the prompt file AND the required skills.

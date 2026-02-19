@@ -16,6 +16,58 @@
 
 ## 🇷🇺 Русская версия
 
+### **v3.9.14 — Волна Enterprise Hardening (BI-001..009)** (Security / Reliability / Governance)
+
+#### **Добавлено**
+* **Governance-документы**:
+    * Добавлен `System/Docs/SOURCE_OF_TRUTH.md` с авторитетной картой prompts, skills, workflows, tools и command conventions.
+    * Добавлен `System/Docs/RELEASE_CHECKLIST.md` с релизными gate-проверками и обязательными командами валидации.
+* **Скрипты валидации и guardrails**:
+    * Добавлены `System/scripts/check_prompt_references.py`, `System/scripts/security_lint.py`, `System/scripts/smoke_workflows.py`, `System/scripts/validate_skills.py`, `System/scripts/doctor.py`.
+* **CI gatekeeping**:
+    * Добавлен `.github/workflows/framework-gates.yml` для принудительных проверок tooling-тестов, валидации skills, smoke-проверок workflows, целостности ссылок и security lint.
+* **Регрессионное покрытие**:
+    * Добавлены `tests/test_tool_runner_security_contract.py`, `tests/test_spec_validator.py`, `tests/test_product_handoff_scripts.py`.
+
+#### **Улучшено**
+* **Безопасность выполнения инструментов (BI-001)**:
+    * Усилен `System/scripts/tool_runner.py` (политика `shell=False`, блок shell-операторов/символов, allowlist-команд, таймауты, нормализация и проверка `cwd`).
+    * Расширены и синхронизированы схемы в `.agent/tools/schemas.py`; обновлена документация рантайма в `System/Docs/ORCHESTRATOR.md`.
+* **Целостность workflow и путей (BI-002, BI-009)**:
+    * Починены устаревшие ссылки на prompts/workflows в workflow-файлах и README.
+    * Нормализованы command conventions: канонический формат `run <workflow-name>` + явные alias-заметки для slash-формы.
+* **Стандартизация Python-окружения (BI-004)**:
+    * Добавлен `requirements-dev.txt` с pinned-зависимостями и инструкции по setup в `README.md` и `README.ru.md`.
+* **Стандартизация skills, технический контур (BI-007)**:
+    * Добавлены недостающие `tier`/`version` в metadata.
+    * Ослаблено строгое применение CSO-prefix для уже работающих legacy-skills (без принудительного переименования).
+* **Усиление execution-policy в мета-скилах**:
+    * Обновлены `.agent/skills/skill-creator/SKILL.md` и `.agent/skills/skill-creator/assets/SKILL_TEMPLATE.md`: добавлены обязательные секции `Execution Mode`, `Script Contract`, `Safety Boundaries`, `Validation Evidence`.
+    * Расширен `.agent/skills/skill-creator/scripts/validate_skill.py`: warning-first проверки execution-policy + опциональный строгий режим (`--strict-exec-policy`).
+    * Расширен `.agent/skills/skill-enhancer/scripts/analyze_gaps.py`: детектирование execution-policy gap-ов (отсутствующие секции контракта + сигналы по script/scope safety).
+    * Обновлен `.agent/skills/skill-enhancer/references/refactoring_patterns.md`: паттерны миграции prompt-only -> hybrid, ad-hoc script -> governed script, unsafe mutation -> scoped mutation.
+
+#### **Исправлено**
+* **Корректность spec-validator (BI-003)**:
+    * Исправлена логика сопоставления ID требований в `.agent/skills/skill-spec-validator/scripts/validate.py` (literal token matching + регрессионные тесты).
+* **Усиление product handoff scripts (BI-008)**:
+    * Усилены `.agent/skills/skill-product-handoff/scripts/sign_off.py`, `.agent/skills/skill-product-handoff/scripts/verify_gate.py`, `.agent/skills/skill-product-handoff/scripts/compile_brd.py` (argparse CLI, явные file-аргументы, safe path validation).
+* **Усиление Artifact Memory, техническая часть (BI-006)**:
+    * Расширен `.agent/skills/skill-update-memory/scripts/suggest_updates.py` с детерминированным bootstrap-контуром:
+        * Добавлены `--mode bootstrap` + `--create-missing` для контролируемой инициализации memory-файлов.
+        * Добавлен явный scope разработки через `--development-root` (по умолчанию: `src`).
+        * Добавлены жёсткие исключения для `/.agent/skills/*` и `/.cursor/skills/*`, чтобы исключить нежелательное создание memory-файлов в каталогах skills.
+        * Сохранено корректное поведение при отсутствии `.AGENTS.md` (без hard-fail).
+    * Синхронизирован workflow/docs-контракт для миграционного запуска:
+        * Обновлена bootstrap-команда в `.agent/workflows/04-update-docs.md` с `--development-root src`.
+        * Обновлены `System/Docs/SOURCE_OF_TRUTH.md` и docs навыков (опциональность `.AGENTS.md` + scoped bootstrap policy).
+
+#### **Проверено**
+* В target-репозитории проходят `System/scripts/check_prompt_references.py --root .` и `System/scripts/smoke_workflows.py --root .`.
+* Статусы backlog синхронизированы: BI-001..006, BI-008 и BI-009 отмечены как `Done` в `Backlog/framework_improvements.md`.
+
+---
+
 ### **v3.9.13 — Усиление Аудита Безопасности & Синхронизация Workflow** (Feature / Maintenance)
 
 #### **Добавлено**

@@ -41,29 +41,29 @@ The Skills System separates **"Who"** (Agent Persona) from **"What"** (Capabilit
 | **`skill-session-state`** | Persist and restore session state (Mode, Task, Summary) to recovery from checks/resets. <br> **[Guide: Session Context Management](SESSION_CONTEXT_GUIDE.md)** | All | All Agents |
 | **`skill-phase-context`** | Skill loading tiers: TIER 0 (always), TIER 1 (phase-triggered), TIER 2 (extended). Defines when to load which skills. | All | Orchestrator |
 | **`skill-orchestrator-patterns`** | Stage Cycle pattern and dispatch table for Orchestrator compression. Defines Init→Review→Revision flow. | All | Orchestrator |
-| **`skill-update-memory`** | Auto-update `.AGENTS.md` files based on code changes from git diff. | `04-update-docs`, Code Review | Developer, Code Reviewer |
+| **`skill-update-memory`** | Sync/Bootstrap `.AGENTS.md` for source-code folders (diff mode by default, bootstrap mode optional). | `04-update-docs`, Code Review | Developer, Code Reviewer |
 | **`skill-reverse-engineering`** | Regenerate architecture documentation from codebase analysis. | `04-update-docs`, Manual | Architect, Analyst |
 | **`planning-decision-tree`** | Decision logic for breaking down tasks and prioritizing work (Stub-First & E2E). | `02-plan-implementation`, `vdd-02-plan` | Planner, Architect |
 | **`requirements-analysis`** | Process for gathering and refining requirements into a structured Technical Specification (TASK). | `01-start-feature`, `vdd-01-start-feature` | Analyst, TASK Reviewer |
 | **`skill-task-model`** | Standard models, examples (Good/Bad), and structure rules for TASK documents. | `01-start-feature` | Analyst, TASK Reviewer |
-| **`brainstorming`** | **Pre-Planning Strategy.** Use for research, idea generation, and concept exploration. **NEVER** for code implementation. | `/iterative-design` | Analyst, Product Analyst |
+| **`brainstorming`** | **Pre-Planning Strategy.** Use for research, idea generation, and concept exploration. **NEVER** for code implementation. | `iterative-design` | Analyst, Product Analyst |
 | **`skill-creator`** | Guidelines for creating new Agent Skills. Based on [Anthropic](https://github.com/anthropics/skills/blob/main/skills/skill-creator/SKILL.md) & [Antigravity](https://antigravity.google/docs/skills) standards. | Manual, `04-update-docs` | Developer, Architect |
 | **`skill-enhancer`** | Meta-skill for auditing and upgrading other skills to Gold Standard (TDD, CSO, Anti-Rationalization). Uses `analyze_gaps.py`. | Manual | Developer, Architect |
-| **`light-mode`** | Fast-track guidelines for trivial tasks (typos, UI tweaks). Skips Architect/Planner. (Tier 2) | `/light`, `light-01-start-feature` | Analyst, Developer, Code Reviewer |
+| **`light-mode`** | Fast-track guidelines for trivial tasks (typos, UI tweaks). Skips Architect/Planner. (Tier 2) | `light`, `light-01-start-feature` | Analyst, Developer, Code Reviewer |
 | **`skill-parallel-orchestration`** | Use when decomposing tasks into parallel sub-tasks or spawning sub-agents. Mock Runner for POC. (Tier 2) | Manual, Orchestrator | Orchestrator |
 
 ### Engineering Standards
 | Skill | Description | Used By in Workflows | Used By Agents |
 |-------|-------------|----------------------|----------------|
-| **`architecture-design`** | Guidelines for designing scalable and modular system architecture and data models. | `01-start-feature`, `/base-stub-first` | Architect, Arch Reviewer |
+| **`architecture-design`** | Guidelines for designing scalable and modular system architecture and data models. | `01-start-feature`, `base-stub-first` | Architect, Arch Reviewer |
 | **`skill-planning-format`** | Standard templates for `PLAN.md` and Task Descriptions. | `02-plan-implementation` | Planner |
 | **`architecture-format-core`** | Core template for Architecture documents. For quick updates. (~150 lines, TIER 1) | `01-start-feature`, Most updates | Architect |
 | **`architecture-format-extended`** | Full templates with examples, diagrams, JSON samples. For new systems. (~400 lines, TIER 2) | New systems, Major refactors | Architect |
-| **`tdd-stub-first`** | Test-Driven Development strategy: "Structure & Stubs" first, then "Implementation". | `03-develop-task`, `vdd-enhanced` | Planner, Developer |
-| **`tdd-strict`** | **[High Assurance]** Strict TDD with mechanical verification (Fail Reason, Minimalism). Tier 3. | `/full-robust` | Developer (Strict Mode) |
-| **`developer-guidelines`** | Behavioral rules for Developers: adherence to tasks, "Documentation First", Anti-Loop Protocol. | `03-develop-task`, `/base-stub-first` | Developer |
+| **`tdd-stub-first`** | Test-Driven Development strategy: "Structure & Stubs" first, then "Implementation". | `03-develop-single-task`, `vdd-enhanced` | Planner, Developer |
+| **`tdd-strict`** | **[High Assurance]** Strict TDD with mechanical verification (Fail Reason, Minimalism). Tier 3. | `full-robust` | Developer (Strict Mode) |
+| **`developer-guidelines`** | Behavioral rules for Developers: adherence to tasks, "Documentation First", Anti-Loop Protocol. | `03-develop-single-task`, `base-stub-first` | Developer |
 | **`documentation-standards`** | Standards for docstrings (Google/JSDoc) and "The Why" comments. | All Development Workflows | Developer, Code Reviewer |
-| **`testing-best-practices`** | Best practices: E2E/Unit hierarchy, no LLM mocking, realism. | `03-develop-task`, `vdd-03-develop` | Developer, Code Reviewer |
+| **`testing-best-practices`** | Best practices: E2E/Unit hierarchy, no LLM mocking, realism. | `03-develop-single-task`, `vdd-03-develop` | Developer, Code Reviewer |
 
 ### Product Management
 | Skill | Description | Used By in Workflows | Used By Agents |
@@ -81,30 +81,35 @@ The Skills System separates **"Who"** (Agent Persona) from **"What"** (Capabilit
 | - `task-review-checklist` | For checking Technical Specifications. | `01-start-feature` | TASK Reviewer |
 | - `architecture-review-checklist` | For checking System Architecture. | `01-start-feature` | Arch Reviewer |
 | - `plan-review-checklist` | For checking Development Plans. | `02-plan-implementation` | Plan Reviewer |
-| - `code-review-checklist` | For checking Code implementation. | `03-develop-task` | Code Reviewer |
+| - `code-review-checklist` | For checking Code implementation. | `03-develop-single-task` | Code Reviewer |
 | **`skill-spec-validator`** | **Automated Gatekeeper.** Validates RTM existence and Atomic Plan coverage. | `vdd-enhanced` | System / Orchestrator |
-| **`skill-self-improvement-verificator`** | **Meta-Auditor.** Verifies safety of Framework Upgrades. | `/framework-upgrade` | System / Orchestrator |
-| **`security-audit`** | Vulnerability assessment (OWASP, secrets) and reporting. | `/security-audit`, `/full-robust` | Security Auditor |
+| **`skill-self-improvement-verificator`** | **Meta-Auditor.** Verifies safety of Framework Upgrades. | `framework-upgrade` | System / Orchestrator |
+| **`security-audit`** | Vulnerability assessment (OWASP, secrets) and reporting. | `security-audit`, `full-robust` | Security Auditor |
 
 ### Executable Skills (Tools)
 | Skill | Description | Used By in Workflows | Used By Agents |
 |-------|-------------|----------------------|----------------|
-| **`tools/*`** | Core system tools defined in `.agent/tools/schemas.py`. These are natively executed by the Orchestrator. | `01-start-feature`, `03-develop-task` | All Agents |
-| - `run_tests` | Runs pytest validation. | `03-develop-task` | Developer |
-| - `git_ops` | Git operations (status, add, commit). | `03-develop-task` | Developer |
+| **`tools/*`** | Core system tools defined in `.agent/tools/schemas.py`. These are natively executed by the Orchestrator. | `01-start-feature`, `03-develop-single-task` | All Agents |
+| - `run_tests` | Runs test commands under the allowed command policy. | `03-develop-single-task` | Developer |
+| - `read_file` | Reads file content from project root (with path safety checks). | All | All Agents |
+| - `write_file` | Creates or overwrites a file within project root. | All | All Agents |
+| - `list_directory` | Lists files/folders (optionally recursive) under project root. | All | All Agents |
+| - `git_status` | Shows repository status. | `03-develop-single-task` | Developer |
+| - `git_add` | Stages selected files. | `03-develop-single-task` | Developer |
+| - `git_commit` | Creates commits with explicit message. | `03-develop-single-task` | Developer |
 | - `generate_task_archive_filename` | Generates unique sequential ID for task archival. Handles conflicts. | `01-start-feature`, `04-update-docs` | Analyst, Orchestrator |
 
 ### Verification Driven Development (VDD)
 | Skill | Description | Used By in Workflows | Used By Agents |
 |-------|-------------|----------------------|----------------|
-| **`skill-vdd-adversarial`** | Adversarial verification: challenging assumptions and finding weak spots. <br> **[Read Full Role Description](VDD.md#core-philosophy)** | `vdd-03-develop`, `/vdd-adversarial`, `/vdd-multi` | **Virtual Persona** <br> (Adversarial Agent) |
-| **`vdd-sarcastic`** | Adversarial verification with a sarcastic/provocative tone. (Variant of `vdd-adversarial`) | `/vdd-sarcastic` | **Virtual Persona** <br> (Adversarial Agent) |
-| **`skill-adversarial-security`** | OWASP security critic in adversarial/sarcastic style. Checks injections, auth, secrets. | `/vdd-multi` | **Virtual Persona** <br> (Security Critic) |
-| **`skill-adversarial-performance`** | Performance critic in adversarial/sarcastic style. Checks N+1, memory, async issues. | `/vdd-multi` | **Virtual Persona** <br> (Performance Critic) |
+| **`vdd-adversarial`** | Adversarial verification: challenging assumptions and finding weak spots. <br> **[Read Full Role Description](VDD.md#core-philosophy)** | `vdd-03-develop`, `vdd-adversarial`, `vdd-multi` | **Virtual Persona** <br> (Adversarial Agent) |
+| **`vdd-sarcastic`** | Adversarial verification with a sarcastic/provocative tone. (Variant of `vdd-adversarial`) | `vdd-sarcastic` | **Virtual Persona** <br> (Adversarial Agent) |
+| **`skill-adversarial-security`** | OWASP security critic in adversarial/sarcastic style. Checks injections, auth, secrets. | `vdd-multi` | **Virtual Persona** <br> (Security Critic) |
+| **`skill-adversarial-performance`** | Performance critic in adversarial/sarcastic style. Checks N+1, memory, async issues. | `vdd-multi` | **Virtual Persona** <br> (Performance Critic) |
 
 ## 🚀 Dynamic Loading
 
-The Orchestrator dynamically dynamically constructs the Agent's prompt by combining three elements:
+The Orchestrator dynamically constructs the Agent's prompt by combining three elements:
 
 1.  **Base Role** (`System/Agents/<agent_name>.md`): The core persona (e.g., "You are a Developer").
 2.  **Active Skills** (`ACTIVE SKILLS` list in Role): The specific capabilities required for the task.
@@ -173,7 +178,7 @@ When creating or modifying skills, follow these guidelines to ensure effectivene
 
 ### 0. Creation Standard (V2)
 **ALWAYS** start your skill implementation using the **Skill Creator standard**:
-- Path: [`.agent/skills/skill-creator`](../.agent/skills/skill-creator)
+- Path: [`.agent/skills/skill-creator`](../../.agent/skills/skill-creator)
 - Reasoning: Ensures compliance with structure, testing, and validation scripts from Day 1.
 
 ### 1. Granularity & Size
@@ -198,4 +203,3 @@ When creating or modifying skills, follow these guidelines to ensure effectivene
 - ❌ **Inline Bloat**: Large ASCII art, huge tables, or inline templates.
 - ❌ **Duplication**: Re-listing OWASP rules instead of linking to `security-audit`.
 - ❌ **Hardcoded Paths**: Use relative structure or standard vars.
-

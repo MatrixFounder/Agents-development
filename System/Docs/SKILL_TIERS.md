@@ -9,13 +9,13 @@ All skills in `.agent/skills/` MUST define a `tier` property in their YAML front
 
 ## TIER 0: SYSTEM FOUNDATION (Mandatory)
 
-**Loading Rule:** Loaded at **SESSION STARTUP** (Bootstrap) via `GEMINI.md`.
+**Loading Rule:** Loaded at **SESSION STARTUP** (Bootstrap) via system prompts (`AGENTS.md`/`GEMINI.md`).
 **Condition:** NEVER Lazy-Load. These enable the agent to function, execute commands, and manage files.
 
 | Skill | Tier | Description |
 |-------|------|-------------|
 | `core-principles` | 0 | Anti-hallucination rules, Stub-First methodology |
-| `safe-commands` | 0 | **Enables automation** — auto-run for `mv`, `ls`, `git`, tests |
+| `skill-safe-commands` | 0 | **Enables automation** — auto-run for `mv`, `ls`, `git`, tests |
 | `artifact-management` | 0 | Archiving protocol, file management |
 | `skill-session-state` | 0 | Persist/Restore session context (Mode, Task) |
 
@@ -44,7 +44,7 @@ All skills in `.agent/skills/` MUST define a `tier` property in their YAML front
 ## TIER 2: EXTENDED (On-Demand)
 
 **Loading Rule:** Loaded **ONLY** when explicitly requested by user, workflow, or specific trigger condition.
-**Condition:** Default tier for all other skills.
+**Condition:** Default tier for most specialized skills unless explicitly marked Tier 3.
 
 | Skill | Tier | Common Triggers |
 |-------|------|-----------------|
@@ -63,6 +63,15 @@ All skills in `.agent/skills/` MUST define a `tier` property in their YAML front
 | `skill-product-backlog-prioritization` | 2 | Backlog prioritization (WSJF) |
 | *(All others)* | 2 | Explicit request |
 
+## TIER 3: HIGH ASSURANCE
+
+**Loading Rule:** Loaded only for strict or critical workflows where stronger verification is required.
+**Condition:** Explicit workflow choice or direct user request.
+
+| Skill | Tier | Common Triggers |
+|-------|------|-----------------|
+| `tdd-strict` | 3 | `full-robust`, critical production changes |
+
 ## Metadata Format
 
 Every `SKILL.md` must start with:
@@ -71,6 +80,6 @@ Every `SKILL.md` must start with:
 ---
 name: [skill-name]
 description: [Short description]
-tier: [0|1|2]
+tier: [0|1|2|3]
 ---
 ```

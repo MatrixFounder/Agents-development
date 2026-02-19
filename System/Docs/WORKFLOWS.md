@@ -2,9 +2,16 @@
 
 This document is the **Single Source of Truth** for all automation workflows in the Antigravity system. Workflows are defined in `.agent/workflows/` and can be executed by the Orchestrator to automate development processes.
 
-## � Table of Contents
+## Command Convention
+
+- Canonical form: `run <workflow-name>` (example: `run base-stub-first`).
+- Slash form: `/workflow-name` is an alias for direct interactive calls.
+- Nested orchestration form inside workflow text: `Call /workflow-name`.
+
+## Table of Contents
 
 - [🚀 Workflow Categorization](#-workflow-categorization)
+- [Command Convention](#command-convention)
 - [1. Pipelines (Meta-Workflows)](#1-pipelines-meta-workflows)
 - [2. Automation Loops](#2-automation-loops)
 - [3. Atomic Actions](#3-atomic-actions)
@@ -120,8 +127,8 @@ The workflows are organized into three categories:
 | **Full Robust** | The Ultimate Pipeline: Runs `VDD Enhanced` strategy (Adversarial) with **Strict TDD** (High Assurance) followed by a Security Audit. | `run full-robust` |
 | **VDD Enhanced** | **Hardened Pipeline.** Stub-First Plan + **RTM Validation** + VDD Adversarial execution. | `run vdd-enhanced` |
 | **VDD Multi-Adversarial** | Sequential execution of 3 specialized critics: Logic → Security → Performance. | `run vdd-multi` |
-| **Framework Upgrade** | **Meta-Workflow.** Safely upgrades the Agentic System itself (Prompts/Skills) with Audit Gates. | `run /framework-upgrade` |
-| **Iterative Design** | **Concept Refinement Loop.** Brainstorm -> Spec Draft -> VDD -> Human Review -> Refine. | `run /iterative-design` |
+| **Framework Upgrade** | **Meta-Workflow.** Safely upgrades the Agentic System itself (Prompts/Skills) with Audit Gates. | `run framework-upgrade` |
+| **Iterative Design** | **Concept Refinement Loop.** Brainstorm -> Spec Draft -> VDD -> Human Review -> Refine. | `run iterative-design` |
 | **Light Mode** | **Fast-track for trivial tasks.** Skips Architecture/Planning. Uses Analysis → Dev → Review loop. | `run light` or `/light` |
 
 ---
@@ -165,7 +172,7 @@ The workflows are organized into three categories:
 ## ❓ FAQ
 
 ### Q: Why did `01-04` not loop through all tasks?
-A: Because `03-develop-single-task` (formerly `03-develop-task`) is designed to be **atomic**. It performs one cycle of "Code -> Review -> Fix". It does **not** contain logic to read a list and iterate. To run the full list, you must use a **Pipeline** (like `base-stub-first`) which calls the **Automation Loop** (`05-run-full-task`).
+A: Because `03-develop-single-task` is designed to be **atomic**. It performs one cycle of "Code -> Review -> Fix". It does **not** contain logic to read a list and iterate. To run the full list, you must use a **Pipeline** (like `base-stub-first`) which calls the **Automation Loop** (`05-run-full-task`).
 
 ### Q: How does `Run Full Task` work?
 A: It parses `../../docs/PLAN.md`. For each entry (e.g., "Task 1.1"), it:
@@ -338,7 +345,7 @@ graph TD
     T -->|No| B{Task Complexity?}
     B -->|Simple/Well-defined| C{Trust Automation?}
     B -->|Complex/Ambiguous| D[Multi-Step Approach]
-    B -->|Concept/Design| ITER[run /iterative-design]
+    B -->|Concept/Design| ITER[run iterative-design]
     C -->|Yes| E[run base-stub-first]
     C -->|No| D
     D --> F{Need Adversarial Review?}
@@ -391,7 +398,7 @@ graph TD
 
 | Workflow Name | Description | Command |
 | :--- | :--- | :--- |
-| **Framework Upgrade** | **Meta-Workflow.** Safely upgrades Prompts, Skills, and System Logic. Includes **Meta-Audit** gates using `skill-self-improvement-verificator` to prevent regression. | `run /framework-upgrade` |
+| **Framework Upgrade** | **Meta-Workflow.** Safely upgrades Prompts, Skills, and System Logic. Includes **Meta-Audit** gates using `skill-self-improvement-verificator` to prevent regression. | `run framework-upgrade` |
 
 **Safety Protocol:**
 1. **Analysis Gate:** Checks `docs/TASK.md` for proper TIER usage and documentation updates.
@@ -403,6 +410,6 @@ graph TD
 For critical system updates, follow this **Hybrid Verification Loop**:
 1. **Draft Spec:** Use `skill-self-improvement-verificator` (Analysis Mode) to draft `docs/TASK.md`.
 2. **Manual Verification (CRITICAL):** Manually review the spec and plan. Do not rely solely on automation.
-3. **Execution:** Once verified, execute using the **`/framework-upgrade`** workflow (for system) or **`/vdd-enhanced`** (for strict implementation).
+3. **Execution:** Once verified, execute using the `run framework-upgrade` workflow (for system) or `run vdd-enhanced` (for strict implementation).
 
 ---

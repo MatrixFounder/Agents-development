@@ -21,7 +21,7 @@ Before requesting sign-off, verify:
 
 ### Verification Command
 ```bash
-python3 [skill_path]/scripts/verify_gate.py docs/product/APPROVED_BACKLOG.md
+python3 [skill_path]/scripts/verify_gate.py --file docs/product/APPROVED_BACKLOG.md
 ```
 > **Note:** `[skill_path]` is the path to this skill (e.g. `.agent/skills/skill-product-handoff`).
 
@@ -30,7 +30,7 @@ python3 [skill_path]/scripts/verify_gate.py docs/product/APPROVED_BACKLOG.md
 
 ### Signing Command (For p03)
 ```bash
-python3 [skill_path]/scripts/sign_off.py docs/product/APPROVED_BACKLOG.md
+python3 [skill_path]/scripts/sign_off.py --file docs/product/APPROVED_BACKLOG.md
 ```
 
 ## 3. BRD Compilation
@@ -38,7 +38,7 @@ Once the gate is open, you MUST compile the scattered artifacts into a single `B
 
 ### Compilation Command
 ```bash
-python3 [skill_path]/scripts/compile_brd.py docs/product/ docs/BRD.md
+python3 [skill_path]/scripts/compile_brd.py --market-file docs/product/MARKET_STRATEGY.md --vision-file docs/product/PRODUCT_VISION.md --blueprint-file docs/product/SOLUTION_BLUEPRINT.md --output-file docs/BRD.md
 ```
 - **Inputs:** `MARKET_STRATEGY.md`, `PRODUCT_VISION.md`, `SOLUTION_BLUEPRINT.md`.
 - **Output:** `docs/BRD.md`.

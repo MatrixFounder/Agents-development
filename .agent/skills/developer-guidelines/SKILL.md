@@ -11,7 +11,7 @@ version: 1.1
 - "This code is messy, I'll clean it up while I'm here" -> **WRONG**. You MUST change ONLY what the task requires.
 - "I'll skip the test, it's a trivial change" -> **WRONG**. ALL changes require verification.
 - "The reviewer didn't mention this, but I know better" -> **WRONG**. Fix ONLY what is requested in reviewer comments.
-- "I don't need to update .AGENTS.md for such a small change" -> **WRONG**. EVERY directory you touch MUST have an updated .AGENTS.md.
+- "I don't need to update .AGENTS.md for such a small change" -> **WRONG**. Update `.AGENTS.md` for touched source scopes under memory tracking policy.
 
 ## 1. Strict Adherence
 - **Follow Instructions:** Execute the task EXACTLY as described.
@@ -28,7 +28,7 @@ version: 1.1
 - **Analyze:** Do not blindly retry. Analyze the error log, propose hypotheses, and record in `open_questions.md`.
 
 ## 4. Documentation First
-- **Update .AGENTS.md:** You are the Single Writer. You MUST create/update this file in every directory you touch.
+- **Update .AGENTS.md:** You are the Single Writer. Update existing `.AGENTS.md` in touched source scopes; create new ones only where project policy enables memory bootstrap.
 
 ## 5. Tooling Protocol
 - **Prefer Native Tools:** ALWAYS use the IDE/agent's native tools (test runners, file operations, git integration) over raw shell commands.

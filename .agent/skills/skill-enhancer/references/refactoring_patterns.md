@@ -47,3 +47,46 @@ Turn "Passive Reference" into "Imperative Algorithms".
 **Why?**
 *   Text loops > 5 lines satisfy the "Laziness Threshold". Agents give up.
 *   Scripts are deterministic.
+
+## Pattern 5: Prompt-Only -> Hybrid Contract
+
+**Bad (Unbounded Prompt):**
+> Analyze the repo, modify everything needed, and validate.
+
+**Good (Hybrid):**
+> 1. Use prompt reasoning to define the change plan and scope.
+> 2. Run deterministic scripts for file mutation and checks.
+> 3. Summarize script evidence and decide follow-up actions.
+
+**Why?**
+*   Keeps reasoning flexible while making execution reproducible.
+*   Produces machine-verifiable evidence.
+
+## Pattern 6: Ad-Hoc Script -> Governed Script
+
+**Bad (Ad-Hoc):**
+> Run `python scripts/tool.py`.
+
+**Good (Governed Contract):**
+> - Command: `python3 scripts/tool.py --target <path> --dry-run`
+> - Inputs: explicit args only.
+> - Outputs: deterministic report + exit code.
+> - Failures: non-zero exit with actionable error.
+
+**Why?**
+*   Makes behavior testable and CI-compatible.
+*   Reduces hidden side effects.
+
+## Pattern 7: Unsafe Mutation -> Scoped Mutation
+
+**Bad (Wide Scope):**
+> Rename files across the project.
+
+**Good (Scoped):**
+> 1. Require explicit scope (`--path`, `--module`, or target list).
+> 2. Exclude non-target/system directories by default.
+> 3. Require explicit opt-in for destructive operations.
+
+**Why?**
+*   Prevents accidental framework or infrastructure changes.
+*   Makes rollback and review practical.

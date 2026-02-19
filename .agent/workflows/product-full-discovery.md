@@ -22,6 +22,6 @@ description: Run the Full Product Discovery Pipeline (Strategy -> Vision -> Gate
 
 5. **Handoff (Automation)**
    - Load Skill: `skill-product-handoff`
-   - Execute: `python3 .agent/skills/skill-product-handoff/scripts/verify_gate.py docs/product/APPROVED_BACKLOG.md`
-   - Execute: `python3 .agent/skills/skill-product-handoff/scripts/compile_brd.py docs/product/ docs/BRD.md`
+   - Execute: `python3 .agent/skills/skill-product-handoff/scripts/verify_gate.py --file docs/product/APPROVED_BACKLOG.md`
+   - Execute: `python3 .agent/skills/skill-product-handoff/scripts/compile_brd.py --market-file docs/product/MARKET_STRATEGY.md --vision-file docs/product/PRODUCT_VISION.md --blueprint-file docs/product/SOLUTION_BLUEPRINT.md --output-file docs/BRD.md`
    - Execute: `python3 .agent/skills/skill-product-handoff/scripts/trigger_technical.py docs/BRD.md docs/TASK.md`

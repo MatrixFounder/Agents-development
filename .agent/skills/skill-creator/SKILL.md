@@ -64,6 +64,30 @@ If your skill requires logic (loops, conditions, parsing, scanning), you **MUST*
 > [!IMPORTANT]
 > **The 5-Line Logic Limit:** If a step in `SKILL.md` requires more than 5 lines of logical "if/then/else" text to explain, **IT MUST BE A SCRIPT**.
 
+## 3.5. Execution Mode
+- **Mode**: `hybrid`
+- **Rationale**: Skill authoring needs judgement for structure/quality decisions and deterministic scripts for repeatable validation and generation.
+
+## 3.6. Script Contract
+- **Primary Commands**:
+  - `python3 scripts/init_skill.py <name> --tier <N>`
+  - `python3 scripts/validate_skill.py <skill-path>`
+- **Inputs**: skill name/path, tier, and local policy config.
+- **Outputs**: generated skill skeletons, validation pass/fail output, warnings.
+- **Failure Semantics**: non-zero exit code on validation errors.
+- **Migration Mode**: execution-policy checks are warning-first by default, strict mode via `--strict-exec-policy`.
+
+## 3.7. Safety Boundaries
+- **Scope**: operate only on explicit target skill directories.
+- **Default Exclusions**: no broad or implicit repo-wide mutation.
+- **Destructive Actions**: never default; require explicit user/task intent.
+- **Optional Artifacts**: missing optional resources should be warnings unless policy marks them mandatory.
+
+## 3.8. Validation Evidence
+- **Local Evidence**: `validate_skill.py` output and generated diffs.
+- **Quality Evidence**: section coverage, CSO checks, inline efficiency, and metadata checks.
+- **CI Evidence**: skill-validation jobs should consume validator exit semantics.
+
 ## 4. Frontmatter & Metadata
 
 The YAML frontmatter is CRITICAL for the Orchestrator's loading logic.
@@ -162,8 +186,12 @@ Use the **Template** found in `assets/SKILL_TEMPLATE.md` as your starting point.
 1.  **Purpose**: Define the "Why".
 2.  **Red Flags**: Immediate "Stop and Rethink" triggers.
 3.  **Capabilities**: Bulleted list of what is possible.
-4.  **Instructions**: Imperative, step-by-step algorithms.
-5.  **Examples (Few-Shot)**: Input -> Output pairs.
+4.  **Execution Mode**: Explicitly choose `prompt-first`, `script-first`, or `hybrid`.
+5.  **Script Contract**: Required for `script-first` and `hybrid`.
+6.  **Safety Boundaries**: Explicit scope, exclusions, and non-default destructive behavior.
+7.  **Validation Evidence**: Define objective verification output.
+8.  **Instructions**: Imperative, step-by-step algorithms.
+9.  **Examples (Few-Shot)**: Input -> Output pairs.
     *   *Reference*: See `examples/SKILL_EXAMPLE_LEGACY_MIGRATOR.md` for a **Gold Standard** example of a rich skill.
 
 ## 9. Best Practices (Extended)
@@ -199,6 +227,7 @@ When creating a new skill, you **MUST** strictly follow this sequence:
 3.  **Populate**:
     *   **MANDATORY**: Edit the auto-generated `SKILL.md` (it already contains the template).
     *   **MANDATORY**: Fill in the "Red Flags" and "Use when..." description.
+    *   **MANDATORY**: Fill `Execution Mode`, `Script Contract`, `Safety Boundaries`, and `Validation Evidence`.
     *   **MANDATORY**: If logic > 5 lines, write a `scripts/` tool.
     *   **MANDATORY**: Consult `references/skill_design_patterns.md` and `references/writing_skills_best_practices_anthropic.md` for structural decisions.
 4.  **Cleanup**:
@@ -216,7 +245,7 @@ When creating a new skill, you **MUST** strictly follow this sequence:
 ## 11. Scripts Reference
 
 *   **`init_skill.py`**: Generates a compliant skill skeleton (`scripts/`, `examples/`, `assets/`, `references/`) using the rich template.
-*   **`validate_skill.py`**: Enforces folder structure, frontmatter compliance, and CSO rules (description format).
+*   **`validate_skill.py`**: Enforces folder structure, frontmatter compliance, CSO rules, and execution-policy coverage checks (warning-first by default).
 
 ## 12. Local Resources
 *   **`references/writing_skills_best_practices_anthropic.md`**: The complete "Gold Standard" authoring guide.

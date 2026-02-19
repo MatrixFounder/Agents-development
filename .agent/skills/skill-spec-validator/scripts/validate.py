@@ -139,8 +139,8 @@ def validate_plan(plan_path, task_path):
         # Strict checking: Expecting "[RID]" or just "RID" if defined loosely?
         # Proposal said: "Checklist items MUST start with the RTM ID (e.g., [R1] Implement...)."
         # So we look for `[RID]` in the plan content.
-        pattern = re.escape(f"[{rid}]")
-        if pattern not in plan_content:
+        token = f"[{rid.strip()}]"
+        if token not in plan_content:
             missing_ids.append(rid)
             
     if missing_ids:

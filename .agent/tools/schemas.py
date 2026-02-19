@@ -1,22 +1,28 @@
-
 TOOLS_SCHEMAS = [
     {
         "type": "function",
         "function": {
             "name": "run_tests",
-            "description": "Run project tests using pytest. Returns stdout, stderr and return code.",
+            "description": "Run tests with a restricted allowlist (pytest/python -m pytest/npm test/npx jest/cargo test) and timeout.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "command": {
                         "type": "string",
-                        "description": "Full command to run tests. Default: 'pytest -q --tb=short'",
+                        "description": "Test command only. Shell separators and metacharacters are forbidden. Default: 'pytest -q --tb=short'",
                         "default": "pytest -q --tb=short"
                     },
                     "cwd": {
                         "type": "string",
-                        "description": "Working directory for execution (default: project root).",
+                        "description": "Working directory inside project root.",
                         "default": "."
+                    },
+                    "timeout_seconds": {
+                        "type": "integer",
+                        "description": "Execution timeout in seconds (1..1800). Default: 120",
+                        "default": 120,
+                        "minimum": 1,
+                        "maximum": 1800
                     }
                 },
                 "required": []

@@ -2,6 +2,7 @@
 name: skill-spec-validator
 description: Validates conformance between TASK.md (RTM) and PLAN.md (Atomic Checklists).
 tier: 2
+version: 1.0
 ---
 
 # Skill: Spec Validator

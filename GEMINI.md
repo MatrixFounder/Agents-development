@@ -83,18 +83,18 @@ Before starting the standard pipeline, check if the user's request matches a wor
    - (Verification): Validate with `System/Agents/05_architecture_reviewer_prompt.md` using `skill-architecture-review-checklist`.
 
 3. **Planning Phase**:
-   - Read `System/Agents/06_agent_planner.md`.
+   - Read `System/Agents/06_planner_prompt.md`.
    - **Apply Skill**: `skill-planning-decision-tree`.
    - Create `docs/PLAN.md` and `docs/tasks/*.md`.
    - **MUST FOLLOW STUB-FIRST STRATEGY**: See `skill-tdd-stub-first`.
-   - (Verification): Validate plan with `System/Agents/07_agent_plan_reviewer.md` using `skill-plan-review-checklist`.
+   - (Verification): Validate plan with `System/Agents/07_plan_reviewer_prompt.md` using `skill-plan-review-checklist`.
 
 4. **Development Phase** (Loop for each task):
-   - Read `System/Agents/08_agent_developer.md`.
+   - Read `System/Agents/08_developer_prompt.md`.
    - Execute the task in the codebase using `skill-developer-guidelines`.
    - **Apply STUBS first**, verify rendering/scrolling, then implement logic.
    - **SKILL CREATION GATE**: Before creating ANY file in `.agent/skills/`, you **MUST** run `python3 .agent/skills/skill-creator/scripts/init_skill.py <name> --tier <N>`. Manual creation is **PROHIBITED**. For modifying existing skills, use `skill-enhancer`.
-   - Verify with `System/Agents/09_agent_code_reviewer.md` using `skill-code-review-checklist`.
+   - Verify with `System/Agents/09_code_reviewer_prompt.md` using `skill-code-review-checklist`.
 
 ## BEHAVIOR RULES
 - **File Creation**: Always save intermediate artifacts (TASK, Plan) to files, do not just output them in chat.

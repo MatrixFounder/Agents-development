@@ -3,7 +3,7 @@
 > [!NOTE]
 > This is the primary version. Translations may lag behind.
 
-# Multi-Agent Software Development System v3.9.13
+# Multi-Agent Software Development System v3.9.14
 
 This framework orchestrates a multi-agent system for structured software development. It transforms vague requirements into high-quality code through a strict pipeline of specialized agents (Analyst, Architect, Planner, Developer, Reviewer, Security Auditor).
 
@@ -103,37 +103,46 @@ To use with Google's `gemini` CLI:
 2.  **Usage**: Run `gemini` commands. The tool will look for `GEMINI.md` as the system instruction.
 
 ### 3. Installation Requirements (Python)
-If you plan to use the **Tool Execution Subsystem** (native tools), you need Python 3.9+ installed.
+This framework requires a reproducible Python environment for tool execution, validators, and test automation.
+
+#### Supported Python
+- **Required:** Python `3.11+` (recommended)
+- **Minimum:** Python `3.9+` (legacy compatibility)
+
+#### Virtual Environment (Mandatory)
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+```
+
+#### Install Dependencies (Pinned)
+```bash
+pip install -r requirements-dev.txt
+# Optional integrations:
+pip install openai python-dotenv
+```
+
+#### Smoke Check (Must Pass)
+```bash
+python --version
+python -m pytest --version
+python -c "import yaml; print('pyyaml: ok')"
+python .agent/skills/skill-creator/scripts/init_skill.py --help
+python .agent/skills/skill-creator/scripts/validate_skill.py .agent/skills/skill-creator
+python System/scripts/doctor.py
+```
+
+#### Troubleshooting
+- `No module named pytest`
+  - Run: `pip install -r requirements-dev.txt`
+- `No module named yaml`
+  - Run: `pip install -r requirements-dev.txt`
+- If global Python conflicts occur:
+  - Deactivate and recreate `.venv`, then reinstall only required packages.
 
 > [!IMPORTANT]
-> **Do not install dependencies globally.** Always use a virtual environment to prevent conflicts with your system Python.
-
-**Setup Instructions:**
-
-1. Create and install dependencies in a virtual environment:
-   ```bash
-   # Create .venv
-   python3 -m venv .venv
-
-   # Install packages (using absolute path ensures it goes into .venv)
-   ./.venv/bin/pip install pytest          # Required: For run_tests tool
-   ./.venv/bin/pip install openai          # Optional: For AI orchestration
-   ./.venv/bin/pip install python-dotenv   # Optional: For environment variables
-   ```
-
-2. Activate the environment (optional, but recommended for development):
-   ```bash
-   source .venv/bin/activate
-   ```
-
-**Minimal Setup** (read-only tools work without dependencies):
-```bash
-# No installation needed for basic tools like:
-# - generate_task_archive_filename
-# - list_directory
-# - read_file
-# These use Python's standard library only.
-```
+> Do not install dependencies globally. Use `.venv` for all framework tooling.
 
 ---
 
@@ -212,17 +221,17 @@ graph TD
 | **TASK Reviewer** | `03_task_reviewer_prompt.md` | Quality control for Technical Specifications. |
 | **Architect** | `04_architect_prompt.md` | System design, database schema, API definition. |
 | **Arch Reviewer** | `05_architecture_reviewer_prompt.md` | Validates verification of architectural decisions. |
-| **Planner** | `06_agent_planner.md` | Breaks down implementation into atomic steps (Stub-First). |
-| **Plan Reviewer** | `07_agent_plan_reviewer.md` | Ensures the plan is logical and testable. |
-| **Developer** | `08_agent_developer.md` | Writes code (Stubs -> Tests -> Implementation). |
-| **Code Reviewer** | `09_agent_code_reviewer.md` | Final code quality check. |
+| **Planner** | `06_planner_prompt.md` | Breaks down implementation into atomic steps (Stub-First). |
+| **Plan Reviewer** | `07_plan_reviewer_prompt.md` | Ensures the plan is logical and testable. |
+| **Developer** | `08_developer_prompt.md` | Writes code (Stubs -> Tests -> Implementation). |
+| **Code Reviewer** | `09_code_reviewer_prompt.md` | Final code quality check. |
 | **Security Auditor** | `10_security_auditor.md` | Security vulnerability assessment and reporting. |
 
 ### 🚀 The Product Team (Roles)
 
 | Role | File | Responsibility |
 |------|------|----------------|
-| **Product Orch** | `p00_product_orchestrator.md` | Dispatches product tasks to Strategy/Vision/Director. |
+| **Product Orch** | `p00_product_orchestrator_prompt.md` | Dispatches product tasks to Strategy/Vision/Director. |
 | **Strategic Analyst** | `p01_strategic_analyst_prompt.md` | Market Research, TAM/SAM/SOM, Competitive Analysis. |
 | **Product Analyst** | `p02_product_analyst_prompt.md` | Product Vision, User Stories, Backlog Prioritization (WSJF). |
 | **Director** | `p03_product_director_prompt.md` | **Quality Gate**. Approves BRD with cryptographic hash. |
@@ -254,6 +263,8 @@ Version 3.0 introduces a modular **Skills System** that separates "Who" (Agent) 
 
 **[>> View Full Skills Catalog <<](System/Docs/SKILLS.md)**
 **[>> Orchestrator & Tools Guide <<](System/Docs/ORCHESTRATOR.md)**
+**[>> Source of Truth Map <<](System/Docs/SOURCE_OF_TRUTH.md)**
+**[>> Release Checklist <<](System/Docs/RELEASE_CHECKLIST.md)**
 
 By default, the system uses English prompts. To use **Russian** context:
 1.  Copy content from `Translations/RU/Agents` to `System/Agents`.
@@ -268,28 +279,30 @@ Detailed description of all workflows: [WORKFLOWS](System/Docs/WORKFLOWS.md).
 
 ### Quick Start
 You can run a workflow simply by asking the agent:
+- Canonical command form is `run <workflow-name>`; slash form (`/workflow-name`) is an alias.
+
 
 - **Product Discovery (New):**
-  - "Start Product Discovery" -> runs `/product-full-discovery` (Full pipeline)
-  - "Just the vision" -> runs `/product-quick-vision` (Fast track)
-  - "Analyze market" -> runs `/product-market-only` (Strategy only)
+  - "Start Product Discovery" -> runs `run product-full-discovery` (Full pipeline)
+  - "Just the vision" -> runs `run product-quick-vision` (Fast track)
+  - "Analyze market" -> runs `run product-market-only` (Strategy only)
 
 - **Standard Mode (Stub-First):**
-  - "Start feature X" -> runs `01-start-feature.md`
-  - "Plan implementation" -> runs `02-plan-implementation.md`
-  - "Develop task" -> runs `03-develop-single-task.md` (for single) or `05-run-full-task.md` (for loop)
+  - "Start feature X" -> runs `run 01-start-feature`
+  - "Plan implementation" -> runs `run 02-plan-implementation`
+  - "Develop task" -> runs `run 03-develop-single-task` (single) or `run 05-run-full-task` (loop)
 
 - **VDD Mode (Verification-Driven Development):**
-  - "Start feature X in VDD mode" -> runs `vdd-01-start-feature.md`
-  - "Develop task in VDD mode" -> runs `vdd-03-develop.md` (Adversarial Loop)
+  - "Start feature X in VDD mode" -> runs `run vdd-01-start-feature`
+  - "Develop task in VDD mode" -> runs `run vdd-03-develop` (Adversarial Loop)
 
 ### Variants
 1. **Standard**: Basic mode, focused on speed and structure (Stub-First).
 2. **VDD (Verification-Driven)**: High-reliability mode using an "Adversarial Agent" (Sarcasmotron) that harshly criticizes code.
 3. **Nested & Advanced**:
-   - **VDD Enhanced** (`/vdd-enhanced`): Runs Stub-First then VDD Refinement.
-   - **VDD Multi-Adversarial** (`/vdd-multi`): Sequential 3-critic verification (Logic → Security → Performance).
-   - **Full Robust** (`/full-robust`): Runs VDD Enhanced then Security Audit.
+   - **VDD Enhanced** (`run vdd-enhanced`; alias: `/vdd-enhanced`): Runs Stub-First then VDD Refinement.
+   - **VDD Multi-Adversarial** (`run vdd-multi`; alias: `/vdd-multi`): Sequential 3-critic verification (Logic → Security → Performance).
+   - **Full Robust** (`run full-robust`; alias: `/full-robust`): Runs VDD Enhanced then Security Audit.
 
 ---
 
@@ -327,29 +340,29 @@ This process will take you from an idea to finished code in the repository.
    - Approve the architecture before planning.
 
 ### Stage 3: Planning (Stub-First)
-1. **Planner (06_agent_planner.md):**
+1. **Planner (06_planner_prompt.md):**
    - The agent creates a work plan.
    - **IMPORTANT:** The plan must follow the **Stub-First** strategy:
      - Task X.1 [STUB]: Create structure and stubs + E2E test on hardcode.
      - Task X.2 [IMPL]: Implement logic + update tests.
-2. **Plan Review (07_agent_plan_reviewer.md):**
+2. **Plan Review (07_plan_reviewer_prompt.md):**
    - Check that Stub-First principle is observed. If not, send for revision.
 
 ### Stage 4: Development (Implementation Cycle)
 For each pair of tasks in the plan (Stub -> Impl):
 
-1. **Developer (08_agent_developer.md) — STUB Phase:**
+1. **Developer (08_developer_prompt.md) — STUB Phase:**
    - Creates files, classes, and methods.
    - Methods return `None` or hardcode (e.g., `return True`).
    - Writes an E2E test that passes on this hardcode.
    - **Documentation First:** Creates/updates `.AGENTS.md` in affected folders.
-2. **Code Review (09_agent_code_reviewer.md) — STUB Phase:**
+2. **Code Review (09_code_reviewer_prompt.md) — STUB Phase:**
    - Checks: "Are these really stubs? Does the test pass?".
-3. **Developer (08_agent_developer.md) — IMPLEMENTATION Phase:**
+3. **Developer (08_developer_prompt.md) — IMPLEMENTATION Phase:**
    - Replaces hardcode with real logic.
    - Updates tests (removes hardcode asserts, adds real checks).
    - **Anti-Loop:** If tests fail 2 times in a row with the same error — stop and analyze.
-4. **Code Review (09_agent_code_reviewer.md) — IMPLEMENTATION Phase:**
+4. **Code Review (09_code_reviewer_prompt.md) — IMPLEMENTATION Phase:**
    - Checks: "No stubs left? Is code clean? Do tests pass?".
 
 ### Stage 5: Completion and Commit
@@ -387,8 +400,8 @@ Requirements:
 **Automated Process:**
 1.  **Analysis**: Agent reads `02_analyst_prompt.md`, creates `TASK.md`.
 2.  **Architecture**: Agent reads `04_architect_prompt.md`, updates `ARCHITECTURE.md`.
-3.  **Planning**: Agent reads `06_agent_planner.md`, creates `PLAN.md` (Stub-First).
-4.  **Development**: Agent reads `08_agent_developer.md`, implements Stubs -> Tests -> Code.
+3.  **Planning**: Agent reads `06_planner_prompt.md`, creates `PLAN.md` (Stub-First).
+4.  **Development**: Agent reads `08_developer_prompt.md`, implements Stubs -> Tests -> Code.
 
 **Result**: You get a fully implemented, tested feature with documentation without manual intervention.
 
@@ -600,5 +613,4 @@ ACTION:
 3. **Config:** Ensure `GEMINI.md` or `AGENTS.md` are updated.
 
 ---
-
 

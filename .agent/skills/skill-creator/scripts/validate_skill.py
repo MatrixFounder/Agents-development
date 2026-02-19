@@ -2,6 +2,7 @@
 import os
 import argparse
 import sys
+import re
 
 # Add script directory to path to import skill_utils
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -62,7 +63,120 @@ def extract_frontmatter(file_path):
     except Exception as e:
         return None, f"File Error: {str(e)}"
 
-def validate_skill(skill_path, config):
+def extract_body_content(file_path: str) -> str:
+    """
+    Returns markdown body (without YAML frontmatter when present).
+    """
+    try:
+        with open(file_path, "r", encoding="utf-8", errors="replace") as f:
+            content = f.read()
+    except Exception:
+        return ""
+
+    lines = content.splitlines()
+    if not lines or lines[0].strip() != "---":
+        return content
+
+    for i, line in enumerate(lines[1:], 1):
+        if line.strip() == "---":
+            return "\n".join(lines[i + 1 :])
+    return content
+
+
+def _normalize_section_title(value: str) -> str:
+    lowered = value.lower()
+    lowered = re.sub(r"[^a-z0-9\s]", " ", lowered)
+    return re.sub(r"\s+", " ", lowered).strip()
+
+
+def _collect_markdown_headings(body: str) -> list[str]:
+    headings = []
+    for line in body.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("#"):
+            continue
+        heading = stripped.lstrip("#").strip()
+        if heading:
+            headings.append(heading)
+    return headings
+
+
+def _has_section(headings: list[str], target: str) -> bool:
+    needle = _normalize_section_title(target)
+    for heading in headings:
+        normalized = _normalize_section_title(heading)
+        if needle == normalized or needle in normalized:
+            return True
+    return False
+
+
+def _has_real_files(directory: str) -> bool:
+    if not os.path.isdir(directory):
+        return False
+    for item in os.listdir(directory):
+        if item in [".DS_Store", ".keep"] or item.startswith("."):
+            continue
+        return True
+    return False
+
+
+def collect_execution_policy_warnings(
+    skill_path: str,
+    body: str,
+    validation_config: dict,
+) -> list[str]:
+    required_sections = validation_config.get(
+        "execution_policy_sections",
+        [
+            "Execution Mode",
+            "Script Contract",
+            "Safety Boundaries",
+            "Validation Evidence",
+        ],
+    )
+    warnings = []
+    headings = _collect_markdown_headings(body)
+    missing = [section for section in required_sections if not _has_section(headings, section)]
+    missing_normalized = {_normalize_section_title(section) for section in missing}
+
+    for section in missing:
+        warnings.append(
+            f"Execution Policy: Missing '{section}' section (warning-first mode)."
+        )
+
+    scripts_dir = os.path.join(skill_path, "scripts")
+    if _has_real_files(scripts_dir):
+        if _normalize_section_title("Script Contract") in missing_normalized:
+            warnings.append(
+                "Execution Policy: 'scripts/' has executable content but 'Script Contract' is missing."
+            )
+
+    body_lower = body.lower()
+    mutation_markers = (
+        "delete",
+        "remove",
+        "overwrite",
+        "rename",
+        "migrate",
+        "truncate",
+        "destructive",
+    )
+    if any(marker in body_lower for marker in mutation_markers):
+        if _normalize_section_title("Safety Boundaries") in missing_normalized:
+            warnings.append(
+                "Execution Policy: Mutation/destructive language found but 'Safety Boundaries' is missing."
+            )
+
+    if ("python3 scripts/" in body_lower or "scripts/" in body_lower):
+        if _normalize_section_title("Validation Evidence") in missing_normalized:
+            warnings.append(
+                "Execution Policy: Script references found but 'Validation Evidence' is missing."
+            )
+
+    return warnings
+
+
+def validate_skill(skill_path, config, strict_exec_policy=False):
     """
     Validates a single skill directory against configured standards.
     """
@@ -74,6 +188,7 @@ def validate_skill(skill_path, config):
     quality_config = validation_config.get('quality_checks', {})
     
     errors = []
+    warnings = []
 
     # 1. Check Required Files
     skill_md_path = os.path.join(skill_path, "SKILL.md")
@@ -123,14 +238,17 @@ def validate_skill(skill_path, config):
                     errors.append("Frontmatter missing 'description'")
                 else:
                     desc = meta['description']
-                    # CSO Rule 1: Configured Prefixes
+                    # CSO Rule 1: Configured Prefixes (optional, configurable)
+                    enforce_cso_prefix = validation_config.get('enforce_cso_prefix', True)
                     allowed_prefixes = validation_config.get('allowed_cso_prefixes', [])
-                    # Fallback if empty to generic safe defaults? No, config should have it.
-                    if not allowed_prefixes: allowed_prefixes = ["Use when"] # minimal safety
-                     
-                    desc_lower = desc.lower().strip()
-                    if not any(desc_lower.startswith(prefix.lower()) for prefix in allowed_prefixes):
-                        errors.append(f"CSO Violation: Description MUST start with one of {allowed_prefixes}. Found: " + desc[:30] + "...")
+                    if enforce_cso_prefix:
+                        # Fallback to minimal safe default only when enforcement is enabled.
+                        if not allowed_prefixes:
+                            allowed_prefixes = ["Use when"]
+
+                        desc_lower = desc.lower().strip()
+                        if not any(desc_lower.startswith(prefix.lower()) for prefix in allowed_prefixes):
+                            errors.append(f"CSO Violation: Description MUST start with one of {allowed_prefixes}. Found: " + desc[:30] + "...")
                     
                     # CSO Rule 2: Token Efficiency
                     max_words = quality_config.get('max_description_words', 50)
@@ -171,12 +289,35 @@ def validate_skill(skill_path, config):
             efficiency_errors = check_inline_efficiency(raw_content, max_inline)
             errors.extend(efficiency_errors)
 
+            body_content = extract_body_content(skill_md_path)
+            warnings.extend(
+                collect_execution_policy_warnings(
+                    skill_path,
+                    body_content,
+                    validation_config,
+                )
+            )
+
     # Report
     if errors:
         print(f"❌ Validation FAILED for '{skill_name}':")
         for err in errors:
             print(f"  - {err}")
+        if warnings:
+            print("⚠️  Additional warnings:")
+            for warning in warnings:
+                print(f"  - {warning}")
         return False
+
+    if warnings:
+        print(f"⚠️  Validation PASSED with warnings for '{skill_name}':")
+        for warning in warnings:
+            print(f"  - {warning}")
+        if strict_exec_policy:
+            print("❌ Strict execution-policy mode enabled: warnings are treated as failures.")
+            return False
+        return True
+
     else:
         print(f"✅ Validation PASSED for '{skill_name}'")
         return True
@@ -184,6 +325,11 @@ def validate_skill(skill_path, config):
 def main():
     parser = argparse.ArgumentParser(description="Validate an Agent Skill (Portable Standard).")
     parser.add_argument("path", help="Path to the skill directory")
+    parser.add_argument(
+        "--strict-exec-policy",
+        action="store_true",
+        help="Treat execution-policy warnings as validation failures.",
+    )
     
     args = parser.parse_args()
     
@@ -195,7 +341,11 @@ def main():
     project_root = os.getcwd() 
     config = skill_utils.load_config(project_root)
 
-    success = validate_skill(args.path, config)
+    success = validate_skill(
+        args.path,
+        config,
+        strict_exec_policy=args.strict_exec_policy,
+    )
     sys.exit(0 if success else 1)
 
 if __name__ == "__main__":

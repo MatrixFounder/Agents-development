@@ -3,7 +3,7 @@
 > [!NOTE]
 > Английская версия является основной. Перевод может отставать.
 
-# Мультиагентная система разработки v3.9.13
+# Мультиагентная система разработки v3.9.14
 
 Это руководство описывает работу мультиагентной системы для разработки программного обеспечения. Система построена на конвейерном принципе, где каждый агент (Аналитик, Архитектор, Планировщик, Разработчик, Ревьюер, Аудитор Безопасности) выполняет свою специализированную роль для преобразования требований в качественный код.
 
@@ -103,37 +103,46 @@ Antigravity поддерживает архитектуру "из коробки
 2.  **Использование**: Запускайте команды `gemini`. Инструмент будет искать `GEMINI.md` как системную инструкцию.
 
 ### 3. Требования к установке (Python)
-Для использования **Подсистемы выполнения инструментов** (native tools) необходим Python 3.9+.
+Для корректной работы инструментов, валидаторов и автотестов требуется воспроизводимое Python-окружение.
+
+#### Поддерживаемая версия Python
+- **Требуется:** Python `3.11+` (рекомендуется)
+- **Минимум:** Python `3.9+` (режим совместимости)
+
+#### Виртуальное окружение (обязательно)
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+```
+
+#### Установка зависимостей (Pinned)
+```bash
+pip install -r requirements-dev.txt
+# Опциональные интеграции:
+pip install openai python-dotenv
+```
+
+#### Smoke Check (должен пройти)
+```bash
+python --version
+python -m pytest --version
+python -c "import yaml; print('pyyaml: ok')"
+python .agent/skills/skill-creator/scripts/init_skill.py --help
+python .agent/skills/skill-creator/scripts/validate_skill.py .agent/skills/skill-creator
+python System/scripts/doctor.py
+```
+
+#### Устранение проблем
+- `No module named pytest`
+  - Выполните: `pip install -r requirements-dev.txt`
+- `No module named yaml`
+  - Выполните: `pip install -r requirements-dev.txt`
+- Если есть конфликты глобального Python:
+  - Деактивируйте и пересоздайте `.venv`, затем переустановите только нужные пакеты.
 
 > [!IMPORTANT]
-> **Не устанавливайте зависимости глобально.** Всегда используйте виртуальное окружение, чтобы избежать конфликтов с системным Python.
-
-**Инструкция по настройке:**
-
-1. Создайте venv и установите зависимости:
-   ```bash
-   # Создание виртуального окружения
-   python3 -m venv .venv
-
-   # Установка пакетов (используем абсолютный путь, чтобы точно попасть в .venv)
-   ./.venv/bin/pip install pytest          # Обязательно: Для инструмента run_tests
-   ./.venv/bin/pip install openai          # Опционально: Для AI-оркестрации
-   ./.venv/bin/pip install python-dotenv   # Опционально: Для переменных окружения
-   ```
-
-2. Активируйте окружение (опционально, но рекомендуется):
-   ```bash
-   source .venv/bin/activate
-   ```
-
-**Минимальная установка** (read-only инструменты работают без зависимостей):
-```bash
-# Установка не требуется для базовых инструментов:
-# - generate_task_archive_filename
-# - list_directory
-# - read_file
-# Они используют только стандартную библиотеку Python.
-```
+> Не устанавливайте зависимости глобально. Используйте `.venv` для всех инструментов фреймворка.
 
 ---
 
@@ -212,17 +221,17 @@ graph TD
 | **Ревьюер ТЗ** | `03_task_reviewer_prompt.md` | Контроль качества Технических Заданий. |
 | **Архитектор** | `04_architect_prompt.md` | Проектирование системы, БД, API. |
 | **Ревьюер Архитектуры** | `05_architecture_reviewer_prompt.md` | Валидация архитектурных решений. |
-| **Планировщик** | `06_agent_planner.md` | Декомпозиция на атомарные шаги (Stub-First). |
-| **Ревьюер Плана** | `07_agent_plan_reviewer.md` | Проверка логичности и тестируемости плана. |
-| **Разработчик** | `08_agent_developer.md` | Написание кода (Заглушки -> Тесты -> Реализация). |
-| **Код-Ревьюер** | `09_agent_code_reviewer.md` | Финальная проверка качества кода. |
+| **Планировщик** | `06_planner_prompt.md` | Декомпозиция на атомарные шаги (Stub-First). |
+| **Ревьюер Плана** | `07_plan_reviewer_prompt.md` | Проверка логичности и тестируемости плана. |
+| **Разработчик** | `08_developer_prompt.md` | Написание кода (Заглушки -> Тесты -> Реализация). |
+| **Код-Ревьюер** | `09_code_reviewer_prompt.md` | Финальная проверка качества кода. |
 | **Аудитор Безопасности** | `10_security_auditor.md` | Оценка уязвимостей безопасности и отчетность. |
 
-### � Продуктовая Команда (Роли)
+### Продуктовая Команда (Роли)
 
 | Роль | Файл | Ответственность |
 |------|------|----------------|
-| **Product Orch** | `p00_product_orchestrator.md` | Распределяет продуктовые задачи на Стратегию/Видение/Директора. |
+| **Product Orch** | `p00_product_orchestrator_prompt.md` | Распределяет продуктовые задачи на Стратегию/Видение/Директора. |
 | **Strategic Analyst** | `p01_strategic_analyst_prompt.md` | Исследование рынка, TAM/SAM/SOM, Анализ конкурентов. |
 | **Product Analyst** | `p02_product_analyst_prompt.md` | Видение Продукта, User Stories, Приоритизация Бэклога (WSJF). |
 | **Director** | `p03_product_director_prompt.md` | **Ворота Качества (Quality Gate)**. Утверждает BRD криптографическим хешем. |
@@ -254,6 +263,8 @@ graph TD
 
 **[>> Полный Каталог Навыков <<](System/Docs/SKILLS.md)**
 **[>> Руководство по Оркестратору и Инструментам <<](System/Docs/ORCHESTRATOR.md)**
+**[>> Карта Source of Truth <<](System/Docs/SOURCE_OF_TRUTH.md)**
+**[>> Release Checklist <<](System/Docs/RELEASE_CHECKLIST.md)**
 
 По умолчанию система использует английские промпты. Чтобы использовать **русский** контекст:
 1.  Скопируйте содержимое `Translations/RU/Agents` в `System/Agents`.
@@ -268,28 +279,30 @@ graph TD
 
 ### Быстрый старт
 Вы можете запустить сценарий, просто попросив агента:
+- Каноническая форма: `run <workflow-name>`; slash-форма (`/workflow-name`) работает как алиас.
+
 
 - **Product Discovery (New):**
-  - "Start Product Discovery" -> запускает `/product-full-discovery` (Полный цикл)
-  - "Just the vision" -> запускает `/product-quick-vision` (Быстрый трек)
-  - "Analyze market" -> запускает `/product-market-only` (Только стратегия)
+  - "Start Product Discovery" -> запускает `run product-full-discovery` (Полный цикл)
+  - "Just the vision" -> запускает `run product-quick-vision` (Быстрый трек)
+  - "Analyze market" -> запускает `run product-market-only` (Только стратегия)
 
 - **Стандартный режим (Stub-First):**
-  - "Start feature X" -> запускает `01-start-feature`
-  - "Plan implementation" -> запускает `02-plan-implementation`
-  - "Develop task" -> запускает `03-develop-single-task`
+  - "Start feature X" -> запускает `run 01-start-feature`
+  - "Plan implementation" -> запускает `run 02-plan-implementation`
+  - "Develop task" -> запускает `run 03-develop-single-task` (одна задача) или `run 05-run-full-task` (цикл по плану)
 
 - **Режим VDD (Verification-Driven Development):**
-  - "Start feature X in VDD mode" -> запускает `vdd-01-start-feature.md`
-  - "Develop task in VDD mode" -> запускает `vdd-03-develop.md` (Adversarial Loop)
+  - "Start feature X in VDD mode" -> запускает `run vdd-01-start-feature`
+  - "Develop task in VDD mode" -> запускает `run vdd-03-develop` (Adversarial Loop)
 
 ### Варианты (Variants)
 1. **Standard**: Базовый режим, сфокусированный на скорости и структуре (Stub-First).
 2. **VDD (Verification-Driven)**: Режим повышенной надежности с использованием "Адверс-агента" (Sarcasmotron), который жестко критикует код.
 3. **Nested & Advanced (Вложенные и Продвинутые)**:
-   - **VDD Enhanced** (`/vdd-enhanced`): Запускает Stub-First, затем VDD Refinement.
-   - **VDD Multi-Adversarial** (`/vdd-multi`): Последовательная проверка 3 критиками (Логика → Безопасность → Производительность).
-   - **Full Robust** (`/full-robust`): Запускает VDD Enhanced, затем Security Audit.
+   - **VDD Enhanced** (`run vdd-enhanced`; алиас: `/vdd-enhanced`): Запускает Stub-First, затем VDD Refinement.
+   - **VDD Multi-Adversarial** (`run vdd-multi`; алиас: `/vdd-multi`): Последовательная проверка 3 критиками (Логика → Безопасность → Производительность).
+   - **Full Robust** (`run full-robust`; алиас: `/full-robust`): Запускает VDD Enhanced, затем Security Audit.
 
 ---
 
@@ -327,29 +340,29 @@ graph TD
    - Утвердите архитектуру перед планированием.
 
 ### Этап 3: Планирование (Stub-First)
-1. **Планировщик (06_agent_planner.md):**
+1. **Планировщик (06_planner_prompt.md):**
    - Агент создает план работ.
    - **ВАЖНО:** План должен следовать стратегии **Stub-First**:
      - Задача X.1 [STUB]: Создать структуру и заглушки + E2E тест на хардкоде.
      - Задача X.2 [IMPL]: Реализовать логику + обновить тесты.
-2. **Ревью Плана (07_agent_plan_reviewer.md):**
+2. **Ревью Плана (07_plan_reviewer_prompt.md):**
    - Проверьте, что принцип Stub-First соблюден. Если нет — отправьте на доработку.
 
 ### Этап 4: Разработка (Цикл реализации)
 Для каждой пары задач из плана (Stub -> Impl):
 
-1. **Разработчик (08_agent_developer.md) — Фаза STUB:**
+1. **Разработчик (08_developer_prompt.md) — Фаза STUB:**
    - Создает файлы, классы и методы.
    - Методы возвращают `None` или хардкод (например, `return True`).
    - Пишет E2E тест, который проходит на этом хардкоде.
    - **Documentation First:** Создает/обновляет `.AGENTS.md` в затронутых папках.
-2. **Код-Ревью (09_agent_code_reviewer.md) — Фаза STUB:**
+2. **Код-Ревью (09_code_reviewer_prompt.md) — Фаза STUB:**
    - Проверяет: "Это действительно заглушки? Тест проходит?".
-3. **Разработчик (08_agent_developer.md) — Фаза IMPLEMENTATION:**
+3. **Разработчик (08_developer_prompt.md) — Фаза IMPLEMENTATION:**
    - Заменяет хардкод на реальную логику.
    - Обновляет тесты (убирает assert хардкода, добавляет реальные проверки).
    - **Anti-Loop:** Если тесты падают 2 раза подряд с одной ошибкой — стоп и анализ.
-4. **Код-Ревью (09_agent_code_reviewer.md) — Фаза IMPLEMENTATION:**
+4. **Код-Ревью (09_code_reviewer_prompt.md) — Фаза IMPLEMENTATION:**
    - Проверяет: "Заглушек не осталось? Код чистый? Тесты проходят?".
 
 ### Этап 5: Завершение и Commit
@@ -387,8 +400,8 @@ claude
 **Автоматический Процесс:**
 1.  **Анализ**: Агент читает `02_analyst_prompt.md`, создает `TASK.md`.
 2.  **Архитектура**: Агент читает `04_architect_prompt.md`, обновляет `ARCHITECTURE.md`.
-3.  **Планирование**: Агент читает `06_agent_planner.md`, создает `PLAN.md` (Stub-First).
-4.  **Разработка**: Агент читает `08_agent_developer.md`, реализует Заглушки -> Тесты -> Код.
+3.  **Планирование**: Агент читает `06_planner_prompt.md`, создает `PLAN.md` (Stub-First).
+4.  **Разработка**: Агент читает `08_developer_prompt.md`, реализует Заглушки -> Тесты -> Код.
 
 **Результат**: Вы получаете полностью реализованную, протестированную и задокументированную фичу без ручного вмешательства.
 
@@ -599,5 +612,4 @@ claude
 3. **Конфигурация:** Обновите `GEMINI.md` или `AGENTS.md`.
 
 ---
-
 

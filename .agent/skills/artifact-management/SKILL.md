@@ -8,7 +8,7 @@ version: 1.0
 
 ## Local .AGENTS.md (Per-Directory)
 - **Purpose:** Distributed long-term memory for specific directories.
-- **Location:** In every source code directory (e.g., `src/services/.AGENTS.md`).
+- **Location:** In source-code directories covered by project memory policy (e.g., `src/services/.AGENTS.md`).
 - **Single Writer:** ONLY the **Developer** agent is allowed to create or update these files. All other agents (Analyst, Reviewer, etc.) must only READ them.
 - **Format:**
   ```markdown
@@ -66,5 +66,5 @@ Key commands: `mv docs/TASK.md docs/tasks/...`, `ls`, `cat` — read-only valida
 
 ## Protocol
 1. **Read First:** Before starting work, read relevant artifacts.
-2. **Update Immediately:** Update artifacts corresponding to your changes (Developer updates `.AGENTS.md`, Analyst updates `TASK.md`).
+2. **Update Immediately:** Update artifacts corresponding to your changes (Developer updates relevant `.AGENTS.md` scopes, Analyst updates `TASK.md`).
 3. **Consistency:** Ensure artifacts match the actual code state.

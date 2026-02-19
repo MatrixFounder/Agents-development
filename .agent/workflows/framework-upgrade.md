@@ -28,7 +28,7 @@ description: Pipeline for upgrading the Agentic Framework itself (Prompts, Skill
 1. **Backup**: 
    - `mkdir -p .agent/archive`
    - `cp GEMINI.md .agent/archive/GEMINI.bak` (and other targets).
-2. **Implement**: Execute `08_agent_developer.md` with `skill-self-improvement-verificator` active.
+2. **Implement**: Execute `08_developer_prompt.md` with `skill-self-improvement-verificator` active.
 3. **Verify**:
    - Run affected tests.
    - Run `skill-spec-validator` (if modified).

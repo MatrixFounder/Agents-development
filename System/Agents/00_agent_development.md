@@ -64,7 +64,7 @@ This system orchestrates a team of specialized agents coordinated by an Orchestr
 
 ### 1. Skill Tiers (Authoritative Source: `System/Docs/SKILL_TIERS.md`)
 The system uses a **Phase-Specific Loading Protocol** (Optimization O1) to minimize token overhead:
-- **TIER 0 (System Foundation):** ALWAYS LOADED. Includes `core-principles`, `safe-commands`, `artifact-management`.
+- **TIER 0 (System Foundation):** ALWAYS LOADED. Includes `core-principles`, `skill-safe-commands`, `artifact-management`.
 - **TIER 0 (+):** `skill-session-state` (Session Persistence).
 - **TIER 1 (Phase-Triggered):** Loaded only when entering a specific phase (e.g., Analysis, Architecture).
 - **TIER 2 (Extended):** Loaded on demand (e.g., `reverse-engineering`).

@@ -24,10 +24,21 @@ Prevent "Agent Amnesia" by keeping `.AGENTS.md` context files synchronized with 
 python3 .agent/skills/skill-update-memory/scripts/suggest_updates.py
 ```
 
+**Bootstrap Migration Mode (optional):**
+```bash
+python3 .agent/skills/skill-update-memory/scripts/suggest_updates.py --mode bootstrap --create-missing --development-root src
+```
+
 **Output:**
 - Identifies modified source files (ignoring build artifacts).
-- Groups them by the closest `.AGENTS.md`.
+- Groups them by the closest `.AGENTS.md` (or suggested per-directory target in source folders).
 - Generates a template for the update.
+- In bootstrap mode, can create missing `.AGENTS.md` files without overwriting existing ones.
+- Creation/suggestions are limited to explicit development roots (`--development-root`, default: `src`).
+- `/.agent/skills/*` and `/.cursor/skills/*` are always excluded from memory target creation.
+
+> [!NOTE]
+> `.AGENTS.md` remains optional. If it does not exist, the helper must not fail.
 
 ### Phase 2: Generate Description (`.AGENTS.md` Update)
 
@@ -60,3 +71,4 @@ Append new information below manual annotations.
 ## Integration
 - **Code Review:** Reviewer runs script to check if docs match code changes.
 - **Pre-Commit:** Developer runs script to ensure no "Undocumented Code" is committed.
+- **Migration/Onboarding:** Run bootstrap mode for external projects to create initial `.AGENTS.md` skeletons in source folders.

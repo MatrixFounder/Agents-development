@@ -11,7 +11,7 @@
 
 ### New Files
 - `path/to/new_file.py` — [purpose of file]
-- `path/to/.AGENTS.md` — [description of module] (MANDATORY for new directories)
+- `path/to/.AGENTS.md` — [description of module] (for new source directories under memory tracking policy)
 
 ### Changes in Existing Files
 

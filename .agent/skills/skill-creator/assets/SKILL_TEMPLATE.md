@@ -18,7 +18,32 @@ List what this skill allows the agent to do.
 - [Capability 1]
 - [Capability 2]
 
-## 3. Instructions
+## 3. Execution Mode
+- **Mode**: [prompt-first | script-first | hybrid]
+- **Why this mode**: [Short rationale for this skill]
+
+## 4. Script Contract
+Use this section when mode is `script-first` or `hybrid`.
+- **Command(s)**:
+  - `python3 scripts/[tool].py --arg value`
+- **Inputs**: [required args/files/config]
+- **Outputs**: [artifacts/logs/exit behavior]
+- **Failure semantics**: [non-zero exit, error schema]
+- **Idempotency**: [how repeated runs behave]
+- **Dry-run support**: [yes/no and flag]
+
+## 5. Safety Boundaries
+- **Allowed scope**: [path/module/target constraints]
+- **Default exclusions**: [system/non-target areas]
+- **Destructive actions**: [must be explicit opt-in, never default]
+- **Optional artifacts**: [whether absence is blocking or non-blocking]
+
+## 6. Validation Evidence
+- **Local verification**: [commands/checks]
+- **Expected evidence**: [files, logs, structured output]
+- **CI signal**: [job/check name if available]
+
+## 7. Instructions
 Provide step-by-step instructions for the agent. Use imperative mood.
 
 ### [Phase/Action 1]
@@ -29,7 +54,7 @@ Provide step-by-step instructions for the agent. Use imperative mood.
 ### [Phase/Action 2]
 ...
 
-## 4. Workflows (Optional)
+## 8. Workflows (Optional)
 For complex tasks, use a checklist:
 ```markdown
 - [ ] Analysis
@@ -37,7 +62,7 @@ For complex tasks, use a checklist:
 - [ ] Verification
 ```
 
-## 4. Best Practices & Anti-Patterns
+## 9. Best Practices & Anti-Patterns
 
 | DO THIS | DO NOT DO THIS |
 | :--- | :--- |
@@ -50,7 +75,7 @@ For complex tasks, use a checklist:
 | "[Excuse 1]" | "[Counter-argument]" |
 | "[Excuse 2]" | "[Counter-argument]" |
 
-## 5. Examples (Few-Shot)
+## 10. Examples (Few-Shot)
 Refer to `examples/` directory for full files, or include short snippets here.
 
 **Input:**
@@ -63,7 +88,8 @@ Refer to `examples/` directory for full files, or include short snippets here.
 [Ideal Agent Response/Action]
 ```
 
-## 6. Resources
-Describe the usage of files in `resources/` (templates, assets) and scripts in `scripts/`.
+## 11. Resources
+Describe the usage of files in `assets/`, `references/`, and scripts in `scripts/`.
 - `scripts/helpers.py`: [Description]
-- `resources/template.json`: [Description]
+- `assets/template.json`: [Description]
+- `references/guidelines.md`: [Description]

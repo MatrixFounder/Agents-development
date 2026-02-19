@@ -4,7 +4,7 @@ description: Develop a task using the Adversarial Loop
 > [!IMPORTANT]
 > **VDD MODE ACTIVE**: Prepare for the **Adversarial Roast**.
 
-1. **Developer Prompt**: Read `System/Agents/08_agent_developer.md`.
+1. **Developer Prompt**: Read `System/Agents/08_developer_prompt.md`.
 2. **Implementation Loop**:
     - **Step 2.1 (Builder)**: Implement the task (Stub -> Implementation).
     - **Step 2.2 (Verification)**: Write and run automated tests. Perform manual verification (HITL).

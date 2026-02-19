@@ -16,6 +16,58 @@
 
 ## 🇺🇸 English Version (Primary)
 
+### **v3.9.14 — Enterprise Hardening Wave (BI-001..009)** (Security / Reliability / Governance)
+
+#### **Added**
+* **Governance docs**:
+    * Added `System/Docs/SOURCE_OF_TRUTH.md` with authoritative mappings for prompts, skills, workflows, tools, and command conventions.
+    * Added `System/Docs/RELEASE_CHECKLIST.md` with release gates and mandatory validation commands.
+* **Validation and guardrail scripts**:
+    * Added `System/scripts/check_prompt_references.py`, `System/scripts/security_lint.py`, `System/scripts/smoke_workflows.py`, `System/scripts/validate_skills.py`, and `System/scripts/doctor.py`.
+* **CI gatekeeping**:
+    * Added `.github/workflows/framework-gates.yml` to enforce tooling tests, skill validation, workflow smoke checks, reference integrity, and security linting.
+* **Regression coverage**:
+    * Added `tests/test_tool_runner_security_contract.py`, `tests/test_spec_validator.py`, and `tests/test_product_handoff_scripts.py`.
+
+#### **Improved**
+* **Tool execution security (BI-001)**:
+    * Hardened `System/scripts/tool_runner.py` command policy (`shell=False`, disallowed shell chars/operators, allowlist checks, timeout handling, normalized `cwd` checks).
+    * Expanded and aligned tool schemas in `.agent/tools/schemas.py`; updated runtime docs in `System/Docs/ORCHESTRATOR.md`.
+* **Workflow and path integrity (BI-002, BI-009)**:
+    * Repaired stale prompt/workflow references across workflow files and READMEs.
+    * Standardized command conventions to canonical `run <workflow-name>` with explicit slash alias notes.
+* **Python environment standardization (BI-004)**:
+    * Added pinned dev dependencies (`requirements-dev.txt`) and setup guidance in `README.md` and `README.ru.md`.
+* **Skills standardization, technical scope (BI-007)**:
+    * Added missing `tier`/`version` metadata where absent.
+    * Relaxed strict CSO prefix enforcement for existing stable skills to avoid forced legacy rewrites.
+* **Meta-skill execution policy hardening**:
+    * Updated `.agent/skills/skill-creator/SKILL.md` and `.agent/skills/skill-creator/assets/SKILL_TEMPLATE.md` with explicit sections: `Execution Mode`, `Script Contract`, `Safety Boundaries`, and `Validation Evidence`.
+    * Extended `.agent/skills/skill-creator/scripts/validate_skill.py` with warning-first execution-policy checks and optional strict mode (`--strict-exec-policy`).
+    * Extended `.agent/skills/skill-enhancer/scripts/analyze_gaps.py` with execution-policy gap detection (missing contract sections + script/scope safety signals).
+    * Updated `.agent/skills/skill-enhancer/references/refactoring_patterns.md` with migration patterns: prompt-only -> hybrid, ad-hoc script -> governed script, unsafe mutation -> scoped mutation.
+
+#### **Fixed**
+* **Spec validator correctness (BI-003)**:
+    * Fixed requirement ID matching logic in `.agent/skills/skill-spec-validator/scripts/validate.py` (literal token handling + regression tests).
+* **Product handoff hardening (BI-008)**:
+    * Hardened `.agent/skills/skill-product-handoff/scripts/sign_off.py`, `.agent/skills/skill-product-handoff/scripts/verify_gate.py`, and `.agent/skills/skill-product-handoff/scripts/compile_brd.py` with argparse CLI, explicit file args, and safe path validation.
+* **Artifact memory hardening, technical part (BI-006)**:
+    * Extended `.agent/skills/skill-update-memory/scripts/suggest_updates.py` with deterministic bootstrap controls:
+        * Added `--mode bootstrap` + `--create-missing` for controlled initial memory file generation.
+        * Added explicit development scope via `--development-root` (default: `src`).
+        * Added hard exclusions for `/.agent/skills/*` and `/.cursor/skills/*` to prevent unintended memory-file creation in skills catalogs.
+        * Preserved graceful behavior when `.AGENTS.md` is missing (no hard failure).
+    * Aligned workflow/docs contract for migration usage:
+        * Updated `.agent/workflows/04-update-docs.md` bootstrap command to use `--development-root src`.
+        * Updated `System/Docs/SOURCE_OF_TRUTH.md` and skill docs to reflect optional `.AGENTS.md` + scoped bootstrap policy.
+
+#### **Verified**
+* `System/scripts/check_prompt_references.py --root .` and `System/scripts/smoke_workflows.py --root .` pass in the target repository.
+* Backlog status alignment: BI-001..006, BI-008, and BI-009 are marked `Done` in `Backlog/framework_improvements.md`.
+
+---
+
 ### **v3.9.13 — Security Audit Enhancement & Workflow Alignment** (Feature / Maintenance)
 
 #### **Added**
