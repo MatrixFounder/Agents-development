@@ -86,21 +86,26 @@ Antigravity supports this architecture out-of-the-box:
 
 #### 🟠 Option C: Claude Code (Native)
 To use with Anthropic's `claude` CLI:
-1.  **Configuration**: Create a `CLAUDE.md` alias for the system prompt:
-    ```bash
-    ln -s AGENTS.md CLAUDE.md
-    ```
-2.  **Skills**: Create a `.claude/skills` symlink (optional, for compatibility):
+1.  **Configuration**: Create a dedicated `CLAUDE.md` adapted from `AGENTS.md` (do not use a raw symlink when `AGENTS.md` contains Cursor-specific rules like `.cursor/skills`).
+2.  **Prompt Compatibility**: In `CLAUDE.md`, keep pipeline rules intact, but ensure skills path references resolve to `.agent/skills/`.
+3.  **Skills**: Create a `.claude/skills` symlink (optional, for compatibility):
     ```bash
     mkdir -p .claude
     ln -s ../.agent/skills .claude/skills
     ```
-3.  **Usage**: Run `claude` in the project root. The system prompt will be automatically loaded.
+4.  **Usage**: Run `claude` in the project root. `CLAUDE.md` will be loaded automatically.
 
 #### 🟢 Option D: Gemini CLI
 To use with Google's `gemini` CLI:
 1.  **Configuration**: Ensure `GEMINI.md` is present in the project root.
 2.  **Usage**: Run `gemini` commands. The tool will look for `GEMINI.md` as the system instruction.
+
+#### ⚫ Option E: Codex (Native)
+To use this framework in Codex:
+1.  **Configuration**: Use a Codex-compatible `AGENTS.md`. If your current file is Cursor-specific, adapt it so runtime rules do not depend on `.cursor/*` paths.
+2.  **Skills**: Keep project skills in `.agent/skills/` as the source of truth.
+3.  **Optional Global Skills**: Reusable meta-skills can be installed to `$CODEX_HOME/skills` when you want cross-project reuse.
+4.  **Usage**: Open the project in Codex and start tasks from the repository root context.
 
 ### 3. Installation Requirements (Python)
 This framework requires a reproducible Python environment for tool execution, validators, and test automation.
@@ -244,7 +249,8 @@ graph TD
 |------|-------------------|----------------|
 | **Cursor IDE** | `AGENTS.md` | Automatic (context rules) |
 | **Antigravity** | `GEMINI.md` | Automatic (native) |
-| **Claude Code** | `CLAUDE.md` (symlink) | Automatic (on launch) |
+| **Claude Code** | `CLAUDE.md` (adapted from `AGENTS.md`) | Automatic (on launch) |
+| **Codex** | `AGENTS.md` (Codex-compatible) | Automatic (workspace policy) |
 | **Gemini CLI** | `GEMINI.md` | Automatic (system instruction) |
 
 **Note:** See [Blueprint vs Driver](#-concept-deep-dive-blueprint-vs-driver) for the difference between `00_agent_development.md` (theory) and system prompt files (execution).
