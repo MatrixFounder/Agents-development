@@ -64,7 +64,7 @@
 
 #### **Проверено**
 * В target-репозитории проходят `System/scripts/check_prompt_references.py --root .` и `System/scripts/smoke_workflows.py --root .`.
-* Статусы backlog синхронизированы: BI-001..006, BI-008 и BI-009 отмечены как `Done` в `Backlog/framework_improvements.md`.
+* Статусы backlog синхронизированы: BI-001..006, BI-008 и BI-009 отмечены как `Done` в `Backlog/archive/framework_improvements_20260219.md`.
 
 ---
 

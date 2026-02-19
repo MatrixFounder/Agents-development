@@ -64,7 +64,7 @@
 
 #### **Verified**
 * `System/scripts/check_prompt_references.py --root .` and `System/scripts/smoke_workflows.py --root .` pass in the target repository.
-* Backlog status alignment: BI-001..006, BI-008, and BI-009 are marked `Done` in `Backlog/framework_improvements.md`.
+* Backlog status alignment: BI-001..006, BI-008, and BI-009 are marked `Done` in `Backlog/archive/framework_improvements_20260219.md`.
 
 ---
 
