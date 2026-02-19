@@ -286,8 +286,10 @@ def validate_skill(skill_path, config, strict_exec_policy=False):
                  raw_content = f.read()
             
             max_inline = quality_config.get('max_inline_lines', 12)
-            efficiency_errors = check_inline_efficiency(raw_content, max_inline)
-            errors.extend(efficiency_errors)
+            inline_exempt_skills = set(validation_config.get('inline_exempt_skills', []))
+            if skill_name not in inline_exempt_skills:
+                efficiency_errors = check_inline_efficiency(raw_content, max_inline)
+                errors.extend(efficiency_errors)
 
             body_content = extract_body_content(skill_md_path)
             warnings.extend(

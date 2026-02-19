@@ -31,6 +31,10 @@ validation:
     - "Guidelines for"
     - "Standards for"
     - "Defines"
+  # Legacy exceptions: keep critical full-context skills intact.
+  inline_exempt_skills:
+    - "skill-safe-commands"
+    - "skill-orchestrator-patterns"
     
   required_sections:
     - "Red Flags"

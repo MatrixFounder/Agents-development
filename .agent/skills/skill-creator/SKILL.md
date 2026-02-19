@@ -246,8 +246,10 @@ When creating a new skill, you **MUST** strictly follow this sequence:
 
 *   **`init_skill.py`**: Generates a compliant skill skeleton (`scripts/`, `examples/`, `assets/`, `references/`) using the rich template.
 *   **`validate_skill.py`**: Enforces folder structure, frontmatter compliance, CSO rules, and execution-policy coverage checks (warning-first by default).
+*   **`skill_utils.py`**: Prints effective merged config (defaults + project overlay) for troubleshooting and policy visibility.
 
 ## 12. Local Resources
+*   **`references/default_parameters.md`**: Full defaults map (resolution order + all default keys + runtime fallbacks).
 *   **`references/writing_skills_best_practices_anthropic.md`**: The complete "Gold Standard" authoring guide.
 *   **`references/output-patterns.md`**: Templates for agent output formats.
 *   **`references/workflows.md`**: Guide for designing skill-internal workflows.

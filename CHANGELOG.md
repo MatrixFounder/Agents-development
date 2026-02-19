@@ -47,6 +47,15 @@
     * Extended `.agent/skills/skill-enhancer/scripts/analyze_gaps.py` with execution-policy gap detection (missing contract sections + script/scope safety signals).
     * Updated `.agent/skills/skill-enhancer/references/refactoring_patterns.md` with migration patterns: prompt-only -> hybrid, ad-hoc script -> governed script, unsafe mutation -> scoped mutation.
 
+* **Skill validator operational alignment (BI-007 follow-up)**:
+    * Added `validation.inline_exempt_skills` in `.agent/rules/skill_standards.yaml` for legacy full-context skills that must keep large inline blocks.
+    * Updated `.agent/skills/skill-creator/scripts/validate_skill.py` to skip inline-size enforcement for explicitly exempted skills while keeping the default limit for new skills.
+* **Skill-creator defaults discoverability**:
+    * Added `.agent/skills/skill-creator/references/default_parameters.md` with configuration resolution order, bundled defaults, runtime fallbacks, and maintenance rule.
+    * Updated `.agent/skills/skill-creator/SKILL.md` to reference the defaults map and `skill_utils.py` for effective merged-config inspection.
+* **Release checklist scope tuning**:
+    * Updated `System/Docs/RELEASE_CHECKLIST.md`: product handoff safety checks are optional and required only when modifying `skill-product-handoff`.
+
 #### **Fixed**
 * **Spec validator correctness (BI-003)**:
     * Fixed requirement ID matching logic in `.agent/skills/skill-spec-validator/scripts/validate.py` (literal token handling + regression tests).

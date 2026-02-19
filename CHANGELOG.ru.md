@@ -47,6 +47,15 @@
     * Расширен `.agent/skills/skill-enhancer/scripts/analyze_gaps.py`: детектирование execution-policy gap-ов (отсутствующие секции контракта + сигналы по script/scope safety).
     * Обновлен `.agent/skills/skill-enhancer/references/refactoring_patterns.md`: паттерны миграции prompt-only -> hybrid, ad-hoc script -> governed script, unsafe mutation -> scoped mutation.
 
+* **Операционное выравнивание skill-validator (BI-007 follow-up)**:
+    * Добавлен `validation.inline_exempt_skills` в `.agent/rules/skill_standards.yaml` для legacy-скилов с обязательными большими inline-блоками.
+    * Обновлен `.agent/skills/skill-creator/scripts/validate_skill.py`: проверка лимита inline-блоков пропускается только для явно исключенных скилов, при этом дефолтный лимит для новых скилов сохранен.
+* **Повышена discoverability дефолтов skill-creator**:
+    * Добавлен `.agent/skills/skill-creator/references/default_parameters.md` (порядок резолва конфигурации, bundled defaults, runtime fallback-правила, maintenance rule).
+    * Обновлен `.agent/skills/skill-creator/SKILL.md`: добавлены ссылки на defaults map и `skill_utils.py` для просмотра эффективной merged-конфигурации.
+* **Точная настройка release checklist**:
+    * Обновлен `System/Docs/RELEASE_CHECKLIST.md`: проверки Product Handoff сделаны опциональными и обязательны только при изменениях в `skill-product-handoff`.
+
 #### **Исправлено**
 * **Корректность spec-validator (BI-003)**:
     * Исправлена логика сопоставления ID требований в `.agent/skills/skill-spec-validator/scripts/validate.py` (literal token matching + регрессионные тесты).

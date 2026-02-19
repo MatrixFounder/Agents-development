@@ -33,13 +33,13 @@ PYTHONPATH=. pytest -p no:cacheprovider tests/test_tool_runner.py tests/test_too
 
 If any gate is intentionally deferred, document rationale and risk in release notes.
 
-## 4. Product Handoff Safety
+## 4. Optional Product Handoff Safety (only when modifying `skill-product-handoff`)
 
 1. Confirm CLI contracts for:
    - `.agent/skills/skill-product-handoff/scripts/sign_off.py`
    - `.agent/skills/skill-product-handoff/scripts/verify_gate.py`
    - `.agent/skills/skill-product-handoff/scripts/compile_brd.py`
-2. Run targeted tests:
+2. Optional targeted tests:
 
 ```bash
 PYTHONPATH=. pytest -p no:cacheprovider tests/test_product_handoff_scripts.py -q
